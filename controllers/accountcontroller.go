@@ -2,12 +2,19 @@ package controllers
 
 import (
 	"fmt"
+	"log"
 	"net/http"
-
-	"github.com/xceejay/boilerplate/services"
+	"net/url"
+	"path"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gorilla/securecookie"
+	"github.com/xceejay/boilerplate/services"
 )
+
+var cookieHandler = securecookie.New(
+	securecookie.GenerateRandomKey(64),
+	securecookie.GenerateRandomKey(32))
 
 type AccountController struct {
 }
@@ -19,28 +26,79 @@ type User struct {
 	age      string
 }
 
-func (accountController AccountController) ShowLoginPage(c *gin.Context) {
+func (accountController AccountController) HandleLogin(c *gin.Context) {
+	cookie, err := c.Cookie("token")
+	if err != nil {
 
-	c.HTML(http.StatusOK, "login.html", nil)
+		c.HTML(http.StatusOK, "login.html", nil)
+		return
+	}
 
+	if cookie == "123456" {
+
+		accountController.PerformLogin(c)
+	} else {
+		c.HTML(http.StatusOK, "login.html", nil)
+	}
 }
 
 func (accountController AccountController) PerformLogin(c *gin.Context) {
+	username := c.PostForm("username")
 
 	if authenticate(c) {
-		paths := []string{
-			"views/html/account/account.html",
+		if username != "" {
+			c.Redirect(http.StatusTemporaryRedirect, "/account/"+username)
+			return
 		}
-		vars := make(map[string]interface{})
 
-		user := accountController.GetAllUserData(c.Query("username"))
-		vars["name"] = user.name
+		cookieusername, err := c.Cookie("username")
+		if err != nil {
+			c.Redirect(http.StatusUnauthorized, "/")
+		}
+		if cookieusername != "" && cookieusername == "xceejay" {
+			c.Redirect(http.StatusTemporaryRedirect, "/account/"+cookieusername)
+		}
+	}
 
-		templateEngine := new(services.TemplateEngine)
+}
 
-		accounthtmlPage := templateEngine.ProcessFile(paths[0], vars)
+func (accountController AccountController) ServeAccountPage(c *gin.Context) {
 
-		c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(accounthtmlPage))
+	paths := []string{
+		"views/html/account/account.html",
+	}
+	vars := make(map[string]interface{})
+
+	user := accountController.GetAllUserData(c.Query("username"))
+	vars["name"] = user.name
+
+	templateEngine := new(services.TemplateEngine)
+
+	accounthtmlPage := templateEngine.ProcessFile(paths[0], vars)
+
+	c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(accounthtmlPage))
+
+}
+
+func (accountController AccountController) HandleAccountPage(c *gin.Context) {
+	tokencookie, err := c.Cookie("token")
+	usernamecookie, err := c.Cookie("username")
+
+	myUrl, err := url.Parse(c.Request.RequestURI)
+	if err != nil {
+		log.Fatal(err)
+	}
+	urlUsername := path.Base(myUrl.Path)
+	fmt.Printf("Request URI: %s\nBase: %s\n", c.Request.RequestURI, urlUsername)
+	if err != nil {
+		c.Redirect(http.StatusUnauthorized, "/")
+	}
+	if tokencookie == "123456" && usernamecookie == "xceejay" && usernamecookie == urlUsername {
+
+		accountController.ServeAccountPage(c)
+	} else {
+
+		c.Redirect(http.StatusUnauthorized, "/")
 
 	}
 
@@ -68,7 +126,8 @@ func authenticate(c *gin.Context) bool {
 
 	if user.username == "xceejay" && user.password == "1234" {
 		token := "123456"
-		c.SetCookie("token", token, 3600, "", "", false, true)
+		c.SetCookie("token", token, 3600, "/", "localhost", false, true)
+		c.SetCookie("username", user.username, 3600, "/", "localhost", false, true)
 
 		return true
 	}
