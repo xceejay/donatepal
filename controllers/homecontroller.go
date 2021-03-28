@@ -14,5 +14,5 @@ func (this HomeController) ServeHomePage(c *gin.Context) {
 }
 
 func (this HomeController) ServeAboutPage(c *gin.Context) {
-
+	c.HTML(http.StatusOK, "about.html", nil)
 }

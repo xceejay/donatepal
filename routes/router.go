@@ -10,6 +10,7 @@ func InitRouter(engine *gin.Engine) {
 	accountController := new(controllers.AccountController)
 	homeController := new(controllers.HomeController)
 	engine.GET("/", homeController.ServeHomePage)
+	engine.GET("/about", homeController.ServeAboutPage)
 	engine.POST("/login", accountController.HandleLogin)
 
 }
