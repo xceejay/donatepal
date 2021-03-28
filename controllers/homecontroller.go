@@ -16,3 +16,9 @@ func (homeController HomeController) ServeHomePage(c *gin.Context) {
 func (homeController HomeController) ServeAboutPage(c *gin.Context) {
 	c.HTML(http.StatusOK, "about.html", nil)
 }
+
+func (homeController HomeController) Handle404(c *gin.Context) {
+
+	c.HTML(http.StatusNotFound, "404.html", nil)
+
+}

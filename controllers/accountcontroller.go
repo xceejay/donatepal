@@ -2,19 +2,16 @@ package controllers
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"net/url"
 	"path"
+	"strings"
 
+	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"github.com/gorilla/securecookie"
+	log "github.com/sirupsen/logrus"
 	"github.com/xceejay/boilerplate/services"
 )
-
-var cookieHandler = securecookie.New(
-	securecookie.GenerateRandomKey(64),
-	securecookie.GenerateRandomKey(32))
 
 type AccountController struct {
 }
@@ -26,40 +23,97 @@ type User struct {
 	age      string
 }
 
-func (accountController AccountController) HandleLogin(c *gin.Context) {
-	cookie, err := c.Cookie("token")
-	if err != nil {
+const (
+	userkey = "user"
+)
 
-		c.HTML(http.StatusOK, "login.html", nil)
+// AuthRequired is a simple middleware to check the session
+func (accountcontroller AccountController) HandleLogin(c *gin.Context) {
+	c.HTML(http.StatusOK, "login.html", nil)
+}
+
+// login is a handler that parses a form and checks for specific data
+func (accountcontroller AccountController) PerformLogin(c *gin.Context) {
+	session := sessions.Default(c)
+	username := c.PostForm("username")
+	password := c.PostForm("password")
+
+	// Validate form input
+	if strings.Trim(username, " ") == "" || strings.Trim(password, " ") == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Parameters can't be empty"})
 		return
 	}
 
-	if cookie == "123456" {
-
-		accountController.PerformLogin(c)
-	} else {
-		c.HTML(http.StatusOK, "login.html", nil)
+	// Check for username and password match, usually from a database
+	if username != "xceejay" || password != "1234" {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Authentication failed"})
+		return
 	}
+
+	// Save the username in the session
+	session.Set(userkey, username) // In real world usage you'd set this to the users ID
+	if err := session.Save(); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
+		return
+	}
+	c.Redirect(http.StatusPermanentRedirect, "/account/"+username)
+
 }
 
-func (accountController AccountController) PerformLogin(c *gin.Context) {
-	username := c.PostForm("username")
+func (accountcontroller AccountController) HandleLogout(c *gin.Context) {
+	session := sessions.Default(c)
+	user := session.Get(userkey)
+	if user == nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid session token"})
+		return
+	}
+	session.Delete(userkey)
+	if err := session.Save(); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "Successfully logged out"})
+}
 
-	if authenticate(c) {
-		if username != "" {
-			c.Redirect(http.StatusTemporaryRedirect, "/account/"+username)
-			return
-		}
+func me(c *gin.Context) {
+	session := sessions.Default(c)
+	user := session.Get(userkey)
+	c.JSON(http.StatusOK, gin.H{"user": user})
+}
 
-		cookieusername, err := c.Cookie("username")
-		if err != nil {
-			c.Redirect(http.StatusUnauthorized, "/")
-		}
-		if cookieusername != "" && cookieusername == "xceejay" {
-			c.Redirect(http.StatusTemporaryRedirect, "/account/"+cookieusername)
-		}
+func (accountController AccountController) HandleAccountPage(c *gin.Context) {
+	session := sessions.Default(c)
+	username := session.Get(userkey)
+	usernameSessionstring := fmt.Sprintf("%s", username)
+
+	myUrl, err := url.Parse(c.Request.RequestURI)
+
+	if err != nil {
+		log.Errorf("ERROR: %s\nHandleAccountPage: Could Not Parse Request URI\nRedirecting to 404\n", err)
+		c.Redirect(http.StatusPermanentRedirect, "/404")
+	}
+	urlUsername := path.Base(myUrl.Path)
+	fmt.Printf("Request URI: %s\nBase: %s\n", c.Request.RequestURI, urlUsername)
+
+	if usernameSessionstring != urlUsername {
+
+		c.Redirect(http.StatusPermanentRedirect, "/login")
+		return
 	}
 
+	if urlUsername != "xceejay" {
+		c.Redirect(http.StatusNotFound, "/404")
+		return
+	}
+
+	if urlUsername == "xceejay" {
+
+		accountController.ServeAccountPage(c)
+		// location := fmt.Sprintf("/%s/%s", "account", username)
+
+		// fmt.Println(location)
+		// c.Redirect(http.StatusPermanentRedirect, location)
+	}
 }
 
 func (accountController AccountController) ServeAccountPage(c *gin.Context) {
@@ -80,63 +134,6 @@ func (accountController AccountController) ServeAccountPage(c *gin.Context) {
 
 }
 
-func (accountController AccountController) HandleAccountPage(c *gin.Context) {
-	tokencookie, err := c.Cookie("token")
-	usernamecookie, err := c.Cookie("username")
-
-	myUrl, err := url.Parse(c.Request.RequestURI)
-	if err != nil {
-		log.Fatal(err)
-	}
-	urlUsername := path.Base(myUrl.Path)
-	fmt.Printf("Request URI: %s\nBase: %s\n", c.Request.RequestURI, urlUsername)
-	if err != nil {
-		c.Redirect(http.StatusUnauthorized, "/")
-	}
-	if tokencookie == "123456" && usernamecookie == "xceejay" && usernamecookie == urlUsername {
-
-		accountController.ServeAccountPage(c)
-	} else {
-
-		c.Redirect(http.StatusUnauthorized, "/")
-
-	}
-
-}
-
-func status(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"status": "You are logged in"})
-}
-
-func (accountController AccountController) PerformLogout(c *gin.Context) {
-
-	c.SetCookie("token", "", -1, "", "", false, true)
-
-	c.Redirect(http.StatusTemporaryRedirect, "/")
-
-}
-
-func authenticate(c *gin.Context) bool {
-
-	var user User
-	user.username = c.PostForm("username")
-	user.password = c.PostForm("password")
-	fmt.Printf("username: %s\n", user.username)
-	fmt.Printf("password: %s\n", user.password)
-
-	if user.username == "xceejay" && user.password == "1234" {
-		token := "123456"
-		c.SetCookie("token", token, 3600, "/", "localhost", false, true)
-		c.SetCookie("username", user.username, 3600, "/", "localhost", false, true)
-
-		return true
-	}
-
-	c.JSON(http.StatusUnauthorized, gin.H{"error": "Authentication failed"})
-	return false
-
-}
-
 func (accountController AccountController) GetAllUserData(username string) *User {
 	user := &User{
 		username: "xceejay",
@@ -146,4 +143,8 @@ func (accountController AccountController) GetAllUserData(username string) *User
 
 	return user
 
+}
+
+func status(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"status": "You are logged in"})
 }
