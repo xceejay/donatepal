@@ -18,16 +18,16 @@ type AccountController struct {
 
 type User struct {
 	username string
-	password string
-	name     string
-	age      string
+	// password string
+	name string
+	age  string
 }
 
 const (
 	userkey = "user"
 )
 
-// AuthRequired is a simple middleware to check the session
+// HandleLogin is a simple middleware to login
 func (accountcontroller AccountController) HandleLogin(c *gin.Context) {
 	c.HTML(http.StatusOK, "login.html", nil)
 }
@@ -44,12 +44,13 @@ func (accountcontroller AccountController) PerformLogin(c *gin.Context) {
 		return
 	}
 
-	// Check for username and password match, usually from a database
+	// Check for username and password match from a database
 	if username != "xceejay" || password != "1234" {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Authentication failed"})
 		return
 	}
 
+	// session.Options(sessions.Options{MaxAge:	})
 	// Save the username in the session
 	session.Set(userkey, username) // In real world usage you'd set this to the users ID
 	if err := session.Save(); err != nil {
@@ -67,23 +68,32 @@ func (accountcontroller AccountController) HandleLogout(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid session token"})
 		return
 	}
-	session.Delete(userkey)
+
+	// session.Delete(userkey)
+
+	session.Set("user", "") // this will mark the session as "written" and hopefully remove the username
+	session.Clear()
+	session.Options(sessions.Options{Path: "/", MaxAge: -1}) // this sets the cookie with a MaxAge of 0
+
 	if err := session.Save(); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"message": "Successfully logged out"})
+
+	// c.JSON(http.StatusOK, gin.H{"message": "Successfully logged out"})
+	c.Redirect(http.StatusTemporaryRedirect, "/")
 }
 
-func me(c *gin.Context) {
-	session := sessions.Default(c)
-	user := session.Get(userkey)
-	c.JSON(http.StatusOK, gin.H{"user": user})
-}
+// func me(c *gin.Context) {
+// 	session := sessions.Default(c)
+// 	user := session.Get(userkey)
+// 	c.JSON(http.StatusOK, gin.H{"user": user})
+// }
 
 func (accountController AccountController) HandleAccountPage(c *gin.Context) {
 	session := sessions.Default(c)
 	username := session.Get(userkey)
+
 	usernameSessionstring := fmt.Sprintf("%s", username)
 
 	myUrl, err := url.Parse(c.Request.RequestURI)
@@ -101,18 +111,12 @@ func (accountController AccountController) HandleAccountPage(c *gin.Context) {
 		return
 	}
 
-	if urlUsername != "xceejay" {
-		c.Redirect(http.StatusNotFound, "/404")
-		return
-	}
+	if urlUsername == usernameSessionstring {
 
-	if urlUsername == "xceejay" {
+		location := fmt.Sprintf("/%s/%s", "account", username)
 
+		fmt.Println("LOCATION:", location)
 		accountController.ServeAccountPage(c)
-		// location := fmt.Sprintf("/%s/%s", "account", username)
-
-		// fmt.Println(location)
-		// c.Redirect(http.StatusPermanentRedirect, location)
 	}
 }
 
@@ -145,6 +149,6 @@ func (accountController AccountController) GetAllUserData(username string) *User
 
 }
 
-func status(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"status": "You are logged in"})
-}
+// func status(c *gin.Context) {
+// 	c.JSON(http.StatusOK, gin.H{"status": "You are logged in"})
+// }
