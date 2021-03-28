@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/xceejay/boilerplate/services"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -26,7 +28,19 @@ func (accountController AccountController) ShowLoginPage(c *gin.Context) {
 func (accountController AccountController) PerformLogin(c *gin.Context) {
 
 	if authenticate(c) {
-		c.HTML(http.StatusOK, "account.html", nil)
+		paths := []string{
+			"views/html/account/account.html",
+		}
+		vars := make(map[string]interface{})
+
+		user := accountController.GetAllUserData(c.Query("username"))
+		vars["name"] = user.name
+
+		templateEngine := new(services.TemplateEngine)
+
+		accounthtmlPage := templateEngine.ProcessFile(paths[0], vars)
+
+		c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(accounthtmlPage))
 
 	}
 
