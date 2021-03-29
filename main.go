@@ -14,6 +14,7 @@ func main() {
 	r.Static("/css", "views/css")
 	r.Static("/images", "views/images")
 	r.Static("/ext", "views/ext")
+	r.Static("/js", "views/js")
 
 	routes.InitRouter(r)
 

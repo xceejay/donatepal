@@ -12,15 +12,15 @@
         <a class="simple-text logo-normal">
           Welcome
         </a>
-        <a class="simple-text logo-normal">
+        <a id="admin" class="simple-text logo-normal">
           <!-- {{.name}} -->
           ADMINSTRATOR
         </a>
       </div>
       <div class="sidebar-wrapper">
-<form method="POST">
+
         <ul  class="nav">
-          <li class="nav-item inactive  ">
+          <li id="overview" class="nav-item inactive  ">
             <a href="/account/admin/overview" class="nav-link">
               <i  class="material-icons">home</i>
               <p>Overview</p>
@@ -28,21 +28,21 @@
           </li>
 
 
-          <li class="nav-item inactive  ">
+          <li id="transactions" class="nav-item inactive  ">
             <a href="/account/admin/transactions" class="nav-link">
               <i class="material-icons">payment</i>
               <p>Transactions</p>
             </a>
           </li>
 
-          <li class="nav-item inactive">
+          <li id="balance" class="nav-item inactive">
             <a href="/account/admin/balance" class="nav-link">
               <i class="material-icons">assessment</i>
               <p>Balance</p>
             </a>
           </li>
 
-          <li class="nav-item inactive">
+          <li id="reciept" class="nav-item inactive">
             <a href="/account/admin/reciept" class="nav-link">
               <i class="material-icons">file_copy</i>
               <p>Reciept</p>
@@ -52,7 +52,7 @@
 
 
 
-          <li class="nav-item inactive">
+          <li id="settings" class="nav-item inactive">
             <a href="/account/admin/settings" class="nav-link">
               <i class="material-icons">settings</i>
               <p>Settings</p>
