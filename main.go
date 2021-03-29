@@ -13,6 +13,7 @@ func main() {
 	r.LoadHTMLGlob("views/**/**/*.html")
 	r.Static("/css", "views/css")
 	r.Static("/images", "views/images")
+	r.Static("/ext", "views/ext")
 
 	routes.InitRouter(r)
 

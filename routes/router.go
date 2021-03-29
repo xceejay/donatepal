@@ -18,6 +18,7 @@ func InitRouter(engine *gin.Engine) {
 	engine.POST("/account/:username", accountController.ServeAccountPage)
 	engine.GET("/account/:username", accountController.HandleAccountPage)
 	engine.GET("/logout", accountController.HandleLogout)
+	engine.GET("/payment", accountController.HandlePayment)
 	// engine.GET("/template", accountController.ServeTemplate)
 
 }

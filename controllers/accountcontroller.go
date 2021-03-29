@@ -27,6 +27,9 @@ const (
 	userkey = "user"
 )
 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////HANDLERS////////////////////////////////////////////////
+
 // HandleLogin is a simple middleware to login
 func (accountcontroller AccountController) HandleLogin(c *gin.Context) {
 	// session := sessions.Default(c)
@@ -39,35 +42,6 @@ func (accountcontroller AccountController) HandleLogin(c *gin.Context) {
 	// }
 
 	c.HTML(http.StatusOK, "login.html", nil)
-
-}
-
-// login is a handler that parses a form and checks for specific data
-func (accountcontroller AccountController) PerformLogin(c *gin.Context) {
-	session := sessions.Default(c)
-	username := c.PostForm("username")
-	password := c.PostForm("password")
-
-	// Validate form input
-	if strings.Trim(username, " ") == "" || strings.Trim(password, " ") == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Parameters can't be empty"})
-		return
-	}
-
-	// Check for username and password match from a database
-	if username != "xceejay" || password != "1234" {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Authentication failed"})
-		return
-	}
-
-	// session.Options(sessions.Options{MaxAge:	})
-	// Save the username in the session
-	session.Set(userkey, username) // In real world usage you'd set this to the users ID
-	if err := session.Save(); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
-		return
-	}
-	c.Redirect(http.StatusPermanentRedirect, "/account/"+username)
 
 }
 
@@ -93,18 +67,6 @@ func (accountcontroller AccountController) HandleLogout(c *gin.Context) {
 	// c.JSON(http.StatusOK, gin.H{"message": "Successfully logged out"})
 	c.Redirect(http.StatusTemporaryRedirect, "/")
 }
-
-// func me(c *gin.Context) {
-// 	session := sessions.Default(c)
-// 	user := session.Get(userkey)
-// 	c.JSON(http.StatusOK, gin.H{"user": user})
-// }
-
-// func (accountController AccountController) ServeTemplate(c *gin.Context) {
-
-// 	c.HTML(http.StatusOK, "template.html", nil)
-
-// }
 
 func (accountController AccountController) HandleAccountPage(c *gin.Context) {
 	session := sessions.Default(c)
@@ -136,6 +98,43 @@ func (accountController AccountController) HandleAccountPage(c *gin.Context) {
 	}
 }
 
+func (accountController AccountController) HandlePayment(c *gin.Context) {
+	c.HTML(http.StatusOK, "payment.html", nil)
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////MISC////////////////////////////////////////////////
+
+// login is a handler that parses a form and checks for specific data
+func (accountcontroller AccountController) PerformLogin(c *gin.Context) {
+	session := sessions.Default(c)
+	username := c.PostForm("username")
+	password := c.PostForm("password")
+
+	// Validate form input
+	if strings.Trim(username, " ") == "" || strings.Trim(password, " ") == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Parameters can't be empty"})
+		return
+	}
+
+	// Check for username and password match from a database
+	if username != "xceejay" || password != "1234" {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Authentication failed"})
+		return
+	}
+
+	// session.Options(sessions.Options{MaxAge:	})
+	// Save the username in the session
+	session.Set(userkey, username) // In real world usage you'd set this to the users ID
+	if err := session.Save(); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
+		return
+	}
+	c.Redirect(http.StatusPermanentRedirect, "/account/"+username)
+
+}
+
 func (accountController AccountController) ServeAccountPage(c *gin.Context) {
 
 	paths := []string{
@@ -154,6 +153,22 @@ func (accountController AccountController) ServeAccountPage(c *gin.Context) {
 
 }
 
+// func status(c *gin.Context) {
+// 	c.JSON(http.StatusOK, gin.H{"status": "You are logged in"})
+// }
+
+// func me(c *gin.Context) {
+// 	session := sessions.Default(c)
+// 	user := session.Get(userkey)
+// 	c.JSON(http.StatusOK, gin.H{"user": user})
+// }
+
+// func (accountController AccountController) ServeTemplate(c *gin.Context) {
+
+// 	c.HTML(http.StatusOK, "template.html", nil)
+
+// }
+
 func (accountController AccountController) GetAllUserData(username string) *User {
 	user := &User{
 		username: "xceejay",
@@ -164,7 +179,3 @@ func (accountController AccountController) GetAllUserData(username string) *User
 	return user
 
 }
-
-// func status(c *gin.Context) {
-// 	c.JSON(http.StatusOK, gin.H{"status": "You are logged in"})
-// }
