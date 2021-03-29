@@ -29,7 +29,17 @@ const (
 
 // HandleLogin is a simple middleware to login
 func (accountcontroller AccountController) HandleLogin(c *gin.Context) {
+	// session := sessions.Default(c)
+	// user := session.Get(userkey)
+	// usernameSessionstring := fmt.Sprintf("%s", user)
+	// if user == nil {
+	// 	c.HTML(http.StatusOK, "login.html", nil)
+	// } else {
+	// 	c.Redirect(http.StatusPermanentRedirect, "/account/"+usernameSessionstring)
+	// }
+
 	c.HTML(http.StatusOK, "login.html", nil)
+
 }
 
 // login is a handler that parses a form and checks for specific data
@@ -88,6 +98,12 @@ func (accountcontroller AccountController) HandleLogout(c *gin.Context) {
 // 	session := sessions.Default(c)
 // 	user := session.Get(userkey)
 // 	c.JSON(http.StatusOK, gin.H{"user": user})
+// }
+
+// func (accountController AccountController) ServeTemplate(c *gin.Context) {
+
+// 	c.HTML(http.StatusOK, "template.html", nil)
+
 // }
 
 func (accountController AccountController) HandleAccountPage(c *gin.Context) {
