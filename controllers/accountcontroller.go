@@ -215,29 +215,44 @@ func (accountController AccountController) getDashboardContent(page string, c *g
 
 	header := templateEngine.ProcessFile(paths[0], vars)
 	footer := templateEngine.ProcessFile(paths[1], vars)
-	accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
+
 	accounthtmlPageBottom := templateEngine.ProcessFile(paths[3], vars)
 	overviewContent := templateEngine.ProcessFile(paths[4], vars)
-	transactionContent := templateEngine.ProcessFile(paths[5], vars)
-	balanceContent := templateEngine.ProcessFile(paths[6], vars)
-	recieptContent := templateEngine.ProcessFile(paths[7], vars)
-	settingsContent := templateEngine.ProcessFile(paths[8], vars)
 
 	switch page {
 	case "transactions":
+		vars["transactions_active"] = "active"
+		accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
+		transactionContent := templateEngine.ProcessFile(paths[5], vars)
 
 		return header + accounthtmlPageTop + transactionContent + accounthtmlPageBottom + footer
 
 	case "balance":
+
+		vars["balance_active"] = "active"
+		accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
+		balanceContent := templateEngine.ProcessFile(paths[6], vars)
+
 		return header + accounthtmlPageTop + balanceContent + accounthtmlPageBottom + footer
 
 	case "reciept":
+		vars["reciept_active"] = "active"
+		accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
+		recieptContent := templateEngine.ProcessFile(paths[7], vars)
+
 		return header + accounthtmlPageTop + recieptContent + accounthtmlPageBottom + footer
 
 	case "settings":
+		vars["settings_active"] = "active"
+		accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
+		settingsContent := templateEngine.ProcessFile(paths[8], vars)
+
 		return header + accounthtmlPageTop + settingsContent + accounthtmlPageBottom + footer
 
 	default:
+		vars["overview_active"] = "active"
+		accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
+
 		return header + accounthtmlPageTop + overviewContent + accounthtmlPageBottom + footer
 
 	}
@@ -252,7 +267,7 @@ func (accountController AccountController) getDashboardContent(page string, c *g
 // 		"views/html/account/account_top.html",
 // 		"views/html/account/account_bottom.html",
 // 		"views/html/account/overview.html",
-// 		"views/html/account/transactions.html",
+// 		"views/htmlsettings/account/transactions.html",
 // 		"views/html/account/balance.html",
 // 		"views/html/account/reciept.html",
 // 		"views/html/account/settings.html",

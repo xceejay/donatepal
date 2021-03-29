@@ -1,10 +1,14 @@
 $(document).ready(function(){
 
+// $("li").hover(
+//     function() {
+//         $(this).toggleClass("active")
+// });
 
-$("li").hover(
+$("#transactions").hover(
     function() {
-        $(this).toggleClass("active")
-
-
+        $(this).addClass("active")
 });
+
+
 });

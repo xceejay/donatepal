@@ -20,7 +20,7 @@
       <div class="sidebar-wrapper">
 
         <ul  class="nav">
-          <li id="overview" class="nav-item inactive  ">
+          <li id="overview" class="nav-item inactive {{.overview_active}}  ">
             <a href="/account/admin/overview" class="nav-link">
               <i  class="material-icons">home</i>
               <p>Overview</p>
@@ -28,21 +28,21 @@
           </li>
 
 
-          <li id="transactions" class="nav-item inactive  ">
+          <li id="transactions" class="nav-item inactive {{.transactions_active}} ">
             <a href="/account/admin/transactions" class="nav-link">
               <i class="material-icons">payment</i>
               <p>Transactions</p>
             </a>
           </li>
 
-          <li id="balance" class="nav-item inactive">
+          <li id="balance" class="nav-item inactive {{.balance_active}} ">
             <a href="/account/admin/balance" class="nav-link">
               <i class="material-icons">assessment</i>
               <p>Balance</p>
             </a>
           </li>
 
-          <li id="reciept" class="nav-item inactive">
+          <li id="reciept" class="nav-item inactive {{.reciept_active}}">
             <a href="/account/admin/reciept" class="nav-link">
               <i class="material-icons">file_copy</i>
               <p>Reciept</p>
@@ -52,7 +52,7 @@
 
 
 
-          <li id="settings" class="nav-item inactive">
+          <li id="settings" class="nav-item inactive {{.settings_active}}">
             <a href="/account/admin/settings" class="nav-link">
               <i class="material-icons">settings</i>
               <p>Settings</p>
