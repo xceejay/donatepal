@@ -8,7 +8,7 @@ $(document).ready(function(){
 
 
 // Get the modal
-var modal = document.getElementById("createInvoiceModal");
+var createInvoicemodal = document.getElementById("createInvoiceModal");
 
 // Get the button that opens the modal
 var btn = document.getElementById("createInvoiceBtn");
@@ -18,22 +18,48 @@ var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks the button, open the modal 
 btn.onclick = function() {
-  modal.style.display = "block";
+  createInvoicemodal.style.display = "block";
 }
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
-  modal.style.display = "none";
+  createInvoicemodal.style.display = "none";
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
+  if (event.target == createInvoicemodal) {
+    createInvoicemodal.style.display = "none";
   }
 }
 
 
+
+
+var viewInvoicesModal = document.getElementById("viewInvoicesModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("viewInvoicesBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[1];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  viewInvoicesModal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  viewInvoicesModal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == viewInvoicesModal) {
+    viewInvoicesModal.style.display = "none";
+  }
+}
 // login
 
 
@@ -49,7 +75,8 @@ var author = '<div style="position: fixed;bottom: 0;right: 20px;background-color
 		$this.wrap($("<div/>", {
 			style: 'position:relative',
 			id: id
-		}));
+		
+     } ));
 
 		$this.css({
 			paddingRight: 60
