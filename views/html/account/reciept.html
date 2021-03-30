@@ -31,7 +31,8 @@
             <div class="container">
 
               <!-- Trigger the modal with a button -->
-              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" id="createInvoiceBtn">Create</button>
+              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
+                id="createInvoiceBtn">Create</button>
               <!-- Modal -->
               <div id="createInvoiceModal" class="modal">
 
@@ -62,7 +63,7 @@
                                   <div class="col-md-10">
                                     <div class="form-group">
                                       <label class="bmd-label-floating">Last Name</label>
-                                      <input type="text" class="form-control" placeholder="Enter Donors' Last Name" >
+                                      <input type="text" class="form-control" placeholder="Enter Donors' Last Name">
                                     </div>
                                   </div>
                                 </div>
@@ -70,28 +71,29 @@
                                   <div class="col-md-10">
                                     <div class="form-group">
                                       <label class="bmd-label-floating">Amount Donated($)</label>
-                                    <input min="0.01" step="0.01" max="12500" type="number" class="form-control" placeholder="Enter Donors' Amount" >
+                                      <input min="0.01" step="0.01" max="12500" type="number" class="form-control"
+                                        placeholder="Enter Donors' Amount">
                                     </div>
                                   </div>
                                   <div class="col-md-10">
                                     <div class="form-group">
                                       <label class="bmd-label-floating">Reciept Date Issued</label>
-                                      <input type="date" id="theDate"  class="form-control"   disabled>
+                                      <input type="date" id="theDate" class="form-control" disabled>
                                     </div>
                                     <script>
                                       document.getElementById('theDate').value = new Date().toISOString().substring(0, 10);
-                                      </script>
+                                    </script>
                                   </div>
                                 </div>
                                 <div class="row">
                                   <div class="col-md-10">
                                     <div class="form-group">
                                       <label class="bmd-label-floating">Date Donated</label>
-                                      <input type="date" class="form-control"  placeholder="Select Dated Donor Donated" >
+                                      <input type="date" class="form-control" placeholder="Select Dated Donor Donated">
                                     </div>
                                   </div>
                                 </div>
-                            
+
                                 <button type="submit" class="btn btn-primary pull-right">Save and Print</button>
                                 <div class="clearfix"></div>
                               </form>
@@ -115,13 +117,12 @@
       </div>
       <div class="col-lg-5 col-md-6 col-sm-6">
         <div class="card" style="height: 50rem;">
-         
-        
+
+
           <br>
           <br>
           <br>
           <br>
-         
           <br>
           <br>
           <br>
@@ -133,7 +134,7 @@
             <p class="card-text text-muted h3">Have a glance at the history of Invoices created for donors recently</p>
             <p></p>
             <br>
-            
+
             <div class="container">
 
               <!-- Trigger the modal with a button -->
@@ -155,18 +156,18 @@
 
                             <div class="card-header card-header-primary">
                               <h4 class="card-title">View Created Invoices History</h4>
-                             
+
                             </div>
                             <div class="card-body">
                               <form>
                                 <div class="row">
 
-                         
-                                
+
+
 
                                 </div>
 
-                              
+
                                 <div class="clearfix"></div>
                               </form>
                             </div>
