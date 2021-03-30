@@ -1,0 +1,116 @@
+
+/* modalllllllllllllllllllllllll */
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 2; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+     background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.13); /* Black w/ opacity */
+  }
+  
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+  }
+  
+  
+  .close {
+    color: #aaaaaa;
+    float: left;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+
+  /* login */
+
+
+  body.my-login-page {
+    background-color: #f7f9fb;
+    font-size: 14px;
+  }
+  
+  .my-login-page .brand {
+    width: 90px;
+    height: 90px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin: 40px auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,.05);
+    position: relative;
+    z-index: 1;
+  }
+  
+  .my-login-page .brand img {
+    width: 100%;
+  }
+  
+  .my-login-page .card-wrapper {
+    width: 400px;
+  }
+  
+  .my-login-page .card {
+    border-color: transparent;
+    box-shadow: 0 4px 8px rgba(0,0,0,.05);
+  }
+  
+  .my-login-page .card.fat {
+    padding: 10px;
+  }
+  
+  .my-login-page .card .card-title {
+    margin-bottom: 30px;
+  }
+  
+  .my-login-page .form-control {
+    border-width: 2.3px;
+  }
+  
+  .my-login-page .form-group label {
+    width: 100%;
+  }
+  
+  .my-login-page .btn.btn-block {
+    padding: 12px 10px;
+  }
+  
+  .my-login-page .footer {
+    margin: 40px 0;
+    color: #888;
+    text-align: center;
+  }
+  
+  @media screen and (max-width: 425px) {
+    .my-login-page .card-wrapper {
+      width: 90%;
+      margin: 0 auto;
+    }
+  }
+  
+  @media screen and (max-width: 320px) {
+    .my-login-page .card.fat {
+      padding: 0;
+    }
+  
+    .my-login-page .card.fat .card-body {
+      padding: 15px;
+    }
+  }

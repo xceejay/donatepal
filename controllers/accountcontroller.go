@@ -155,14 +155,19 @@ func (accountController AccountController) HandleAdminDashboardContent(c *gin.Co
 		case "settings":
 			accountController.ServeAdminAccountSettingsPage(c)
 			return
-		default:
+		case "overview":
+			accountController.ServeAdminAccountOverviewPage(c)
+
+			return
+		case "":
 			accountController.ServeAdminAccountOverviewPage(c)
 
 			return
 
 		}
 	}
-	accountController.HandleLogin(c)
+	var homecontroller HomeController
+	homecontroller.Handle404(c)
 
 }
 
@@ -203,31 +208,31 @@ func (accountController AccountController) ServeAdminAccountPage(c *gin.Context)
 }
 
 func (accountController AccountController) ServeAdminAccountOverviewPage(c *gin.Context) {
-	content := accountController.getDashboardContent("overview", c)
+	content := accountController.getAdminDashboardContent("overview", c)
 	c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(content))
 }
 
 func (accountController AccountController) ServeAdminAccountTransactionPage(c *gin.Context) {
-	content := accountController.getDashboardContent("transactions", c)
+	content := accountController.getAdminDashboardContent("transactions", c)
 	c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(content))
 }
 
 func (accountController AccountController) ServeAdminAccountBalancePage(c *gin.Context) {
-	content := accountController.getDashboardContent("balance", c)
+	content := accountController.getAdminDashboardContent("balance", c)
 	c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(content))
 }
 
 func (accountController AccountController) ServeAdminAccountRecieptPage(c *gin.Context) {
-	content := accountController.getDashboardContent("reciept", c)
+	content := accountController.getAdminDashboardContent("reciept", c)
 	c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(content))
 }
 
 func (accountController AccountController) ServeAdminAccountSettingsPage(c *gin.Context) {
-	content := accountController.getDashboardContent("settings", c)
+	content := accountController.getAdminDashboardContent("settings", c)
 	c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(content))
 }
 
-func (accountController AccountController) getDashboardContent(page string, c *gin.Context) string {
+func (accountController AccountController) getAdminDashboardContent(page string, c *gin.Context) string {
 	paths := []string{
 		"views/html/account/header.html",
 		"views/html/account/footer.html",
