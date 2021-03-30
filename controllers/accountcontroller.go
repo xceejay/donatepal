@@ -166,8 +166,7 @@ func (accountController AccountController) HandleAdminDashboardContent(c *gin.Co
 
 		}
 	}
-	var homecontroller HomeController
-	homecontroller.Handle404(c)
+	accountController.HandleLogin(c)
 
 }
 
