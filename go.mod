@@ -9,4 +9,5 @@ require (
 	github.com/gorilla/sessions v1.2.1 // indirect
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/viper v1.7.1
+	github.com/thinkerou/favicon v0.1.0
 )

@@ -1,1 +1,131 @@
-Reciept
+<div class="content">
+
+
+
+  <div class="container-fluid">
+    <div class="row">
+
+
+
+
+
+      <div class="col-lg-5 col-md-6 col-sm-6">
+
+        <div class="card">
+
+          <div class="card-body">
+
+            <h3 class="card-title">Create Invoice</h3>
+
+            <br>
+
+            <p class="card-text text-muted">Create an invoice for a user who donated</p>
+            <div class="container">
+
+              <!-- Trigger the modal with a button -->
+              <button type="button" class="btn btn-primary" data-toggle="modal" id="createInvoiceBtn">Create</button>
+              <!-- Modal -->
+              <div id="createInvoiceModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                  <span class="close">&times;</span>
+
+
+                  <div class="content">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="card">
+                            <div class="card-header card-header-primary">
+                              <h4 class="card-title">Create Invoice</h4>
+                              <p class="card-category ">Create invoice for specified user and export as pdf</p>
+                            </div>
+                            <div class="card-body">
+                              <form>
+                                <div class="row">
+
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label class="bmd-label-floating">Username</label>
+                                      <input type="text" class="form-control" placeholder="{{.username}}" disabled>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label class="bmd-label-floating">Email address</label>
+                                      <input type="email" class="form-control" placeholder="{{.email}}" disabled>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label class="bmd-label-floating">Fist Name</label>
+                                      <input type="text" class="form-control" placeholder="{{.firstname}}" disabled>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label class="bmd-label-floating">Last Name</label>
+                                      <input type="text" class="form-control" placeholder="{{.lastname}}" disabled>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-12">
+                                    <div class="form-group">
+                                      <label class="bmd-label-floating">Adress</label>
+                                      <input type="text" class="form-control" placeholder="{{.address}}" disabled>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-4">
+                                    <div class="form-group">
+                                      <label class="bmd-label-floating">City</label>
+                                      <input type="text" class="form-control" placeholder="{{.city}}" disabled>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label class="bmd-label-floating">Country</label>
+                                      <input type="text" class="form-control" placeholder="{{.country}}" disabled>
+                                    </div>
+                                  </div>
+
+                                </div>
+
+                                <button disabled class="btn btn-disabled pull-right">Update Profile</button>
+                                <div class="clearfix"></div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-5 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-body">
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

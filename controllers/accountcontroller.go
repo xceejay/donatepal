@@ -17,10 +17,14 @@ type AccountController struct {
 }
 
 type User struct {
-	username string
-	// password string
-	name string
-	age  string
+	username  string
+	firstname string
+	lastname  string
+	email     string
+	address   string
+	country   string
+	city      string
+	age       uint
 }
 
 const (
@@ -209,13 +213,18 @@ func (accountController AccountController) getDashboardContent(page string, c *g
 	vars := make(map[string]interface{})
 
 	user := accountController.GetAllUserData(c.Query("username"))
-	vars["name"] = user.name
+	vars["username"] = user.username
+	vars["email"] = user.email
+	vars["firstname"] = user.firstname
+	vars["lastname"] = user.lastname
+	vars["address"] = user.address
+	vars["city"] = user.city
+	vars["country"] = user.country
 
 	templateEngine := new(services.TemplateEngine)
 
 	header := templateEngine.ProcessFile(paths[0], vars)
 	footer := templateEngine.ProcessFile(paths[1], vars)
-
 	accounthtmlPageBottom := templateEngine.ProcessFile(paths[3], vars)
 	overviewContent := templateEngine.ProcessFile(paths[4], vars)
 
@@ -347,9 +356,14 @@ func isLoggedIn(c *gin.Context) bool {
 
 func (accountController AccountController) GetAllUserData(username string) *User {
 	user := &User{
-		username: "xceejay",
-		name:     "Joel Kofi Amoako",
-		age:      "21",
+		username:  "admin",
+		firstname: "Joel",
+		lastname:  "Amoako",
+		email:     "joelkofiamoako@gmail.com",
+		address:   "N/A",
+		country:   "N/A",
+		city:      "N/A",
+		age:       21,
 	}
 
 	return user
