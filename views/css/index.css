@@ -3,13 +3,13 @@
 #main {
   border: 7px solid hsl(0, 100%, 50%);
   /* Sets the RGB border around the page */
-  -webkit-animation: rainbow 10s infinite alternate;
+  animation: rainbow 10s infinite alternate;
   /* Animation for the border */
   height: 100vh;
   background: black;
 }
 
-@-webkit-keyframes rainbow {
+@keyframes rainbow {
   /* Keyframes for the RGB */
   0% {
     border-color: hsl(0, 100%, 50%);
