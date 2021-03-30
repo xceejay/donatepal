@@ -17,15 +17,10 @@ func InitRouter(engine *gin.Engine) {
 	// engine.POST("/login", accountController.PerformLogin)
 	// engine.POST("/account/:username", accountController.ServeAccountPage)
 	// engine.GET("/account/:username", accountController.HandleAccountPage)
-
 	engine.POST("/account/admin", accountController.ServeAdminAccountPage)
 	engine.GET("/account/admin", accountController.HandleAdminAccountPage)
-	engine.GET("/account/admin/transactions", accountController.ServeAdminAccountTransactionPage)
-	engine.GET("/account/admin/balance", accountController.ServeAdminAccountBalancePage)
-	engine.GET("/account/admin/reciept", accountController.ServeAdminAccountRecieptPage)
-	engine.GET("/account/admin/settings", accountController.ServeAdminAccountSettingsPage)
-	engine.GET("/account/admin/", accountController.ServeAdminAccountOverviewPage)
-	engine.GET("/account/admin/overview", accountController.ServeAdminAccountOverviewPage)
+	engine.GET("/account/admin/:dashboard_content", accountController.HandleAdminDashboardContent)
+
 	engine.GET("/logout", accountController.HandleLogout)
 	engine.GET("/payment", accountController.HandlePayment)
 

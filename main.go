@@ -11,6 +11,7 @@ func main() {
 
 	r := gin.New()
 	r.Use(sessions.Sessions("mysession", sessions.NewCookieStore([]byte("secret"))))
+
 	r.Use(favicon.New("./favicon.ico"))
 	r.LoadHTMLGlob("views/**/**/*.html")
 	r.Static("/css", "views/css")

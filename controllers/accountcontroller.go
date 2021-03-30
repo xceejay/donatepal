@@ -137,6 +137,35 @@ func (accountController AccountController) HandlePayment(c *gin.Context) {
 
 }
 
+func (accountController AccountController) HandleAdminDashboardContent(c *gin.Context) {
+
+	if isLoggedIn(c) {
+
+		dashboardContent := c.Param("dashboard_content")
+		switch dashboardContent {
+		case "transactions":
+			accountController.ServeAdminAccountTransactionPage(c)
+			return
+		case "balance":
+			accountController.ServeAdminAccountBalancePage(c)
+			return
+		case "reciept":
+			accountController.ServeAdminAccountRecieptPage(c)
+			return
+		case "settings":
+			accountController.ServeAdminAccountSettingsPage(c)
+			return
+		default:
+			accountController.ServeAdminAccountOverviewPage(c)
+
+			return
+
+		}
+	}
+	accountController.HandleLogin(c)
+
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////MISC////////////////////////////////////////////////
 

@@ -113,7 +113,7 @@
 
 .close {
   color: #aaaaaa;
-  float: right;
+  float: left;
   font-size: 28px;
   font-weight: bold;
 }
