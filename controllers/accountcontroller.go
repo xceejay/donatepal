@@ -10,21 +10,11 @@ import (
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
+	"github.com/xceejay/boilerplate/models"
 	"github.com/xceejay/boilerplate/services"
 )
 
 type AccountController struct {
-}
-
-type User struct {
-	username  string
-	firstname string
-	lastname  string
-	email     string
-	address   string
-	country   string
-	city      string
-	age       uint
 }
 
 const (
@@ -36,6 +26,7 @@ const (
 
 // HandleLogin is a simple middleware to login
 func (accountcontroller AccountController) HandleLogin(c *gin.Context) {
+
 	// session := sessions.Default(c)
 	// user := session.Get(userkey)
 	// usernameSessionstring := fmt.Sprintf("%s", user)
@@ -45,8 +36,12 @@ func (accountcontroller AccountController) HandleLogin(c *gin.Context) {
 	// 	c.Redirect(http.StatusPermanentRedirect, "/account/"+usernameSessionstring)
 	// }
 
-	c.HTML(http.StatusOK, "login.html", nil)
+	if !isLoggedIn(c) {
+		c.HTML(http.StatusOK, "login.html", nil)
+	} else {
 
+		c.Redirect(http.StatusPermanentRedirect, "/account/admin")
+	}
 }
 
 func (accountcontroller AccountController) HandleLogout(c *gin.Context) {
@@ -69,7 +64,7 @@ func (accountcontroller AccountController) HandleLogout(c *gin.Context) {
 	}
 
 	// c.JSON(http.StatusOK, gin.H{"message": "Successfully logged out"})
-	c.Redirect(http.StatusTemporaryRedirect, "/")
+	c.Redirect(http.StatusTemporaryRedirect, "/login")
 }
 
 // func (accountController AccountController) HandleAccountPage(c *gin.Context) {
@@ -175,30 +170,33 @@ func (accountController AccountController) HandleAdminDashboardContent(c *gin.Co
 
 // // login is a handler that parses a form and checks for specific data
 func (accountcontroller AccountController) PerformLogin(c *gin.Context) {
+
+	user := new(models.User)
+
 	session := sessions.Default(c)
-	username := c.PostForm("username")
-	password := c.PostForm("password")
+	user.Username = c.PostForm("username")
+	user.Password = c.PostForm("password")
 
 	// Validate form input
-	if strings.Trim(username, " ") == "" || strings.Trim(password, " ") == "" {
+	if strings.Trim(user.Username, " ") == "" || strings.Trim(user.Password, " ") == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Parameters can't be empty"})
 		return
 	}
 
 	// Check for username and password match from a database
-	if username != "admin" || password != "1234" {
+	if !user.AuthencateUser(user) {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Authentication failed"})
 		return
 	}
 
 	// session.Options(sessions.Options{MaxAge:	})
 	// Save the username in the session
-	session.Set(userkey, username) // In real world usage you'd set this to the users ID
+	session.Set(userkey, user.Username) // In real world usage you'd set this to the users ID
 	if err := session.Save(); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
 		return
 	}
-	c.Redirect(http.StatusPermanentRedirect, "/account/"+username)
+	c.Redirect(http.StatusPermanentRedirect, "/account/"+user.Username)
 
 }
 
@@ -245,14 +243,20 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 	}
 	vars := make(map[string]interface{})
 
-	user := accountController.GetAllUserData(c.Query("username"))
-	vars["username"] = user.username
-	vars["email"] = user.email
-	vars["firstname"] = user.firstname
-	vars["lastname"] = user.lastname
-	vars["address"] = user.address
-	vars["city"] = user.city
-	vars["country"] = user.country
+	var user models.User
+
+	user, err := user.GetAllUserData(c.Query("username"))
+	if err != nil {
+		panic(err)
+	}
+
+	vars["username"] = user.Username
+	vars["email"] = user.Email.String
+	vars["firstname"] = user.Firstname.String
+	vars["lastname"] = user.Lastname.String
+	vars["address"] = user.Address.String
+	vars["city"] = user.City.String
+	vars["country"] = user.Country.String
 
 	templateEngine := new(services.TemplateEngine)
 
@@ -386,19 +390,3 @@ func isLoggedIn(c *gin.Context) bool {
 // 	c.HTML(http.StatusOK, "template.html", nil)
 
 // }
-
-func (accountController AccountController) GetAllUserData(username string) *User {
-	user := &User{
-		username:  "admin",
-		firstname: "Joel",
-		lastname:  "Amoako",
-		email:     "joelkofiamoako@gmail.com",
-		address:   "N/A",
-		country:   "N/A",
-		city:      "N/A",
-		age:       21,
-	}
-
-	return user
-
-}

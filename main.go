@@ -4,13 +4,15 @@ import (
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/thinkerou/favicon"
+
 	"github.com/xceejay/boilerplate/routes"
 )
 
 func main() {
 
 	r := gin.New()
-	r.Use(sessions.Sessions("mysession", sessions.NewCookieStore([]byte("secret"))))
+
+	r.Use(sessions.Sessions("session", sessions.NewCookieStore([]byte("secret"))))
 
 	r.Use(favicon.New("./favicon.ico"))
 	r.LoadHTMLGlob("views/**/**/*.html")
