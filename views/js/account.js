@@ -83,14 +83,16 @@ $(document).ready(function () {
 						//do what you need here
 						w.print();
 						w.close();
+						document.location.reload()
 					}, 1);
 
 
 				}
 
 				createReceiptmodal.style.display = "none";
-				document.getElementById("saveReceiptForm").reset();
-				document.getElementById('theDate').value = new Date().toISOString().substring(0, 10);
+				
+				// document.getElementById("saveReceiptForm").reset();
+				// document.getElementById('theDate').value = new Date().toISOString().substring(0, 10);
 
 			}
 		});

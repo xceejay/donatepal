@@ -269,6 +269,7 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 	switch page {
 	case "transactions":
 		vars["transactions_active"] = "active"
+		vars["fundraiser_name"] = template.HTML("<b>World Health Organization Cancer Project</b>")
 
 		accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
 		transactionContent := templateEngine.ProcessFile(paths[5], vars)
@@ -278,6 +279,8 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 	case "balance":
 
 		vars["balance_active"] = "active"
+		vars["fundraiser_name"] = template.HTML("<b>World Health Organization Cancer Project</b>")
+
 		accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
 		balanceContent := templateEngine.ProcessFile(paths[6], vars)
 
@@ -317,6 +320,7 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 
 		}
 		vars["view_receipts_table"] = template.HTML(receiptsTable)
+		vars["fundraiser_name"] = template.HTML("<b>World Health Organization Cancer Project</b>")
 
 		accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
 		receiptContent := templateEngine.ProcessFile(paths[7], vars)
@@ -325,6 +329,8 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 
 	case "settings":
 		vars["settings_active"] = "active"
+		vars["fundraiser_name"] = template.HTML("<b>World Health Organization Cancer Project</b>")
+
 		accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
 		settingsContent := templateEngine.ProcessFile(paths[8], vars)
 
@@ -332,6 +338,7 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 
 	default:
 		vars["overview_active"] = "active"
+		vars["fundraiser_name"] = template.HTML("<b>World Health Organization Cancer Project</b>")
 		accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
 
 		return header + accounthtmlPageTop + overviewContent + accounthtmlPageBottom + footer
