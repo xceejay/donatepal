@@ -15,6 +15,7 @@ type User struct {
 	Country   sql.NullString
 	City      sql.NullString
 	Age       sql.NullString
+	Phone     sql.NullString
 }
 
 func (usr User) AuthencateUser(user *User) bool {

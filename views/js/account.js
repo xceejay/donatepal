@@ -1,73 +1,148 @@
-$(document).ready(function(){
+$(document).ready(function () {
 
-// $("li").hover(
-//     function() {
-//         $(this).toggleClass("active")
-// });
-
-
-
-// Get the modal
-var createInvoicemodal = document.getElementById("createInvoiceModal");
-
-// Get the button that opens the modal
-var btn = document.getElementById("createInvoiceBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-  createInvoicemodal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  createInvoicemodal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == createInvoicemodal) {
-    createInvoicemodal.style.display = "none";
-  }
-}
+	// $("li").hover(
+	//     function() {
+	//         $(this).toggleClass("active")
+	// });
 
 
 
+	// Get the modal
+	var createReceiptmodal = document.getElementById("createReceiptModal");
 
-var viewInvoicesModal = document.getElementById("viewInvoicesModal");
+	// Get the button that opens the modal
+	var btn = document.getElementById("createReceiptBtn");
 
-// Get the button that opens the modal
-var btn = document.getElementById("viewInvoicesBtn");
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[1];
+	// When the user clicks the button, open the modal 
+	btn.onclick = function () {
+		createReceiptmodal.style.display = "block";
+	}
 
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-  viewInvoicesModal.style.display = "block";
-}
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function () {
+		createReceiptmodal.style.display = "none";
+	}
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  viewInvoicesModal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == viewInvoicesModal) {
-    viewInvoicesModal.style.display = "none";
-  }
-}
-// login
-
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function (event) {
+		if (event.target == createReceiptmodal) {
+			createReceiptmodal.style.display = "none";
+		}
+	}
 
 
-var author = '<div style="position: fixed;bottom: 0;right: 20px;background-color: #fff;box-shadow: 0 4px 8px rgba(0,0,0,.05);border-radius: 3px 3px 0 0;font-size: 12px;padding: 5px 10px;">By <a href="https://twitter.com/mhdnauvalazhar">@mhdnauvalazhar</a> &nbsp;&bull;&nbsp; <a href="https://www.buymeacoffee.com/mhdnauvalazhar">Buy me a Coffee</a></div>';
+
+
+	var viewReceiptsModal = document.getElementById("viewReceiptsModal");
+
+	// Get the button that opens the modal
+	var btn = document.getElementById("viewReceiptsBtn");
+
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[1];
+
+	// When the user clicks the button, open the modal 
+	btn.onclick = function () {
+		viewReceiptsModal.style.display = "block";
+	}
+
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function () {
+		viewReceiptsModal.style.display = "none";
+	}
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function (event) {
+		if (event.target == viewReceiptsModal) {
+			viewReceiptsModal.style.display = "none";
+		}
+	}
+
+
+
+
+	//save receipt 
+
+	$('#saveReceiptForm')
+		.ajaxForm({
+			url: '/account/admin/receipt/savereceipt', // or whatever
+			type: "post",
+			success: function (response, textstatus, xhr) {
+
+				if (xhr.status == 200) {
+
+
+
+
+					w = window.open();
+					w.document.write(response);
+					setTimeout(function () {
+						//do what you need here
+						w.print();
+						w.close();
+					}, 1);
+
+
+				}
+
+				createReceiptmodal.style.display = "none";
+				document.getElementById("saveReceiptForm").reset();
+				document.getElementById('theDate').value = new Date().toISOString().substring(0, 10);
+
+			}
+		});
+
+	///select
+
+
+	$('.ro-select').filter(function () {
+		var $this = $(this),
+			$sel = $('<ul>', { 'class': 'ro-select-list' }),
+			$wr = $('<div>', { 'class': 'ro-select-wrapper' }),
+			$inp = $('<input>', {
+				type: 'hidden',
+				name: $this.attr('name'),
+				'class': 'ro-select-input'
+			}),
+			$text = $('<div>', {
+				'class': 'ro-select-text ro-select-text-empty',
+				text: $this.attr('placeholder')
+			});
+		$opts = $this.children('option');
+
+		$text.click(function () {
+			$sel.show();
+		});
+
+		$opts.filter(function () {
+			var $opt = $(this);
+			$sel.append($('<li>', { text: $opt.text(), 'class': 'ro-select-item' })).data('value', $opt.attr('value'));
+		});
+		$sel.on('click', 'li', function () {
+			$text.text($(this).text()).removeClass('ro-select-text-empty');
+			$(this).parent().hide().children('li').removeClass('ro-select-item-active');
+			$(this).addClass('ro-select-item-active');
+			$inp.val($this.data('value'));
+		});
+		$wr.append($text);
+		$wr.append($('<i>', { 'class': 'fa fa-caret-down ro-select-caret' }));
+		$this.after($wr.append($inp, $sel));
+		$this.remove();
+	});
+
+
+
+	// login
+
+
+
+	var author = '<div style="position: fixed;bottom: 0;right: 20px;background-color: #fff;box-shadow: 0 4px 8px rgba(0,0,0,.05);border-radius: 3px 3px 0 0;font-size: 12px;padding: 5px 10px;"></div>';
 	$("body").append(author);
 
-	$("input[type='password'][data-eye]").each(function(i) {
+	$("input[type='password'][data-eye]").each(function (i) {
 		var $this = $(this),
 			id = 'eye-password-' + i,
 			el = $('#' + id);
@@ -75,8 +150,8 @@ var author = '<div style="position: fixed;bottom: 0;right: 20px;background-color
 		$this.wrap($("<div/>", {
 			style: 'position:relative',
 			id: id
-		
-     } ));
+
+		}));
 
 		$this.css({
 			paddingRight: 60
@@ -84,14 +159,14 @@ var author = '<div style="position: fixed;bottom: 0;right: 20px;background-color
 		$this.after($("<div/>", {
 			html: 'Show',
 			class: 'btn btn-primary btn-sm',
-			id: 'passeye-toggle-'+i,
+			id: 'passeye-toggle-' + i,
 		}).css({
-				position: 'absolute',
-				right: 10,
-				top: ($this.outerHeight() / 2) - 12,
-				padding: '2px 7px',
-				fontSize: 12,
-				cursor: 'pointer',
+			position: 'absolute',
+			right: 10,
+			top: ($this.outerHeight() / 2) - 12,
+			padding: '2px 7px',
+			fontSize: 12,
+			cursor: 'pointer',
 		}));
 
 		$this.after($("<input/>", {
@@ -101,35 +176,39 @@ var author = '<div style="position: fixed;bottom: 0;right: 20px;background-color
 
 		var invalid_feedback = $this.parent().parent().find('.invalid-feedback');
 
-		if(invalid_feedback.length) {
+		if (invalid_feedback.length) {
 			$this.after(invalid_feedback.clone());
 		}
 
-		$this.on("keyup paste", function() {
-			$("#passeye-"+i).val($(this).val());
+		$this.on("keyup paste", function () {
+			$("#passeye-" + i).val($(this).val());
 		});
-		$("#passeye-toggle-"+i).on("click", function() {
-			if($this.hasClass("show")) {
+		$("#passeye-toggle-" + i).on("click", function () {
+			if ($this.hasClass("show")) {
 				$this.attr('type', 'password');
 				$this.removeClass("show");
 				$(this).removeClass("btn-outline-primary");
-			}else{
+			} else {
 				$this.attr('type', 'text');
-				$this.val($("#passeye-"+i).val());				
+				$this.val($("#passeye-" + i).val());
 				$this.addClass("show");
 				$(this).addClass("btn-outline-primary");
 			}
 		});
 	});
 
-	$(".my-login-validation").submit(function() {
+	$(".my-login-validation").submit(function () {
 		var form = $(this);
-        if (form[0].checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
+		if (form[0].checkValidity() === false) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
 		form.addClass('was-validated');
 	});
+
+
+
+
 
 });
 

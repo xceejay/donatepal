@@ -144,8 +144,8 @@ func (accountController AccountController) HandleAdminDashboardContent(c *gin.Co
 		case "balance":
 			accountController.ServeAdminAccountBalancePage(c)
 			return
-		case "reciept":
-			accountController.ServeAdminAccountRecieptPage(c)
+		case "receipt":
+			accountController.ServeAdminAccountReceiptPage(c)
 			return
 		case "settings":
 			accountController.ServeAdminAccountSettingsPage(c)
@@ -219,8 +219,8 @@ func (accountController AccountController) ServeAdminAccountBalancePage(c *gin.C
 	c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(content))
 }
 
-func (accountController AccountController) ServeAdminAccountRecieptPage(c *gin.Context) {
-	content := accountController.getAdminDashboardContent("reciept", c)
+func (accountController AccountController) ServeAdminAccountReceiptPage(c *gin.Context) {
+	content := accountController.getAdminDashboardContent("receipt", c)
 	c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(content))
 }
 
@@ -238,7 +238,7 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 		"views/html/account/overview.html",
 		"views/html/account/transactions.html",
 		"views/html/account/balance.html",
-		"views/html/account/reciept.html",
+		"views/html/account/receipt.html",
 		"views/html/account/settings.html",
 	}
 	vars := make(map[string]interface{})
@@ -281,12 +281,12 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 
 		return header + accounthtmlPageTop + balanceContent + accounthtmlPageBottom + footer
 
-	case "reciept":
-		vars["reciept_active"] = "active"
+	case "receipt":
+		vars["receipt_active"] = "active"
 		accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
-		recieptContent := templateEngine.ProcessFile(paths[7], vars)
+		receiptContent := templateEngine.ProcessFile(paths[7], vars)
 
-		return header + accounthtmlPageTop + recieptContent + accounthtmlPageBottom + footer
+		return header + accounthtmlPageTop + receiptContent + accounthtmlPageBottom + footer
 
 	case "settings":
 		vars["settings_active"] = "active"
@@ -315,7 +315,7 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 // 		"views/html/account/overview.html",
 // 		"views/htmlsettings/account/transactions.html",
 // 		"views/html/account/balance.html",
-// 		"views/html/account/reciept.html",
+// 		"views/html/account/receipt.html",
 // 		"views/html/account/settings.html",
 // 	}
 // 	vars := make(map[string]interface{})
@@ -332,7 +332,7 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 // 	overviewContent := templateEngine.ProcessFile(paths[4], vars)
 // 	transactionContent := templateEngine.ProcessFile(paths[5], vars)
 // 	balanceContent := templateEngine.ProcessFile(paths[6], vars)
-// 	recieptContent := templateEngine.ProcessFile(paths[7], vars)
+// 	receiptContent := templateEngine.ProcessFile(paths[7], vars)
 // 	settingsContent := templateEngine.ProcessFile(paths[8], vars)
 
 // 	page := "home"
@@ -344,8 +344,8 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 // 		c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(header+accounthtmlPageTop+balanceContent+accounthtmlPageBottom+footer))
 
 // 		return
-// 	case "reciept":
-// 		c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(header+accounthtmlPageTop+recieptContent+accounthtmlPageBottom+footer))
+// 	case "receipt":
+// 		c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(header+accounthtmlPageTop+receiptContent+accounthtmlPageBottom+footer))
 
 // 		return
 // 	case "settings":

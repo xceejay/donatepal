@@ -9,6 +9,8 @@ func InitRouter(engine *gin.Engine) {
 
 	accountController := new(controllers.AccountController)
 	homeController := new(controllers.HomeController)
+	receiptController := new(controllers.ReceiptController)
+
 	engine.NoRoute(homeController.Handle404)
 	engine.GET("/", homeController.ServeHomePage)
 	engine.GET("/about", homeController.ServeAboutPage)
@@ -20,7 +22,7 @@ func InitRouter(engine *gin.Engine) {
 	engine.POST("/account/admin", accountController.ServeAdminAccountPage)
 	engine.GET("/account/admin", accountController.HandleAdminAccountPage)
 	engine.GET("/account/admin/:dashboard_content", accountController.HandleAdminDashboardContent)
-
+	engine.POST("/account/admin/:dashboard_content/*savereceipt", receiptController.HandleSaveReceipt)
 	engine.GET("/logout", accountController.HandleLogout)
 	engine.GET("/payment", accountController.HandlePayment)
 
