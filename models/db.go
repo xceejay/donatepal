@@ -11,7 +11,7 @@ const (
 	username = "root"
 	password = "1234"
 	hostname = "localhost:3306"
-	dbname   = "donatepal"
+	dbname   = "donatepal?parseTime=true"
 )
 
 type Database struct {

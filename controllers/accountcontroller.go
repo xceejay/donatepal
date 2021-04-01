@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
 	"net/url"
 	"path"
@@ -268,6 +269,7 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 	switch page {
 	case "transactions":
 		vars["transactions_active"] = "active"
+
 		accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
 		transactionContent := templateEngine.ProcessFile(paths[5], vars)
 
@@ -283,6 +285,39 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 
 	case "receipt":
 		vars["receipt_active"] = "active"
+
+		receiptModel := new(models.Receipt)
+
+		receipts, err := receiptModel.GetAllReceipts()
+
+		if err != nil {
+			fmt.Printf("ERROR GETTING RECIEPT TABLE: %v", err)
+		}
+		var receiptsTable string
+
+		for index, receipt := range receipts {
+
+			fmt.Println("index:", index)
+			receiptsTable += "<tr>"
+
+			receiptsTable += "<td>" + fmt.Sprintf("%v", receipt.Receiptid) + "</td>"
+
+			receiptsTable += "<td>" + receipt.Email.String + "</td>"
+
+			receiptsTable += "<td>" + receipt.Firstname.String + "</td>"
+			receiptsTable += "<td>" + receipt.Lastname.String + "</td>"
+			receiptsTable += "<td>" + fmt.Sprintf("%f", receipt.Amount) + "</td>"
+			receiptsTable += "<td>" + receipt.PaymentMethod + "</td>"
+			receiptsTable += "<td>" + receipt.Phone.String + "</td>"
+			receiptsTable += "<td>" + receipt.Address.String + "</td>"
+			receiptsTable += "<td>" + receipt.DateDonated.Format("2020-12-01") + "</td>"
+			receiptsTable += "</tr>"
+
+			fmt.Println(receiptsTable)
+
+		}
+		vars["view_receipts_table"] = template.HTML(receiptsTable)
+
 		accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
 		receiptContent := templateEngine.ProcessFile(paths[7], vars)
 

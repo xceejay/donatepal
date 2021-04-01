@@ -96,7 +96,8 @@
                                   <div class="col-md-10">
                                     <div class="form-group">
                                       <label class="bmd-label-floating">Payment Method</label>
-                                      <select class="ro-select" placeholder="Choose Your Payment Methodx" name="payment_method" id="payment_method">
+                                      
+                                      <select form="saveReceiptForm" class="select-text" placeholder="Choose Your Payment Method" name="payment_method" >
                                         <option value="card">Card</option>
                                         <option value="cash">Cash</option>
                                         <option value="banktransfer">Bank Transfer</option>
@@ -177,7 +178,7 @@
               <div id="viewReceiptsModal" class="modal">
 
                 <!-- Modal content -->
-                <div class="modal-content">
+                <div class="modal-content" style="width: 85rem;">
                   <span class="close">&times;</span>
 
 
@@ -185,17 +186,60 @@
                     <div class="container-fluid">
                       <div class="row">
                         <div class="col-md-12">
-                          <div class="card">
+                          <div class="card" style="width: 80rem;">
 
                             <div class="card-header card-header-primary">
-                              <h4 class="card-title">View Created Receipts History</h4>
+                              <h4 class="card-title">View Donor's Receipts History</h4>
 
                             </div>
                             <div class="card-body">
                               <form>
                                 <div class="row">
 
+                                  <div class="table-responsive">
+                                    <table  draggable="true" class="table">
+                                      <thead class=" text-primary">
+                                        <th>
+                                          Reciept ID
+                                        </th>
+                                        <th>
+                                          Email
+                                        </th>
+                                     
+                                        <th>
+                                          First Name
+                                        </th>
+                                        <th>
+                                          Last Name
+                                        </th>
 
+                                        <th>
+                                          Amount
+                                        </th>
+
+                                        <th>
+                                          Payment Method
+                                        </th>
+                                        <th>
+                                          Phone
+                                        </th>
+
+                                        <th>
+                                          Adress 
+                                        </th>
+
+                                        <th>
+                                          Date Donated
+                                        </th>
+
+                                      </thead>
+                                      <tbody>
+
+                                        {{.view_receipts_table}}
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                
 
 
                                 </div>
