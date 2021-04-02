@@ -1,5 +1,4 @@
 package models
-package models
 
 import (
 	"database/sql"
