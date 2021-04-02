@@ -26,7 +26,7 @@ func InitRouter(engine *gin.Engine) {
 	engine.GET("/account/admin/:dashboard_content", accountController.HandleAdminDashboardContent)
 	engine.POST("/account/admin/:dashboard_content/*savereceipt", receiptController.HandleSaveReceipt)
 	engine.GET("/logout", accountController.HandleLogout)
-	engine.GET("/payment", accountController.HandlePayment)
+	engine.POST("/payment", accountController.HandlePayment)
 
 	// engine.GET("/template", accountController.ServeTemplate)
 

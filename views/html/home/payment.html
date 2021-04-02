@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Card &ndash; the better way to collect credit cards</title>
+    <title>Donate Pal - Card Payment</title>
     <meta name="viewport" content="initial-scale=1">
     <!-- CSS is included through the card.js script -->
 </head>
+
 <body>
     <style>
         .demo-container {
@@ -16,32 +18,96 @@
         form {
             margin: 30px;
         }
+
         input {
             width: 200px;
             margin: 10px auto;
             display: block;
         }
-
     </style>
-    <div class="demo-container">
-        <div class="card-wrapper"></div>
 
-        <div class="form-container active">
-            <form action="">
-                <input placeholder="Card number" type="tel" name="number">
-                <input placeholder="Full name" type="text" name="name">
-                <input placeholder="MM/YY" type="tel" name="expiry">
-                <input placeholder="CVC" type="number" name="cvc">
-            </form>
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon.png">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <title>
+            Donatepal - Login
+        </title>
+        <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+        <!--     Fonts and icons     -->
+        <link rel="stylesheet" type="text/css"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+        <!-- CSS Files -->
+        <link href="/css/material-kit.css?v=2.0.7" rel="stylesheet" />
+
+    </head>
+
+    <body>
+
+        <div id="nav-tabs">
+
+
+            <div class="section">
+
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-md-8 mr-auto ml-auto">
+
+                            <!-- Tabs with icons on Card -->
+                            <div class="card card-nav-tabs">
+                                <div class="card-header card-header-primary">
+
+                                    <h3 class="">Card Payment </h3>
+                                    <!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
+
+                                </div>
+                                <div class="card-body ">
+                                    <div class="demo-container">
+                                        <div class="card-wrapper"></div>
+
+
+                                        <div class="form-container active form-group has-default bmd-form-group">
+                                            <form action="" id="paymentform">
+                                                <input class="form-control" placeholder="Card number" type="tel"
+                                                    name="number">
+                                                <input class="form-control" placeholder="Full name" type="text"
+                                                    name="name">
+                                                <input class="form-control" placeholder="MM/YY" type="tel"
+                                                    name="expiry">
+                                                <input class="form-control" placeholder="CVC" type="number" name="cvc">
+
+                                            </form>
+
+                                        </div>
+                                        <br>
+                                        <div class="text-center">
+                                            <input class="btn btn-primary" type="submit" value="Donate"
+                                                form="paymentform">
+                                        </div>
+                                    </div>
+
+                                    <script src="/ext/card/dist/card.js"></script>
+                                    <script>
+                                        new Card({
+                                            form: document.querySelector('form'),
+                                            container: '.card-wrapper'
+                                        });
+                                    </script>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <script src="/ext/card/dist/card.js"></script>
-    <script>
-        new Card({
-            form: document.querySelector('form'),
-            container: '.card-wrapper'
-        });
-    </script>
-</body>
-</html>
+    </body>
+
+    </html>
