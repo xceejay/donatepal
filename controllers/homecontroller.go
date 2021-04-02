@@ -14,7 +14,18 @@ func (homeController HomeController) ServeHomePage(c *gin.Context) {
 }
 
 func (homeController HomeController) ServeAboutPage(c *gin.Context) {
+
 	c.HTML(http.StatusOK, "about.html", nil)
+}
+
+func (homeController HomeController) ServeDonationPage(c *gin.Context) {
+
+	c.HTML(http.StatusOK, "donate.html", nil)
+}
+
+func (homeController HomeController) ServePaymentPage(c *gin.Context) {
+
+	c.HTML(http.StatusOK, "payment.html", nil)
 }
 
 func (homeController HomeController) Handle404(c *gin.Context) {
