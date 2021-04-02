@@ -74,7 +74,7 @@ func (receipt Receipt) GetAllReceipts() ([]Receipt, error) {
 
 	}
 
-	fmt.Printf("%v", receipts)
+	// fmt.Printf("%v", receipts)
 
 	fmt.Println("Sucessfully Got Receipts")
 	return receipts, nil

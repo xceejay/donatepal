@@ -1,3 +1,6 @@
+<h2>Receipt</h2>
+
+
 <div class="content">
 
 
@@ -8,7 +11,7 @@
       <div class="col-lg-5 col-md-6 col-sm-6">
 
         <div class="card" style="height: 35rem;">
-          
+
           <br>
           <br>
           <br>
@@ -39,65 +42,71 @@
                     <div class="container-fluid">
                       <div class="row">
                         <div class="col-md-12">
-                          <div class="card" >
+                          <div class="card">
                             <div class="card-header card-header-primary">
                               <h4 class="card-title">Create Receipt</h4>
                               <p class="card-category ">Enter necessary information for the creation of this receipt</p>
                             </div>
                             <div class="card-body">
-                              <form method="post"  id="saveReceiptForm">
+                              <form method="post" id="saveReceiptForm">
                                 <div class="row">
                                   <div class="col-md-5">
                                     <div class="form-group">
                                       <label class="bmd-label-floating">Email</label>
-                                      <input type="email" name="email" class="form-control" placeholder="Enter Donors' Email">
+                                      <input type="email" name="email" class="form-control"
+                                        placeholder="Enter Donors' Email">
                                     </div>
                                   </div>
                                   <div class="col-md-5">
                                     <div class="form-group">
                                       <label class="bmd-label-floating">First Name</label>
-                                      <input type="text" name="firstname" class="form-control" placeholder="Enter Donors' First Name">
+                                      <input type="text" name="firstname" class="form-control"
+                                        placeholder="Enter Donors' First Name">
                                     </div>
                                   </div>
-                                  
+
                                   <div class="col-md-5">
                                     <div class="form-group">
                                       <label class="bmd-label-floating">Last Name</label>
-                                      <input type="text" name="lastname" class="form-control" placeholder="Enter Donors' Last Name">
+                                      <input type="text" name="lastname" class="form-control"
+                                        placeholder="Enter Donors' Last Name">
                                     </div>
-                                    
+
                                   </div>
 
                                   <div class="col-md-5">
                                     <div class="form-group">
                                       <label class="bmd-label-floating">Address</label>
-                                      <input type="text" name="address" class="form-control" placeholder="Enter Donors' Address">
+                                      <input type="text" name="address" class="form-control"
+                                        placeholder="Enter Donors' Address">
 
                                     </div>
                                   </div>
-                                 
+
                                 </div>
                                 <div class="row">
                                   <div class="col-md-5">
                                     <div class="form-group">
                                       <label class="bmd-label-floating">Phone Number</label>
-                                      <input type="tel" name="phone" class="form-control" placeholder="Enter Donors' Phone Number">
+                                      <input type="tel" name="phone" class="form-control"
+                                        placeholder="Enter Donors' Phone Number">
                                     </div>
                                   </div>
 
                                   <div class="col-md-5">
                                     <div class="form-group">
                                       <label class="bmd-label-floating">Amount Donated($)</label>
-                                      <input min="0.01" name="amount" value="1.00" step="0.01" max="12500" type="number" class="form-control"
-                                        placeholder="Enter Donors' Amount">
+                                      <input min="0.01" name="amount" value="1.00" step="0.01" max="12500" type="number"
+                                        class="form-control" placeholder="Enter Donors' Amount">
                                     </div>
                                   </div>
 
                                   <div class="col-md-10">
                                     <div class="form-group">
                                       <label class="bmd-label-floating">Payment Method</label>
-                                      
-                                      <select form="saveReceiptForm" class="select-text" placeholder="Choose Your Payment Method" name="payment_method" >
+
+                                      <select form="saveReceiptForm" class="select-text"
+                                        placeholder="Choose Your Payment Method" name="payment_method">
                                         <option value="card">Card</option>
                                         <option value="cash">Cash</option>
                                         <option value="banktransfer">Bank Transfer</option>
@@ -105,17 +114,17 @@
 
                                       </select>
                                     </div>
-                                    
+
                                   </div>
 
                                   <div class="col-md-10">
                                     <div class="form-group">
                                       <label class="bmd-label-floating">Receipt Date Issued</label>
-                                      <input  type="date"  id="theDate" class="form-control" disabled>
+                                      <input type="date" id="theDate" class="form-control" disabled>
                                     </div>
                                     <script>
                                       document.getElementById('theDate').value = new Date().toISOString().substring(0, 10);
-                                    
+
                                     </script>
                                   </div>
                                 </div>
@@ -123,10 +132,11 @@
                                   <div class="col-md-10">
                                     <div class="form-group">
                                       <label class="bmd-label-floating">Date Donated</label>
-                                      <input type="date" id="date_donated" name="date_donated" class="form-control" placeholder="Select Dated Donor Donated">
+                                      <input type="date" id="date_donated" name="date_donated" class="form-control"
+                                        placeholder="Select Dated Donor Donated">
                                     </div>
-                                   
-                                    
+
+
                                   </div>
                                 </div>
 
@@ -155,7 +165,7 @@
         <div class="card" style="height: 35rem;">
 
 
-        
+
           <br>
           <br>
           <br>
@@ -164,6 +174,7 @@
           <div class="card-body">
 
             <h2 class="card-title">View Receipt History</h2>
+
             <br>
             <p class="card-text text-muted h3">Have a glance at the history of Receipts created for donors recently</p>
             <p></p>
@@ -178,7 +189,7 @@
               <div id="viewReceiptsModal" class="modal">
 
                 <!-- Modal content -->
-                <div class="modal-content" style="width: 85rem;">
+                <div class="modal-content" style="width: 85rem; ">
                   <span class="close">&times;</span>
 
 
@@ -190,14 +201,25 @@
 
                             <div class="card-header card-header-primary">
                               <h4 class="card-title">View Donor's Receipts History</h4>
-
+                              <div class="navbar-form">
+                                <span class="bmd-form-group white">
+                                  <div class="input-group no-border">
+                                    <input type="text"  id="searchReceipts" value="" class="form-control " style="color: white;" placeholder="Search...">
+                                    <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                                      <i class="material-icons">search</i>
+                                      <div class="ripple-container"></div>
+                                      <div class="ripple-container"></div>
+                                    </button>
+                                  </div>
+                                </span>
+                              </div>
                             </div>
                             <div class="card-body">
                               <form>
                                 <div class="row">
 
-                                  <div class="table-responsive">
-                                    <table  draggable="true" class="table">
+                                  <div  class="table-responsive">
+                                    <table  style="overflow-y: scroll;display: inline-block; height: 35rem;" draggable="true" class="table paging">
                                       <thead class=" text-primary">
                                         <th>
                                           Reciept ID
@@ -205,7 +227,7 @@
                                         <th>
                                           Email
                                         </th>
-                                     
+
                                         <th>
                                           First Name
                                         </th>
@@ -225,7 +247,7 @@
                                         </th>
 
                                         <th>
-                                          Adress 
+                                          Adress
                                         </th>
 
                                         <th>
@@ -233,13 +255,13 @@
                                         </th>
 
                                       </thead>
-                                      <tbody>
+                                      <tbody id="searchReceiptsTable">
 
                                         {{.view_receipts_table}}
                                       </tbody>
                                     </table>
                                   </div>
-                                
+
 
 
                                 </div>

@@ -5,8 +5,9 @@
   /* Hidden by default */
   position: fixed;
   /* Stay in place */
-  z-index: 2;
-  /* Sit on top */
+  z-index: 1050!important; 
+
+  
   padding-top: 100px;
   /* Location of the box */
   left: 0;
@@ -157,4 +158,8 @@ body.my-login-page {
 }
 
 	
+
+
+
+/* searchhhhhhhhhhhhhhhhhhhhhhh */
 

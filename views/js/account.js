@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+
 	// $("li").hover(
 	//     function() {
 	//         $(this).toggleClass("active")
@@ -79,18 +80,21 @@ $(document).ready(function () {
 
 					w = window.open();
 					w.document.write(response);
-					setTimeout(function () {
+
+					//  alert(w.onload)
+					w.onload = function () {
+						// receiptContent.onload = function(){
 						//do what you need here
+						alert("loaded");
 						w.print();
 						w.close();
-						document.location.reload()
-					}, 1);
+					}
 
 
 				}
 
 				createReceiptmodal.style.display = "none";
-				
+				document.location.reload()
 				// document.getElementById("saveReceiptForm").reset();
 				// document.getElementById('theDate').value = new Date().toISOString().substring(0, 10);
 
@@ -100,7 +104,7 @@ $(document).ready(function () {
 	///select
 
 
-	
+
 	// login
 
 
@@ -173,8 +177,12 @@ $(document).ready(function () {
 	});
 
 
-
-
+	$("#searchReceipts").keyup(function () {
+		var value = $(this).val().toLowerCase();
+		$("#searchReceiptsTable tr").filter(function () {
+			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		});
+	})
 
 });
 

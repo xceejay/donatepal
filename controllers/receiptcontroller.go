@@ -13,7 +13,7 @@ import (
 type ReceiptController struct{}
 
 func (receiptController ReceiptController) HandleSaveReceipt(c *gin.Context) {
-	fmt.Printf("receipt handled")
+	// fmt.Printf("receipt handled")
 	if c.Param("dashboard_content") == "receipt" && isLoggedIn(c) {
 		receiptModel := new(models.Receipt)
 

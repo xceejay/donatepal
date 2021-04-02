@@ -316,7 +316,7 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 			receiptsTable += "<td>" + receipt.DateDonated.Format("2020-12-01") + "</td>"
 			receiptsTable += "</tr>"
 
-			fmt.Println(receiptsTable)
+			// fmt.Println(receiptsTable)
 
 		}
 		vars["view_receipts_table"] = template.HTML(receiptsTable)
