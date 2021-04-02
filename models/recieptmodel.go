@@ -7,12 +7,12 @@ import (
 	"time"
 )
 
-type Transaction struct {
+type Receipt struct {
 	Email         sql.NullString
 	DonationType  string
 	PaymentMethod string
 	DateCreated   time.Time
-	Transactionid int
+	Receiptid     int
 	Firstname     sql.NullString
 	Lastname      sql.NullString
 	Amount        float64
@@ -21,33 +21,33 @@ type Transaction struct {
 	DateDonated   time.Time
 }
 
-func (transaction Transaction) InsertTransaction() error {
+func (receipt Receipt) InsertReceipt() error {
 	database := new(Database)
 	db := database.InitDatabase()
 	defer db.Close()
 
-	statement, err := db.Prepare("insert into transactions (email,payment_method,date_created,firstname,lastname,amount,address,phone,date_donated) values(?,?,curdate(),?,?,?,?,?,?)")
+	statement, err := db.Prepare("insert into receipts (email,payment_method,date_created,firstname,lastname,amount,address,phone,date_donated) values(?,?,curdate(),?,?,?,?,?,?)")
 
 	if err != nil {
 		return err
 	}
 	defer statement.Close()
 
-	_, err = statement.Exec(transaction.Email.String, transaction.PaymentMethod, transaction.Firstname.String, transaction.Lastname.String, transaction.Amount, transaction.Address.String, transaction.Phone.String, transaction.DateDonated)
+	_, err = statement.Exec(receipt.Email.String, receipt.PaymentMethod, receipt.Firstname.String, receipt.Lastname.String, receipt.Amount, receipt.Address.String, receipt.Phone.String, receipt.DateDonated)
 	if err != nil {
 		return err
 	}
-	fmt.Println("Sucessfully Inserted Transaction")
+	fmt.Println("Sucessfully Inserted Receipt")
 	return nil
 }
 
-func (transaction Transaction) GetAllTransactions() ([]Transaction, error) {
+func (receipt Receipt) GetAllReceipts() ([]Receipt, error) {
 	database := new(Database)
 	db := database.InitDatabase()
 	defer db.Close()
 
 	var count int
-	err := db.QueryRow("SELECT COUNT(*) FROM transactions").Scan(&count)
+	err := db.QueryRow("SELECT COUNT(*) FROM receipts").Scan(&count)
 	switch {
 	case err != nil:
 		log.Fatal(err)
@@ -55,27 +55,27 @@ func (transaction Transaction) GetAllTransactions() ([]Transaction, error) {
 		fmt.Printf("Number of rows are %d\n", count)
 	}
 
-	transactions := make([]Transaction, count)
-	results, err := db.Query("select reciept_id,email,firstname,lastname,amount,payment_method,phone,address,date_donated from transactions")
+	receipts := make([]Receipt, count)
+	results, err := db.Query("select reciept_id,email,firstname,lastname,amount,payment_method,phone,address,date_donated from receipts")
 
 	if err != nil {
-		return transactions, err
+		return receipts, err
 	}
 
 	var i int = 0
 	for results.Next() {
 
-		err = results.Scan(&transactions[i].Transactionid, &transactions[i].Email, &transactions[i].Firstname.String, &transactions[i].Lastname.String, &transactions[i].Amount, &transactions[i].PaymentMethod, &transactions[i].Phone.String, &transactions[i].Address.String, &transactions[i].DateDonated)
+		err = results.Scan(&receipts[i].Receiptid, &receipts[i].Email, &receipts[i].Firstname.String, &receipts[i].Lastname.String, &receipts[i].Amount, &receipts[i].PaymentMethod, &receipts[i].Phone.String, &receipts[i].Address.String, &receipts[i].DateDonated)
 
 		if err != nil {
-			return transactions, err
+			return receipts, err
 		}
 		i++
 
 	}
 
-	// fmt.Printf("%v", transactions)
+	// fmt.Printf("%v", receipts)
 
-	fmt.Println("Sucessfully Got Transactions")
-	return transactions, nil
+	fmt.Println("Sucessfully Got Receipts")
+	return receipts, nil
 }

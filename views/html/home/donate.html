@@ -23,9 +23,37 @@
     <div id="nav-tabs">
 
 
-        <div class="section">
-
+        <nav class="navbar navbar-transparent navbar-color-on-scroll fixed-top navbar-expand-lg" color-on-scroll="100"
+            id="sectionsNav">
             <div class="container">
+                <div class="navbar-translate ">
+
+                    <a href="/">
+                        <img class="" src="/images/logowhite.png" style="z-index: 99; height: 150px;">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="navbar-toggler-icon"></span>
+                        <span class="navbar-toggler-icon"></span>
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse">
+
+                </div>
+            </div>
+        </nav>
+        <div class="page-header header-filter"
+            style="background-image: url('/images/bg-login.webp'); background-size: cover; background-position: top center;">
+            <div class="container">
+                <br>
+                <br>
+                <br>
+                <br>
+                
+
+
 
                 <div class="row">
                     <div class="col-md-8 mr-auto ml-auto">
@@ -33,7 +61,6 @@
                         <!-- Tabs with icons on Card -->
                         <div class="card card-nav-tabs">
                             <div class="card-header card-header-primary">
-
                                 <h3 class="">Donation Form </h3>
                                 <!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
                                 <div class="nav-tabs-navigation">
@@ -229,9 +256,15 @@
 
                                     <div class="tab-pane" id="finish">
 
-                                        <a> are you sure bla bla</a>
+                                        <h3> Are You Sure You Have Entered The Correct Information? </h3>
+                                        <a class="text-muted">Click On The "<b>Donation Details</b>" Tab Verify Your
+                                            Input Before Proceed. </a>
+                                        <br>
+                                        <a class="text-muted"> If You Are Sure Click <b>Yes i am</b></a>
+
                                         <div>
-                                            <input class="btn btn-primary" actio type="submit" form="donation_form">
+                                            <input class="btn btn-primary" value="Yes I AM" type="submit"
+                                                form="donation_form">
                                         </div>
                                     </div>
                                 </div>
@@ -243,20 +276,20 @@
                 </div>
             </div>
         </div>
+    </div>
 
-
-        <!--   Core JS Files   -->
-        <script src="/js/core/jquery.min.js" type="text/javascript"></script>
-        <script src="/js/core/popper.min.js" type="text/javascript"></script>
-        <script src="/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-        <script src="/js/plugins/moment.min.js"></script>
-        <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
-        <script src="/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
-        <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-        <script src="/js/plugins/nouislider.min.js" type="text/javascript"></script>
-        <!--  Google Maps Plugin    -->
-        <!-- Control Center for Donatepal: parallax effects, scripts for the example pages etc -->
-        <script src="/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
+    <!--   Core JS Files   -->
+    <script src="/js/core/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+    <script src="/js/plugins/moment.min.js"></script>
+    <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
+    <script src="/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
+    <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+    <script src="/js/plugins/nouislider.min.js" type="text/javascript"></script>
+    <!--  Google Maps Plugin    -->
+    <!-- Control Center for Donatepal: parallax effects, scripts for the example pages etc -->
+    <script src="/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
 </body>
 
 </html>
