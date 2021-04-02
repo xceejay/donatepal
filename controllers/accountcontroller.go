@@ -309,7 +309,7 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 
 			receiptsTable += "<td>" + receipt.Firstname.String + "</td>"
 			receiptsTable += "<td>" + receipt.Lastname.String + "</td>"
-			receiptsTable += "<td>" + fmt.Sprintf("%f", receipt.Amount) + "</td>"
+			receiptsTable += "<td>" + fmt.Sprintf("%.2f", receipt.Amount) + "</td>"
 			receiptsTable += "<td>" + receipt.PaymentMethod + "</td>"
 			receiptsTable += "<td>" + receipt.Phone.String + "</td>"
 			receiptsTable += "<td>" + receipt.Address.String + "</td>"
