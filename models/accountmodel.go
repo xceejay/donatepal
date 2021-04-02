@@ -26,7 +26,7 @@ func (usr User) AuthencateUser(user *User) bool {
 	results, err := db.Query("select username,firstname from users where password=? and username=?", user.Password, user.Username)
 
 	if err != nil {
-		fmt.Errorf("ERORR QUERYING: %v", err)
+		fmt.Printf("ERORR QUERYING: %v", err)
 	}
 
 	defer results.Close()
@@ -37,7 +37,7 @@ func (usr User) AuthencateUser(user *User) bool {
 
 		err = results.Scan(&user.Username, &user.Firstname)
 		if err != nil {
-			fmt.Errorf("Database Scan ERROR:%v", err)
+			fmt.Printf("Database Scan ERROR:%v", err)
 		}
 
 		if len(user.Username) >= 0 {
