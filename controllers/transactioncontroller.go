@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/xceejay/boilerplate/models"
 )
@@ -13,42 +14,108 @@ import (
 type TransactionController struct{}
 
 func (transactionController TransactionController) HandleDonation(c *gin.Context) {
-	// session := sessions.Default(c)
-	// session.Set("", c.PostForm(""))
-	// session.Set("", c.PostForm(""))
-	// session.Set("", c.PostForm(""))
-	// session.Set("", c.PostForm(""))
-	// session.Set("", c.PostForm(""))
-	// session.Set("", c.PostForm(""))
+	session := sessions.Default(c)
 
-	// if err := session.Save(); err != nil {
-	// 	c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
-	// 	return
-	// }
+	session.Set("payment_method", c.PostForm("payment_method"))
+
+	session.Set("firstname", c.PostForm("firstname"))
+
+	session.Set("lastname", c.PostForm("lastname"))
+	session.Set("email", c.PostForm("email"))
+	session.Set("address", c.PostForm("address"))
+	session.Set("amount", c.PostForm("amount"))
+	session.Set("date_donated", c.PostForm("date_donated"))
+	session.Set("donation_type", c.PostForm("donation_type"))
+
+	session.Set("phone", c.PostForm("phone"))
+
+	if err := session.Save(); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
+		return
+	}
 	c.Redirect(http.StatusTemporaryRedirect, "/payment")
 
 }
 
+func (transactionController TransactionController) HandleCardPayment(c *gin.Context) {
+	session := sessions.Default(c)
+	if c.PostForm("number") != "" {
+
+		// this will mark the session as "written" and hopefully remove the username
+
+		session.Set("payment_method", "")
+		session.Set("firstname", "")
+		session.Set("lastname", "")
+		session.Set("email", "")
+		session.Set("address", "")
+		session.Set("amount", "")
+		session.Set("date_donated", "")
+		session.Set("donation_type", "")
+		session.Set("phone", "")
+		session.Clear()
+		session.Options(sessions.Options{Path: "/", MaxAge: -1}) // this sets the cookie with a MaxAge of 0
+
+		if err := session.Save(); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
+			return
+		}
+		c.Redirect(http.StatusPermanentRedirect, "/successful-payment")
+		return
+	}
+	transactionController.ServePaymentPage(c)
+}
+
+func (transactionController TransactionController) HandleSuccessfulPayment(c *gin.Context) {
+	c.HTML(http.StatusOK, "success.html", nil)
+}
+
 func (transactionController TransactionController) HandlePayment(c *gin.Context) {
 
-	// transactionModel := new(models.Transaction)
+	fmt.Println("payment handled")
 
-	// session := sessions.Default(c)
-	// var tempvar1 string
-	// var tempvar1 string
-	// tempvar := session.Get(tempvar1)
-	// tempvar = session.Get(tempvar1)
-	// tempvar = session.Get(tempvar1)
-	// tempvar = session.Get(tempvar1)
-	// tempvar = session.Get(tempvar1)
-	// tempvar = session.Get(tempvar1)
-	// tempvar = session.Get(tempvar1)
-	// tempvar = session.Get(tempvar1)
+	transactionModel := new(models.Transaction)
+
+	homeController := new(HomeController)
+
+	session := sessions.Default(c)
+
+	transactionModel.Firstname.String = fmt.Sprintf("%s", session.Get("firstname"))
+	transactionModel.Lastname.String = fmt.Sprintf("%s", session.Get("lastname"))
+	transactionModel.Email.String = fmt.Sprintf("%s", session.Get("email"))
+	transactionModel.Address.String = fmt.Sprintf("%s", session.Get("address"))
+	transactionModel.Phone.String = fmt.Sprintf("%s", session.Get("phone"))
+	transactionModel.DonationType = fmt.Sprintf("%s", session.Get("donation_type"))
+
+	amount, err := strconv.ParseFloat(c.PostForm("amount"), 64)
+	if err != nil {
+		fmt.Printf("ERROR CONV: %v", err)
+	}
+	transactionModel.Amount = amount
+	// donated_time, err := time.Now().UTC()
+
+	// if err != nil {
+
+	// 	fmt.Printf("Error converting time: %v", err)
+	// }
+	// transactionModel.Amount = amount
+	transactionModel.DateDonated = time.Now()
+	transactionModel.PaymentMethod = fmt.Sprintf("%s", session.Get("payment_method"))
 	// if tempvar empty
-	transactionController.ServePaymentPage(c)
-	// else
-	// transactionModel.Address set fields
-	// transactionModel.InsertTransaction()
+
+	if session.Get("amount") == "" {
+		homeController.ServeDonationPage(c)
+		return
+	}
+
+	err = transactionModel.InsertTransaction()
+	if err != nil {
+		fmt.Printf("ERROR Inserting transactions: %v\n", err)
+	}
+	fmt.Println(transactionModel.PaymentMethod)
+	if transactionModel.PaymentMethod == "card" {
+		fmt.Println("its card")
+		transactionController.HandleCardPayment(c)
+	}
 
 }
 

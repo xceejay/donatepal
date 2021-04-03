@@ -27,9 +27,9 @@ func InitRouter(engine *gin.Engine) {
 	engine.POST("/account/admin/:dashboard_content/*savereceipt", receiptController.HandleSaveReceipt)
 	engine.GET("/logout", accountController.HandleLogout)
 	engine.POST("/payment", transactionController.HandlePayment)
-
-	// engine.POST("/payment", transactionController.HandlePayment)
+	engine.POST("/card-payment", transactionController.HandleCardPayment)
 	engine.POST("/donate", transactionController.HandleDonation)
+	engine.POST("/successful-payment", transactionController.HandleSuccessfulPayment)
 
 	// engine.GET("/template", accountController.ServeTemplate)
 

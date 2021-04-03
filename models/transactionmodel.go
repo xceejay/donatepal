@@ -26,14 +26,14 @@ func (transaction Transaction) InsertTransaction() error {
 	db := database.InitDatabase()
 	defer db.Close()
 
-	statement, err := db.Prepare("insert into transactions (email,payment_method,date_created,firstname,lastname,amount,address,phone,date_donated) values(?,?,curdate(),?,?,?,?,?,?)")
+	statement, err := db.Prepare("insert into transactions (email,payment_method,firstname,lastname,amount,address,phone,date_donated,donation_type) values(?,?,?,?,?,?,?,curdate())")
 
 	if err != nil {
 		return err
 	}
 	defer statement.Close()
 
-	_, err = statement.Exec(transaction.Email.String, transaction.PaymentMethod, transaction.Firstname.String, transaction.Lastname.String, transaction.Amount, transaction.Address.String, transaction.Phone.String, transaction.DateDonated)
+	_, err = statement.Exec(transaction.Email.String, transaction.PaymentMethod, transaction.Firstname.String, transaction.Lastname.String, transaction.Amount, transaction.Address.String, transaction.Phone.String, transaction.DonationType)
 	if err != nil {
 		return err
 	}
@@ -56,7 +56,7 @@ func (transaction Transaction) GetAllTransactions() ([]Transaction, error) {
 	}
 
 	transactions := make([]Transaction, count)
-	results, err := db.Query("select reciept_id,email,firstname,lastname,amount,payment_method,phone,address,date_donated from transactions")
+	results, err := db.Query("select reciept_id,email,firstname,lastname,amount,payment_method,phone,address,date_donated,donation_type from transactions")
 
 	if err != nil {
 		return transactions, err
@@ -65,7 +65,7 @@ func (transaction Transaction) GetAllTransactions() ([]Transaction, error) {
 	var i int = 0
 	for results.Next() {
 
-		err = results.Scan(&transactions[i].Transactionid, &transactions[i].Email, &transactions[i].Firstname.String, &transactions[i].Lastname.String, &transactions[i].Amount, &transactions[i].PaymentMethod, &transactions[i].Phone.String, &transactions[i].Address.String, &transactions[i].DateDonated)
+		err = results.Scan(&transactions[i].Transactionid, &transactions[i].Email, &transactions[i].Firstname.String, &transactions[i].Lastname.String, &transactions[i].Amount, &transactions[i].PaymentMethod, &transactions[i].Phone.String, &transactions[i].Address.String, &transactions[i].DateDonated, transaction.DonationType)
 
 		if err != nil {
 			return transactions, err

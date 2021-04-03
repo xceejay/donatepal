@@ -89,23 +89,46 @@
                                     <div class="tab-pane active" id="profile">
 
                                         <form action="/donate" method="POST" id="donation_form">
-                                            
+
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <label class=""> Choose Your Payment Method <a class="text-primary"> (required) &#8203;</a></label>
-                                                    <select form="saveReceiptForm" style="background-color: rgba(255, 255, 255, 0); border: 1px solid #d2d2d2;padding: 5px;"    placeholder="Choose Your Payment Method" name="payment_method" required>
-                                                    <option value="card">Card</option>
-                                                    <option value="cash">Cash</option>
-                                                    <option value="banktransfer">Bank Transfer</option>
-                                                    <option value="cryptocurreny">Crypto Currency</option>
-            
-                                                  </select>
+                                                    <label class=""> Choose Your Payment Method <a class="text-primary">
+                                                            (required) &#8203;</a></label>
+                                                    <select
+                                                        style="background-color: rgba(255, 255, 255, 0); border: 1px solid #d2d2d2;padding: 5px;"
+                                                        placeholder="Choose Your Payment Method" name="payment_method"
+                                                        required>
+                                                        <option value="card">Card</option>
+                                                        <option value="cash">Cash</option>
+                                                        <option value="banktransfer">Bank Transfer</option>
+                                                        <option value="cryptocurreny">Crypto Currency</option>
+
+                                                    </select>
 
 
                                                 </div>
-                                              
+
+                                                <style>
+                                                    .col-centered {
+                                                        float: none;
+                                                        margin: 0 auto;
+
+                                                    }
+                                                </style>
+                                                <div class="col-md-8   col-centered ">
+
+
+                                                    <div class="form-group bmd-form-group">
+                                                        <label class="bmd-label-floating">
+                                                            Amount <a class="text-primary">(required)</a></label>
+                                                        <input class="form-control" min="0.01" name="amount"
+                                                            value="1.00" step="0.01" max="12500" type="number" required>
+                                                        <span class=" bmd-help">Required</span>
+                                                    </div>
+
+                                                </div>
                                             </div>
-                                       
+
                                             <div class="row">
                                                 <div class="col-md-6 unanymous">
 
@@ -148,19 +171,19 @@
                                                     <div class="form-group bmd-form-group">
                                                         <label class="bmd-label-floating">
                                                             Address (optional)</label>
-                                                        <input type="text" class="form-control unanymous">
+                                                        <input type="text" name="address"
+                                                            class="form-control unanymous">
                                                         <span class="bmd-help">Optional</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row unanymous">
                                                 <div class="col-md-7">
                                                     <div class="form-group bmd-form-group">
                                                         <label class="bmd-label-floating">
-                                                            Amount <a class="text-primary">(required)</a></label>
-                                                        <input class="form-control" min="0.01" name="amount"
-                                                            value="1.00" step="0.01" max="12500" type="number" required>
-                                                        <span class=" bmd-help">Required</span>
+                                                            Phone Number (optional)</label>
+                                                        <input name="phone" type="text" class="form-control unanymous">
+                                                        <span class="bmd-help">Optional</span>
                                                     </div>
 
 
@@ -171,13 +194,17 @@
                                                             background-color: white;
                                                         }
                                                     </style>
+
                                                     <div class="form-group bmd-form-group">
                                                         <label class="bmd-label-floating">
                                                             Donation Date </label>
-                                                        <input type="date" class="form-control" id="theDate" style=""
-                                                            disabled>
+                                                        <input type="date" name="date_donated" class="form-control"
+                                                            id="theDate" style="" value="" disabled>
+
                                                         <script>
-                                                            document.getElementById('theDate').value = new Date().toISOString().substring(0, 10);
+                                                            document.getElementById("theDate").valueAsDate = new Date()
+
+
                                                         </script>
                                                         <span class="bmd-help">required</span>
                                                     </div>
@@ -185,7 +212,7 @@
                                                 </div>
                                             </div>
 
-                                          
+
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-check">
