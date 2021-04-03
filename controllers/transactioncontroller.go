@@ -6,7 +6,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/xceejay/boilerplate/models"
 )
@@ -14,24 +13,28 @@ import (
 type TransactionController struct{}
 
 func (transactionController TransactionController) HandleDonation(c *gin.Context) {
-	session := sessions.Default(c)
-	session.Set("", c.PostForm(""))
-	session.Set("", c.PostForm(""))
-	session.Set("", c.PostForm(""))
-	session.Set("", c.PostForm(""))
-	session.Set("", c.PostForm(""))
-	session.Set("", c.PostForm(""))
+	// session := sessions.Default(c)
+	// session.Set("", c.PostForm(""))
+	// session.Set("", c.PostForm(""))
+	// session.Set("", c.PostForm(""))
+	// session.Set("", c.PostForm(""))
+	// session.Set("", c.PostForm(""))
+	// session.Set("", c.PostForm(""))
 
-	if err := session.Save(); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
-		return
-	}
+	// if err := session.Save(); err != nil {
+	// 	c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
+	// 	return
+	// }
+	c.Redirect(http.StatusTemporaryRedirect, "/payment")
 
-	c.Redirect(http.StatusPermanentRedirect, "/payment")
 }
 
 func (transactionController TransactionController) HandlePayment(c *gin.Context) {
+
+	// transactionModel := new(models.Transaction)
+
 	// session := sessions.Default(c)
+	// var tempvar1 string
 	// var tempvar1 string
 	// tempvar := session.Get(tempvar1)
 	// tempvar = session.Get(tempvar1)
@@ -41,8 +44,11 @@ func (transactionController TransactionController) HandlePayment(c *gin.Context)
 	// tempvar = session.Get(tempvar1)
 	// tempvar = session.Get(tempvar1)
 	// tempvar = session.Get(tempvar1)
-
-	c.HTML(http.StatusOK, "success.html", nil)
+	// if tempvar empty
+	transactionController.ServePaymentPage(c)
+	// else
+	// transactionModel.Address set fields
+	// transactionModel.InsertTransaction()
 
 }
 
@@ -84,4 +90,9 @@ func (transactionController TransactionController) HandleSaveTransaction(c *gin.
 
 	}
 
+}
+
+func (transactionController TransactionController) ServePaymentPage(c *gin.Context) {
+
+	c.HTML(http.StatusOK, "payment.html", nil)
 }

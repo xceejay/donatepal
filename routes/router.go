@@ -10,12 +10,12 @@ func InitRouter(engine *gin.Engine) {
 	accountController := new(controllers.AccountController)
 	homeController := new(controllers.HomeController)
 	receiptController := new(controllers.ReceiptController)
+	transactionController := new(controllers.TransactionController)
 
 	engine.NoRoute(homeController.Handle404)
 	engine.GET("/", homeController.ServeHomePage)
 	engine.GET("/about", homeController.ServeAboutPage)
 	engine.GET("/donate", homeController.ServeDonationPage)
-	engine.GET("/payment", homeController.ServePaymentPage)
 	engine.GET("/login", accountController.HandleLogin)
 	engine.POST("/login", accountController.PerformLogin)
 	// engine.POST("/login", accountController.PerformLogin)
@@ -26,7 +26,10 @@ func InitRouter(engine *gin.Engine) {
 	engine.GET("/account/admin/:dashboard_content", accountController.HandleAdminDashboardContent)
 	engine.POST("/account/admin/:dashboard_content/*savereceipt", receiptController.HandleSaveReceipt)
 	engine.GET("/logout", accountController.HandleLogout)
-	engine.POST("/payment", accountController.HandlePayment)
+	engine.POST("/payment", transactionController.HandlePayment)
+
+	// engine.POST("/payment", transactionController.HandlePayment)
+	engine.POST("/donate", transactionController.HandleDonation)
 
 	// engine.GET("/template", accountController.ServeTemplate)
 

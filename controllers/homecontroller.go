@@ -23,11 +23,6 @@ func (homeController HomeController) ServeDonationPage(c *gin.Context) {
 	c.HTML(http.StatusOK, "donate.html", nil)
 }
 
-func (homeController HomeController) ServePaymentPage(c *gin.Context) {
-
-	c.HTML(http.StatusOK, "payment.html", nil)
-}
-
 func (homeController HomeController) Handle404(c *gin.Context) {
 
 	c.HTML(http.StatusNotFound, "404.html", nil)

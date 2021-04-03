@@ -51,7 +51,7 @@
                 <br>
                 <br>
                 <br>
-                
+
 
 
 
@@ -72,11 +72,7 @@
                                                     Donation Details
                                                 </a>
                                             </li>
-                                            <!-- <li class="nav-item">
-                                                <a class="nav-link" href="#messages" data-toggle="tab">
-                                                    <i class="material-icons">chat</i>
-                                                    Fundraiser Profile
-                                                </a> -->
+
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" href="#finish" data-toggle="tab">
@@ -92,164 +88,138 @@
                                 <div class="tab-content text-center">
                                     <div class="tab-pane active" id="profile">
 
-                                        <form action="/payment" method="GET" id="donation_form">
+                                        <form action="/donate" method="POST" id="donation_form">
+                                            
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
+                                                    <label class=""> Choose Your Payment Method <a class="text-primary"> (required) &#8203;</a></label>
+                                                    <select form="saveReceiptForm" style="background-color: rgba(255, 255, 255, 0); border: 1px solid #d2d2d2;padding: 5px;"    placeholder="Choose Your Payment Method" name="payment_method" required>
+                                                    <option value="card">Card</option>
+                                                    <option value="cash">Cash</option>
+                                                    <option value="banktransfer">Bank Transfer</option>
+                                                    <option value="cryptocurreny">Crypto Currency</option>
+            
+                                                  </select>
+
+
+                                                </div>
+                                              
+                                            </div>
+                                       
+                                            <div class="row">
+                                                <div class="col-md-6 unanymous">
 
                                                     <div class="form-group bmd-form-group">
-                                                        <label for="exampleInput1" class="bmd-label-floating">With
-                                                            Floating
-                                                            Label</label>
-                                                        <input type="email" class="form-control" id="exampleInput1">
-                                                        <span class="bmd-help">We'll never share your email with anyone
-                                                            else.</span>
+                                                        <label class="bmd-label-floating">
+                                                            First Name (optional)</label>
+                                                        <input type="text" class="form-control unanymous"
+                                                            name="firstname">
+                                                        <span class="bmd-help">Optional</span>
                                                     </div>
 
 
                                                 </div>
-                                                <div class="col-md-6">
-
+                                                <div class="col-md-6 unanymous">
                                                     <div class="form-group bmd-form-group">
-                                                        <label class="bmd-label-floating">With Floating
-                                                            Label</label>
-                                                        <input type="email" class="form-control">
-                                                        <span class="bmd-help">We'll never share your email with anyone
-                                                            else.</span>
+                                                        <label class="bmd-label-floating">
+                                                            Last Name (optional)</label>
+                                                        <input type="text" class="form-control unanymous"
+                                                            name="lastname">
+                                                        <span class="bmd-help">Optional</span>
                                                     </div>
 
                                                 </div>
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 unanymous">
 
                                                     <div class="form-group bmd-form-group">
-                                                        <label for="exampleInput1" class="bmd-label-floating">With
-                                                            Floating
-                                                            Label</label>
-                                                        <input type="email" class="form-control" id="exampleInput1">
-                                                        <span class="bmd-help">We'll never share your email with anyone
-                                                            else.</span>
+                                                        <label class="bmd-label-floating">
+                                                            Email (optional)</label>
+                                                        <input type="email" class="form-control unanymous" name="email">
+                                                        <span class="bmd-help">Optional</span>
                                                     </div>
 
 
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 unanymous">
 
                                                     <div class="form-group bmd-form-group">
-                                                        <label class="bmd-label-floating">With Floating
-                                                            Label</label>
-                                                        <input type="email" class="form-control">
-                                                        <span class="bmd-help">We'll never share your email with anyone
-                                                            else.</span>
+                                                        <label class="bmd-label-floating">
+                                                            Address (optional)</label>
+                                                        <input type="text" class="form-control unanymous">
+                                                        <span class="bmd-help">Optional</span>
                                                     </div>
-
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">
-
+                                                <div class="col-md-7">
                                                     <div class="form-group bmd-form-group">
-                                                        <label for="exampleInput1" class="bmd-label-floating">With
-                                                            Floating
-                                                            Label</label>
-                                                        <input type="email" class="form-control" id="exampleInput1">
-                                                        <span class="bmd-help">We'll never share your email with anyone
-                                                            else.</span>
+                                                        <label class="bmd-label-floating">
+                                                            Amount <a class="text-primary">(required)</a></label>
+                                                        <input class="form-control" min="0.01" name="amount"
+                                                            value="1.00" step="0.01" max="12500" type="number" required>
+                                                        <span class=" bmd-help">Required</span>
                                                     </div>
 
 
                                                 </div>
-                                                <div class="col-md-6">
-
+                                                <div class="col-md-4 ">
+                                                    <style>
+                                                        input[type="date"][disabled] {
+                                                            background-color: white;
+                                                        }
+                                                    </style>
                                                     <div class="form-group bmd-form-group">
-                                                        <label class="bmd-label-floating">With Floating
-                                                            Label</label>
-                                                        <input type="email" class="form-control">
-                                                        <span class="bmd-help">We'll never share your email with anyone
-                                                            else.</span>
+                                                        <label class="bmd-label-floating">
+                                                            Donation Date </label>
+                                                        <input type="date" class="form-control" id="theDate" style=""
+                                                            disabled>
+                                                        <script>
+                                                            document.getElementById('theDate').value = new Date().toISOString().substring(0, 10);
+                                                        </script>
+                                                        <span class="bmd-help">required</span>
                                                     </div>
 
                                                 </div>
                                             </div>
+
+                                          
                                             <div class="row">
                                                 <div class="col-md-6">
-
-                                                    <div class="form-group bmd-form-group">
-                                                        <label for="exampleInput1" class="bmd-label-floating">With
-                                                            Floating
-                                                            Label</label>
-                                                        <input type="email" class="form-control" id="exampleInput1">
-                                                        <span class="bmd-help">We'll never share your email with anyone
-                                                            else.</span>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="donation_type" id="exampleRadios1"
+                                                                value="unanymous" checked>
+                                                            Unanimous Donation (Known Identity)
+                                                            <span class="circle">
+                                                                <span class="check"></span>
+                                                            </span>
+                                                        </label>
                                                     </div>
 
 
                                                 </div>
                                                 <div class="col-md-6">
 
-                                                    <div class="form-group bmd-form-group">
-                                                        <label class="bmd-label-floating">With Floating
-                                                            Label</label>
-                                                        <input type="email" class="form-control">
-                                                        <span class="bmd-help">We'll never share your email with anyone
-                                                            else.</span>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="donation_type" id="exampleRadios2"
+                                                                value="anonymous">
+                                                            Anonymous Donation (Unknown Identity)
+                                                            <span class="circle">
+                                                                <span class="check"></span>
+                                                            </span>
+                                                        </label>
                                                     </div>
 
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-
-                                                    <div class="form-group bmd-form-group">
-                                                        <label for="exampleInput1" class="bmd-label-floating">With
-                                                            Floating
-                                                            Label</label>
-                                                        <input type="email" class="form-control" id="exampleInput1">
-                                                        <span class="bmd-help">We'll never share your email with anyone
-                                                            else.</span>
-                                                    </div>
 
 
-                                                </div>
-                                                <div class="col-md-6">
-
-                                                    <div class="form-group bmd-form-group">
-                                                        <label class="bmd-label-floating">With Floating
-                                                            Label</label>
-                                                        <input type="email" class="form-control">
-                                                        <span class="bmd-help">We'll never share your email with anyone
-                                                            else.</span>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-
-                                                    <div class="form-group bmd-form-group">
-                                                        <label for="exampleInput1" class="bmd-label-floating">With
-                                                            Floating
-                                                            Label</label>
-                                                        <input type="email" class="form-control" id="exampleInput1">
-                                                        <span class="bmd-help">We'll never share your email with anyone
-                                                            else.</span>
-                                                    </div>
-
-
-                                                </div>
-                                                <div class="col-md-6">
-
-                                                    <div class="form-group bmd-form-group">
-                                                        <label class="bmd-label-floating">With Floating
-                                                            Label</label>
-                                                        <input type="email" class="form-control">
-                                                        <span class="bmd-help">We'll never share your email with anyone
-                                                            else.</span>
-                                                    </div>
-
-                                                </div>
-                                            </div>
                                             <br>
                                         </form>
                                     </div>
@@ -290,6 +260,7 @@
     <!--  Google Maps Plugin    -->
     <!-- Control Center for Donatepal: parallax effects, scripts for the example pages etc -->
     <script src="/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
+    <script src="/js/main.js" type="text/javascript"></script>
 </body>
 
 </html>

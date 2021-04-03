@@ -128,11 +128,6 @@ func (accountController AccountController) HandleAdminAccountPage(c *gin.Context
 	}
 }
 
-func (accountController AccountController) HandlePayment(c *gin.Context) {
-	c.HTML(http.StatusOK, "payment.html", nil)
-
-}
-
 func (accountController AccountController) HandleAdminDashboardContent(c *gin.Context) {
 
 	if isLoggedIn(c) {

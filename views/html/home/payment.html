@@ -73,14 +73,14 @@
 
 
                                         <div class="form-container active form-group has-default bmd-form-group">
-                                            <form action="" id="paymentform">
+                                            <form action="/payment" method="POST" id="paymentform">
                                                 <input class="form-control" placeholder="Card number" type="tel"
-                                                    name="number">
+                                                    name="number" required>
                                                 <input class="form-control" placeholder="Full name" type="text"
-                                                    name="name">
+                                                    name="name" required>
                                                 <input class="form-control" placeholder="MM/YY" type="tel"
-                                                    name="expiry">
-                                                <input class="form-control" placeholder="CVC" type="number" name="cvc">
+                                                    name="expiry" required>
+                                                <input class="form-control" placeholder="CVC" type="number" name="cvc" required>
 
                                             </form>
 
