@@ -19,7 +19,7 @@ func (homeController HomeController) ServeAboutPage(c *gin.Context) {
 }
 
 func (homeController HomeController) ServeDonationPage(c *gin.Context) {
-
+	// get all the fundraiser but for now its hard coded
 	c.HTML(http.StatusOK, "donate.html", nil)
 }
 

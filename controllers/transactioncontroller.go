@@ -26,6 +26,7 @@ func (transactionController TransactionController) HandleDonation(c *gin.Context
 	session.Set("amount", c.PostForm("amount"))
 	session.Set("date_donated", c.PostForm("date_donated"))
 	session.Set("donation_type", c.PostForm("donation_type"))
+	session.Set("fundraiser", c.PostForm("fundraiser"))
 
 	session.Set("phone", c.PostForm("phone"))
 
@@ -51,6 +52,8 @@ func (transactionController TransactionController) HandleCardPayment(c *gin.Cont
 		session.Set("amount", "")
 		session.Set("date_donated", "")
 		session.Set("donation_type", "")
+		session.Set("fundraiser", "")
+
 		session.Set("phone", "")
 		session.Clear()
 		session.Options(sessions.Options{Path: "/", MaxAge: -1}) // this sets the cookie with a MaxAge of 0
@@ -85,6 +88,7 @@ func (transactionController TransactionController) HandlePayment(c *gin.Context)
 	transactionModel.Address.String = fmt.Sprintf("%s", session.Get("address"))
 	transactionModel.Phone.String = fmt.Sprintf("%s", session.Get("phone"))
 	transactionModel.DonationType = fmt.Sprintf("%s", session.Get("donation_type"))
+	transactionModel.FundRaiser = fmt.Sprintf("%s", session.Get("fundraiser"))
 
 	amount, err := strconv.ParseFloat(c.PostForm("amount"), 64)
 	if err != nil {
@@ -143,6 +147,8 @@ func (transactionController TransactionController) HandleSaveTransaction(c *gin.
 
 		transactionModel.DateDonated = donated_time
 		transactionModel.PaymentMethod = c.PostForm("payment_method")
+		transactionModel.FundRaiser = c.PostForm("fundraiser")
+
 		transactionModel.Address.String = c.PostForm("address")
 		transactionModel.Phone.String = c.PostForm("phone")
 
