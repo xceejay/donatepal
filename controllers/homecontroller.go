@@ -23,6 +23,11 @@ func (homeController HomeController) ServeDonationPage(c *gin.Context) {
 	c.HTML(http.StatusOK, "donate.html", nil)
 }
 
+func (homeController HomeController) ServeRegistrationPage(c *gin.Context) {
+	// get all the fundraiser but for now its hard coded
+	c.HTML(http.StatusOK, "register.html", nil)
+}
+
 func (homeController HomeController) Handle404(c *gin.Context) {
 
 	c.HTML(http.StatusNotFound, "404.html", nil)

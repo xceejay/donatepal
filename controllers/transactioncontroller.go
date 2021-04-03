@@ -115,7 +115,7 @@ func (transactionController TransactionController) HandlePayment(c *gin.Context)
 	if err != nil {
 		fmt.Printf("ERROR Inserting transactions: %v\n", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save transaction"})
-
+		return
 	}
 	fmt.Println(transactionModel.PaymentMethod)
 	if transactionModel.PaymentMethod == "card" {
