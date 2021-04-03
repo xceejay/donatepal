@@ -22,7 +22,7 @@ func InitRouter(engine *gin.Engine) {
 	// engine.POST("/login", accountController.PerformLogin)
 	// engine.POST("/account/:username", accountController.ServeAccountPage)
 	// engine.GET("/account/:username", accountController.HandleAccountPage)
-	engine.POST("/account/admin", accountController.HandleRegistration)
+	engine.POST("/register", accountController.HandleRegistration)
 	engine.POST("/account/admin", accountController.ServeAdminAccountPage)
 	engine.GET("/account/admin", accountController.HandleAdminAccountPage)
 	engine.GET("/logout", accountController.HandleLogout)
