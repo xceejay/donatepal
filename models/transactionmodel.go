@@ -26,7 +26,7 @@ func (transaction Transaction) InsertTransaction() error {
 	db := database.InitDatabase()
 	defer db.Close()
 
-	statement, err := db.Prepare("insert into transactions (email,payment_method,firstname,lastname,amount,address,phone,date_donated,donation_type) values(?,?,?,?,?,?,?,curdate())")
+	statement, err := db.Prepare("insert into transactions (email,payment_method,firstname,lastname,amount,address,phone,date_donated,donation_type) values(?,?,?,?,?,?,?,curdate(),?)")
 
 	if err != nil {
 		return err
