@@ -11,6 +11,7 @@ type Receipt struct {
 	Email         sql.NullString
 	DonationType  string
 	PaymentMethod string
+	Fundraiser    string
 	DateCreated   time.Time
 	Receiptid     int
 	Firstname     sql.NullString
@@ -26,14 +27,14 @@ func (receipt Receipt) InsertReceipt() error {
 	db := database.InitDatabase()
 	defer db.Close()
 
-	statement, err := db.Prepare("insert into receipts (email,payment_method,date_created,firstname,lastname,amount,address,phone,date_donated) values(?,?,curdate(),?,?,?,?,?,?)")
+	statement, err := db.Prepare("insert into receipts (email,payment_method,date_created,firstname,lastname,amount,address,phone,date_donated,fundraiser) values(?,?,curdate(),?,?,?,?,?,?,?)")
 
 	if err != nil {
 		return err
 	}
 	defer statement.Close()
 
-	_, err = statement.Exec(receipt.Email.String, receipt.PaymentMethod, receipt.Firstname.String, receipt.Lastname.String, receipt.Amount, receipt.Address.String, receipt.Phone.String, receipt.DateDonated)
+	_, err = statement.Exec(receipt.Email.String, receipt.PaymentMethod, receipt.Firstname.String, receipt.Lastname.String, receipt.Amount, receipt.Address.String, receipt.Phone.String, receipt.DateDonated, receipt.Fundraiser)
 	if err != nil {
 		return err
 	}
@@ -57,6 +58,45 @@ func (receipt Receipt) GetAllReceipts() ([]Receipt, error) {
 
 	receipts := make([]Receipt, count)
 	results, err := db.Query("select reciept_id,email,firstname,lastname,amount,payment_method,phone,address,date_donated from receipts")
+
+	if err != nil {
+		return receipts, err
+	}
+
+	var i int = 0
+	for results.Next() {
+
+		err = results.Scan(&receipts[i].Receiptid, &receipts[i].Email, &receipts[i].Firstname.String, &receipts[i].Lastname.String, &receipts[i].Amount, &receipts[i].PaymentMethod, &receipts[i].Phone.String, &receipts[i].Address.String, &receipts[i].DateDonated)
+
+		if err != nil {
+			return receipts, err
+		}
+		i++
+
+	}
+
+	// fmt.Printf("%v", receipts)
+
+	fmt.Println("Sucessfully Got Receipts")
+	return receipts, nil
+}
+
+func (receipt Receipt) GetAllReceiptsByUsername(username string) ([]Receipt, error) {
+	database := new(Database)
+	db := database.InitDatabase()
+	defer db.Close()
+
+	var count int
+	err := db.QueryRow("SELECT COUNT(*) FROM receipts").Scan(&count)
+	switch {
+	case err != nil:
+		log.Fatal(err)
+	default:
+		fmt.Printf("Number of rows are %d\n", count)
+	}
+
+	receipts := make([]Receipt, count)
+	results, err := db.Query("select reciept_id,email,firstname,lastname,amount,payment_method,phone,address,date_donated from receipts where fundraiser = ?", username)
 
 	if err != nil {
 		return receipts, err

@@ -65,7 +65,7 @@ func (user User) GetAllUserData(username string) (User, error) {
 	database := new(Database)
 	db := database.InitDatabase()
 	defer db.Close()
-	results, err := db.Query("select username,age,firstname,lastname,email,address,country,city from users where username=?", "admin")
+	results, err := db.Query("select username,age,firstname,lastname,email,address,country,city from users where username=?", username)
 
 	if err != nil {
 		return user, err
@@ -87,4 +87,24 @@ func (user User) GetAllUserData(username string) (User, error) {
 		}
 	}
 	return user, nil
+}
+
+func (user User) InsertUser() error {
+	database := new(Database)
+	db := database.InitDatabase()
+	defer db.Close()
+
+	statement, err := db.Prepare("insert into users (username,password,email,firstname,lastname,address,country,city) values(?,?,?,?,?,?,?,?)")
+
+	if err != nil {
+		return err
+	}
+	defer statement.Close()
+
+	_, err = statement.Exec(user.Username, user.Password, user.Email.String, user.Firstname.String, user.Lastname.String, user.Address.String, user.Country.String, user.City.String)
+	if err != nil {
+		return err
+	}
+	fmt.Println("Sucessfully Inserted User")
+	return nil
 }

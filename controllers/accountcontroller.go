@@ -26,6 +26,33 @@ const (
 ////////////////////////////////////////HANDLERS////////////////////////////////////////////////
 
 func (accountcontroller AccountController) HandleRegistration(c *gin.Context) {
+	// fmt.Printf("handled\n")
+
+	accountModel := new(models.User)
+	accountModel.Username = c.PostForm("username")
+	accountModel.Password = c.PostForm("password")
+	accountModel.Firstname.String = c.PostForm("firstname")
+	accountModel.Lastname.String = c.PostForm("lastname")
+	accountModel.Email.String = c.PostForm("email")
+	accountModel.Country.String = c.PostForm("country")
+	accountModel.City.String = c.PostForm("city")
+
+	if accountModel.Username != "" {
+		err := accountModel.InsertUser()
+		if err != nil {
+			fmt.Printf("ERROR INSERTING USER: %v", err)
+			return
+		}
+	}
+
+	// c.JSON(http.StatusOK, gin.H{"message": c.PostForm("password"), "username": c.PostForm("username")})
+	c.Redirect(http.StatusTemporaryRedirect, "/successful-registration")
+}
+func (accountcontroller AccountController) HandleSuccessfulRegistration(c *gin.Context) {
+
+	// c.JSON(http.StatusOK, gin.H{"message": c.PostForm("password"), "username": c.PostForm("username")})
+	c.HTML(http.StatusOK, "successful_registration.html", nil)
+
 }
 
 // HandleLogin is a simple middleware to login
@@ -116,19 +143,24 @@ func (accountController AccountController) HandleAdminAccountPage(c *gin.Context
 	urlUsername := path.Base(myUrl.Path)
 	fmt.Printf("Request URI: %s\nBase: %s\n", c.Request.RequestURI, urlUsername)
 
-	if usernameSessionstring != urlUsername {
+	if len(usernameSessionstring) < 1 {
 
 		c.Redirect(http.StatusPermanentRedirect, "/login")
 		return
 	}
 
-	if urlUsername == usernameSessionstring {
+	// if urlUsername == usernameSessionstring {
 
-		location := fmt.Sprintf("/%s/%s", "account", username)
+	// 	location := fmt.Sprintf("/%s/%s", "account", username)
 
-		fmt.Println("LOCATION:", location)
-		accountController.ServeAdminAccountPage(c)
-	}
+	// 	fmt.Println("LOCATION:", location)
+	// 	accountController.ServeAdminAccountPage(c)
+	// }
+
+	location := fmt.Sprintf("/%s/%s", "account", username)
+
+	fmt.Println("LOCATION:", location)
+	accountController.ServeAdminAccountPage(c)
 }
 
 func (accountController AccountController) HandleAdminDashboardContent(c *gin.Context) {
@@ -195,7 +227,7 @@ func (accountcontroller AccountController) PerformLogin(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
 		return
 	}
-	c.Redirect(http.StatusPermanentRedirect, "/account/"+user.Username)
+	c.Redirect(http.StatusPermanentRedirect, "/account/admin")
 
 }
 
@@ -241,10 +273,12 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 		"views/html/account/settings.html",
 	}
 	vars := make(map[string]interface{})
+	session := sessions.Default(c)
+	usernameSessionString := session.Get(userkey)
 
 	var user models.User
 
-	user, err := user.GetAllUserData(c.Query("username"))
+	user, err := user.GetAllUserData(fmt.Sprintf("%s", usernameSessionString))
 	if err != nil {
 		panic(err)
 	}
@@ -267,7 +301,8 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 	switch page {
 	case "transactions":
 		vars["transactions_active"] = "active"
-		vars["fundraiser_name"] = template.HTML("<b>World Health Organization Cancer Project</b>")
+		fundRaiserName := "<b>" + user.Firstname.String + " " + user.Lastname.String + "</b>"
+		vars["fundraiser_name"] = template.HTML(fundRaiserName)
 
 		accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
 		transactionContent := templateEngine.ProcessFile(paths[5], vars)
@@ -277,7 +312,8 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 	case "balance":
 
 		vars["balance_active"] = "active"
-		vars["fundraiser_name"] = template.HTML("<b>World Health Organization Cancer Project</b>")
+		fundRaiserName := "<b>" + user.Firstname.String + " " + user.Lastname.String + "</b>"
+		vars["fundraiser_name"] = template.HTML(fundRaiserName)
 
 		accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
 		balanceContent := templateEngine.ProcessFile(paths[6], vars)
@@ -289,7 +325,7 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 
 		receiptModel := new(models.Receipt)
 
-		receipts, err := receiptModel.GetAllReceipts()
+		receipts, err := receiptModel.GetAllReceiptsByUsername(user.Username)
 
 		if err != nil {
 			fmt.Printf("ERROR GETTING RECIEPT TABLE: %v", err)
@@ -298,6 +334,9 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 
 		for index, receipt := range receipts {
 
+			if receipt.Amount < 1 {
+				continue
+			}
 			fmt.Println("index:", index)
 			receiptsTable += "<tr>"
 
@@ -318,7 +357,9 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 
 		}
 		vars["view_receipts_table"] = template.HTML(receiptsTable)
-		vars["fundraiser_name"] = template.HTML("<b>World Health Organization Cancer Project</b>")
+
+		fundRaiserName := "<b>" + user.Firstname.String + " " + user.Lastname.String + "</b>"
+		vars["fundraiser_name"] = template.HTML(fundRaiserName)
 
 		accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
 		receiptContent := templateEngine.ProcessFile(paths[7], vars)
@@ -327,7 +368,8 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 
 	case "settings":
 		vars["settings_active"] = "active"
-		vars["fundraiser_name"] = template.HTML("<b>World Health Organization Cancer Project</b>")
+		fundRaiserName := "<b>" + user.Firstname.String + " " + user.Lastname.String + "</b>"
+		vars["fundraiser_name"] = template.HTML(fundRaiserName)
 
 		accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
 		settingsContent := templateEngine.ProcessFile(paths[8], vars)
@@ -336,7 +378,9 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 
 	default:
 		vars["overview_active"] = "active"
-		vars["fundraiser_name"] = template.HTML("<b>World Health Organization Cancer Project</b>")
+		fundRaiserName := "<b>" + user.Firstname.String + " " + user.Lastname.String + "</b>"
+		vars["fundraiser_name"] = template.HTML(fundRaiserName)
+
 		accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
 
 		return header + accounthtmlPageTop + overviewContent + accounthtmlPageBottom + footer
@@ -415,7 +459,7 @@ func isLoggedIn(c *gin.Context) bool {
 	}
 	usernameSessionstring := fmt.Sprintf("%s", user)
 
-	return usernameSessionstring == "admin"
+	return usernameSessionstring != ""
 
 }
 

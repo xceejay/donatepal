@@ -24,6 +24,7 @@ func InitRouter(engine *gin.Engine) {
 	// engine.GET("/account/:username", accountController.HandleAccountPage)
 	engine.POST("/register", accountController.HandleRegistration)
 	engine.POST("/account/admin", accountController.ServeAdminAccountPage)
+	engine.POST("/successful-registration", accountController.HandleSuccessfulRegistration)
 	engine.GET("/account/admin", accountController.HandleAdminAccountPage)
 	engine.GET("/logout", accountController.HandleLogout)
 	engine.GET("/account/admin/:dashboard_content", accountController.HandleAdminDashboardContent)

@@ -20,10 +20,10 @@
 
 <body class="login-page sidebar-collapse">
 
-    
+
     <nav class="navbar navbar-transparent navbar-color-on-scroll fixed-top navbar-expand-lg" color-on-scroll="100"
         id="sectionsNav">
-        <div class="container">
+        <div class="container" >
             <div class="navbar-translate">
 
                 <a href="/">
@@ -44,7 +44,7 @@
     </nav>
 
 
-    
+
     <style>
         .col-centered {
             float: none;
@@ -66,40 +66,47 @@
         }
     </style>
     <div class="page-header header-filter"
-        style="background-image: url('/images/bg-login.webp'); background-size: cover; background-position: top center;">
-        <div class="container ">
+        style="background-image: url('/images/bg-reg.webp'); background-size: cover; background-position: top center;">
+        <div class="container " >
+            <br>
+            <br>
+            
+            
             <div class="row">
                 <div class="col-lg-4 col-md-6 ml-auto mr-auto">
-                    <div class="section-notifications" id="passwordnotif" style="padding: 10px; display: none;">  
-                    
-                        <div class="alert alert-warning">
-                          <div class="container">
-                            <div class="alert-icon">
-                              <i class="material-icons">warning</i>
-                            </div>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                              <span aria-hidden="true"><i class="material-icons">clear</i></span>
-                            </button>
-                          Passwords do not match
-                          </div>
-                        </div>
-                      
-                      </div>
-                    <div class="card card-login">
+                    <div class="section-notifications" id="passwordnotif" style="padding: 10px; display: none;">
 
-                      
-                       
-                           
-                       
-                        
+                        <div class="alert alert-warning">
+                            <div class="container">
+                                <div class="alert-icon">
+                                    <i class="material-icons">warning</i>
+                                </div>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true"><i class="material-icons">clear</i></span>
+                                </button>
+                                <a id="notiftext"> Passwords do not match </a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card card-login" style="width: 25rem;">
+
+
+
+
+
+
 
 
 
                         <form class="form registerform" method="POST" action="/register">
+                            <!-- <form class="form registerform" > -->
+
                             <div class="card-header card-header-primary text-center">
                                 <h4 class="card-title">Register</h4>
                                 <div class="social-line">
-                                    <a style="font-weight: normal">Register A Fundraiser To Accept Donations</a>
+                                    <a style="font-weight: normal">Register A Fundraiser Organization To Accept
+                                        Donations</a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -108,47 +115,74 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
 
-                                            <i class="material-icons">face</i>
+                                            <i class="material-icons">groups</i>
                                         </span>
                                     </div>
-                                    <input type="username" name="username" class="form-control" placeholder="Username">
+                                    <input type="username" name="username" class="form-control"
+                                        placeholder="Fundraiser Username Organization">
                                 </div>
 
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
 
-                                            <i class="material-icons">face</i>
+                                            <i class="material-icons">badge</i>
                                         </span>
                                     </div>
-                                    <input type="username" name="username" class="form-control" placeholder="Username">
+                                    <input type="username" name="firstname" class="form-control"
+                                        placeholder="Name Of Fundraiser Organization">
                                 </div>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
 
-                                            <i class="material-icons">face</i>
+                                            <i class="material-icons">badge</i>
                                         </span>
                                     </div>
-                                    <input type="username" name="username" class="form-control" placeholder="Username">
+                                    <input type="text" name="lastname" class="form-control"
+                                        placeholder="Other Names of Fundraiser Organization">
                                 </div>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
 
-                                            <i class="material-icons">face</i>
+                                            <i class="material-icons">email</i>
                                         </span>
                                     </div>
-                                    <input type="username" name="username" class="form-control" placeholder="Username">
+                                    <input type="email" name="email" class="form-control"
+                                        placeholder="Fundraiser Organization Email">
                                 </div>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
 
-                                            <i class="material-icons">face</i>
+                                            <i class="material-icons">maps_home_work</i>
                                         </span>
                                     </div>
-                                    <input type="username" name="username" class="form-control" placeholder="Username">
+                                    <input type="username" name="address" class="form-control"
+                                        placeholder="Address of Fundraiser Organization">
+                                </div>
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+
+                                            <i class="material-icons">landscape</i>
+                                        </span>
+                                    </div>
+                                    <input type="username" name="country" class="form-control"
+                                        placeholder="Country of Fundraiser Organization">
+                                </div>
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+
+                                            <i class="material-icons">local_convenience_store</i>
+                                        </span>
+                                    </div>
+                                    <input type="username" name="city" class="form-control"
+                                        placeholder="City of Fundraiser Organization">
                                 </div>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -156,8 +190,8 @@
                                             <i class="material-icons">lock_outline</i>
                                         </span>
                                     </div>
-                                    <input class="form-control" type="password" placeholder="Password" id="password"
-                                        name="password" required>
+                                    <input class="form-control" type="password" onchange="check_pass()"
+                                        placeholder="Password" id="password" name="password" required>
 
                                 </div>
 
@@ -168,23 +202,40 @@
                                             <i class="material-icons">lock_outline</i>
                                         </span>
                                     </div>
-                                    <input class="form-control" type="password" placeholder="Confirm Password"
-                                        name="password" id="confirm_password" required>
+                                    <input class="form-control" onchange="check_pass()" type="password"
+                                        placeholder="Confirm Password" name="password" id="confirm_password" required>
                                 </div>
                             </div>
-              
-                            <div class="form-check">
+
+                            <!-- <div class="form-check">
                                 <label class="form-check-label">
-                                  <input class="form-check-input" type="checkbox" value="" id="registerCheckbox">
-                                  <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-                                  I agree to the <a href="">terms and conditions</a>.
+                                    <input class="form-check-input" type="checkbox" value="" id="registerCheckbox">
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                    I agree to the <a href="">terms and conditions</a>.
                                 </label>
-                              </div>
+                            </div> -->
                             <div class=" text-center">
-                                <button class="btn btn-primary btn-link btn-wd btn-lg" id="registerbtn"
+                                <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg" id="registerbtn"
                                     disabled>Login</button>
+
+                                <script>
+
+                                    function check_pass() {
+                                        if ((document.getElementById('password').value == "")) {
+                                            document.getElementById('registerbtn').disabled = true;
+                                        } else {
+                                            if (document.getElementById('password').value ==
+                                                document.getElementById('confirm_password').value) {
+                                                document.getElementById('registerbtn').disabled = false;
+                                            } else {
+                                                document.getElementById('registerbtn').disabled = true;
+                                            }
+
+                                        }
+                                    }
+                                </script>
 
 
                             </div>
@@ -215,24 +266,25 @@
     <!--  Google Maps Plugin    -->
     <!-- Control Center for Donatepal: parallax effects, scripts for the example pages etc -->
     <script src="/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+
+    <!-- <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script> -->
 
     <script src="/js/main.js"></script>
 
-    <script type="text/javascript">
-        $(function()
-        {
-          $('#registerCheckbox').change(function()
-          {
-            if ($(this).is(':checked')) {
-               // Do something...
-               $("#registerbtn").removeAttr('disabled');
-            }else{
-            $("#registerbtn").attr('disabled',true);
-            }  
+    <!-- <script type="text/javascript">
+        $(function () {
+            $('#registerCheckbox').change(function () {
+                if ($(this).is(':checked')) {
+                    // Do something...
+                    $("#registerbtn").removeAttr('disabled');
+                } else {
+                    $("#registerbtn").attr('disabled', true);
+                }
+            });
         });
-        });
-      </script>
+    </script> -->
 </body>
 
 </html>

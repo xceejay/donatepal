@@ -36,6 +36,7 @@ func (receiptController ReceiptController) HandleSaveReceipt(c *gin.Context) {
 		receiptModel.PaymentMethod = c.PostForm("payment_method")
 		receiptModel.Address.String = c.PostForm("address")
 		receiptModel.Phone.String = c.PostForm("phone")
+		receiptModel.Fundraiser = c.PostForm("fundraiser")
 
 		err = receiptModel.InsertReceipt()
 		if err != nil {
