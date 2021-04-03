@@ -16,7 +16,7 @@ func InitRouter(engine *gin.Engine) {
 	engine.GET("/", homeController.ServeHomePage)
 	engine.GET("/about", homeController.ServeAboutPage)
 	engine.GET("/donate", homeController.ServeDonationPage)
-	engine.GET("/donate", homeController.ServeRegistrationPage)
+	engine.GET("/register", homeController.ServeRegistrationPage)
 	engine.GET("/login", accountController.HandleLogin)
 	engine.POST("/login", accountController.PerformLogin)
 	// engine.POST("/login", accountController.PerformLogin)
