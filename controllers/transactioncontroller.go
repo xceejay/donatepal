@@ -71,7 +71,7 @@ func (transactionController TransactionController) HandleSuccessfulPayment(c *gi
 
 func (transactionController TransactionController) HandlePayment(c *gin.Context) {
 
-	fmt.Println("payment handled")
+	// fmt.Println("payment handled")
 
 	transactionModel := new(models.Transaction)
 
@@ -110,10 +110,12 @@ func (transactionController TransactionController) HandlePayment(c *gin.Context)
 	err = transactionModel.InsertTransaction()
 	if err != nil {
 		fmt.Printf("ERROR Inserting transactions: %v\n", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save transaction"})
+
 	}
 	fmt.Println(transactionModel.PaymentMethod)
 	if transactionModel.PaymentMethod == "card" {
-		fmt.Println("its card")
+		// fmt.Println("its card")
 		transactionController.HandleCardPayment(c)
 	}
 
