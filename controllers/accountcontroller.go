@@ -300,7 +300,43 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 
 	switch page {
 	case "transactions":
-		vars["transactions_active"] = "active"
+		vars["transaction_active"] = "active"
+
+		transactionModel := new(models.Transaction)
+
+		transactions, err := transactionModel.GetAllTransactionsByFundRaiser(user.Username)
+
+		if err != nil {
+			fmt.Printf("ERROR GETTING RECIEPT TABLE: %v", err)
+		}
+		var transactionsTable string
+
+		for index, transaction := range transactions {
+
+			if transaction.Amount < 1 {
+				continue
+			}
+			fmt.Println("index:", index)
+			transactionsTable += "<tr>"
+
+			transactionsTable += "<td>" + fmt.Sprintf("%v", transaction.Transactionid) + "</td>"
+
+			transactionsTable += "<td>" + transaction.Email.String + "</td>"
+
+			transactionsTable += "<td>" + transaction.Firstname.String + "</td>"
+			transactionsTable += "<td>" + transaction.Lastname.String + "</td>"
+			transactionsTable += "<td>" + fmt.Sprintf("%.2f", transaction.Amount) + "</td>"
+			transactionsTable += "<td>" + transaction.PaymentMethod + "</td>"
+			transactionsTable += "<td>" + transaction.Phone.String + "</td>"
+			transactionsTable += "<td>" + transaction.Address.String + "</td>"
+			transactionsTable += "<td>" + transaction.DateDonated.Format("2020-12-01") + "</td>"
+			transactionsTable += "</tr>"
+
+			// fmt.Println(transactionsTable)
+
+		}
+		vars["transactions_table"] = template.HTML(transactionsTable)
+
 		fundRaiserName := "<b>" + user.Firstname.String + " " + user.Lastname.String + "</b>"
 		vars["fundraiser_name"] = template.HTML(fundRaiserName)
 

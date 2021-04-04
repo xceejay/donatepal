@@ -177,16 +177,20 @@ $(document).ready(function () {
 	});
 
 
-
-
-
 	$("#searchReceipts").keyup(function () {
 		var value = $(this).val().toLowerCase();
 		$("#searchReceiptsTable tr").filter(function () {
 			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 		});
-	})
+	});
 
+
+
+
+	
+
+
+	
 
 
 });

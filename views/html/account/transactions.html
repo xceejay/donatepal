@@ -7,8 +7,20 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header card-header-primary">
-              <h4 class="card-title ">Donors</h4>
-              <p class="card-category">Donors To Your Fund Raiser</p>
+              <h4 class="card-title ">Donations</h4>
+              <p class="card-category">A Glance at the Donations To Your Fund Raiser</p>
+              <div class="navbar-form">
+                <span class="bmd-form-group white">
+                  <div class="input-group no-border">
+                    <input type="text"  id="searchTransactions" value="" class="form-control " style="color: white;" placeholder="Search...">
+                    <!-- <button type="submit" class="btn btn-white btn-round btn-just-icon"></button> -->
+                      <i class="material-icons">search</i>
+                      <div class="ripple-container"></div>
+                      <div class="ripple-container"></div>
+                    </button>
+                  </div>
+                </span>
+              </div>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -43,8 +55,8 @@
                       Date Donated
                     </th>
                   </thead>
-                  <tbody>
-                   
+                  <tbody id="TransactionsTable">
+                   {{.transactions_table}}
                   </tbody>
                 </table>
               </div>
@@ -54,7 +66,20 @@
       </div>
     </div>
 </div>
+<script>
 
+
+
+	$("#searchTransactions").keyup(function () {
+		
+		var value = $(this).val().toLowerCase();
+		$("#TransactionsTable tr").filter(function () {
+			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		});
+	});
+
+
+</script>
 
 <!-- 
 <div class="content">
