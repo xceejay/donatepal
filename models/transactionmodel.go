@@ -119,3 +119,39 @@ func (transaction Transaction) GetAllTransactionsByFundRaiser(fundraiser string)
 	fmt.Println("Sucessfully Got Transactions By FundRaiser")
 	return transactions, nil
 }
+
+func (transaction Transaction) GetTotalAmountOfTransactionsByFundraiser(fundraiser string) int {
+	database := new(Database)
+	db := database.InitDatabase()
+	defer db.Close()
+
+	var count int = 0
+	err := db.QueryRow("SELECT COUNT(*) FROM transactions").Scan(&count)
+	switch {
+	case err != nil:
+		log.Fatal(err)
+	default:
+		fmt.Printf("Number of rows are %d\n", count)
+	}
+
+	return count
+
+}
+
+// fmt.Printf("%v", transactions)
+
+func (transaction Transaction) GetTotalAmountRaisedByFundaiser(fundraiser string) float64 {
+	database := new(Database)
+	db := database.InitDatabase()
+	defer db.Close()
+
+	var Amount sql.NullFloat64
+	err := db.QueryRow("SELECT SUM(amount) FROM transactions").Scan(&Amount)
+	switch {
+	case err != nil:
+		log.Fatal(err)
+	default:
+		fmt.Printf("Number of rows are %d\n", Amount)
+	}
+	return Amount.Float64
+}

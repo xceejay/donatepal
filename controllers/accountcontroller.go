@@ -296,7 +296,6 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 	header := templateEngine.ProcessFile(paths[0], vars)
 	footer := templateEngine.ProcessFile(paths[1], vars)
 	accounthtmlPageBottom := templateEngine.ProcessFile(paths[3], vars)
-	overviewContent := templateEngine.ProcessFile(paths[4], vars)
 
 	switch page {
 	case "transactions":
@@ -413,12 +412,22 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 		return header + accounthtmlPageTop + settingsContent + accounthtmlPageBottom + footer
 
 	default:
+		transactionsModel := new(models.Transaction)
+		receiptModel := new(models.Receipt)
+		totalAmountOfTransactions := transactionsModel.GetTotalAmountOfTransactionsByFundraiser(user.Username)
+
+		totalAmountOfReceipts := receiptModel.GetTotalAmountOfReceiptsByFundraiser(user.Username)
+		amountRaisedByFundraiser := transactionsModel.GetTotalAmountRaisedByFundaiser(user.Username)
+
 		vars["overview_active"] = "active"
 		fundRaiserName := "<b>" + user.Firstname.String + " " + user.Lastname.String + "</b>"
 		vars["fundraiser_name"] = template.HTML(fundRaiserName)
+		vars["amount_of_receipts"] = template.HTML(fmt.Sprintf("%d", totalAmountOfReceipts))
+		vars["amount_of_transactions"] = template.HTML(fmt.Sprintf("%d", totalAmountOfTransactions))
+		vars["amount_raised"] = template.HTML(fmt.Sprintf("%.2f", amountRaisedByFundraiser))
 
 		accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
-
+		overviewContent := templateEngine.ProcessFile(paths[4], vars)
 		return header + accounthtmlPageTop + overviewContent + accounthtmlPageBottom + footer
 
 	}

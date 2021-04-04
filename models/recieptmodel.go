@@ -119,3 +119,21 @@ func (receipt Receipt) GetAllReceiptsByUsername(username string) ([]Receipt, err
 	fmt.Println("Sucessfully Got Receipts")
 	return receipts, nil
 }
+
+func (receipt Receipt) GetTotalAmountOfReceiptsByFundraiser(fundraiser string) int {
+	database := new(Database)
+	db := database.InitDatabase()
+	defer db.Close()
+
+	var count int = 0
+	err := db.QueryRow("SELECT COUNT(*) FROM receipts").Scan(&count)
+	switch {
+	case err != nil:
+		log.Fatal(err)
+	default:
+		fmt.Printf("Number of rows are %d\n", count)
+	}
+
+	return count
+
+}
