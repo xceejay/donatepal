@@ -41,7 +41,7 @@ func (accountcontroller AccountController) HandleRegistration(c *gin.Context) {
 	if accountModel.Username != "" {
 		err := accountModel.InsertUser()
 		if err != nil {
-			fmt.Printf("ERROR INSERTING USER: %v", err)
+			c.HTML(http.StatusNotImplemented, "registration-failed.html", nil)
 			return
 		}
 	}
@@ -316,7 +316,7 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 
 	switch page {
 	case "transactions":
-		vars["transaction_active"] = "active"
+		vars["transactions_active"] = "active"
 
 		transactionModel := new(models.Transaction)
 

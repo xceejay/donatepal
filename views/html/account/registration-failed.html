@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Donatepal - Register
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS Files -->
+    <link href="/css/material-kit.css?v=2.0.7" rel="stylesheet" />
+
+</head>
+
+<body class="login-page sidebar-collapse">
+
+
+    <nav class="navbar navbar-transparent navbar-color-on-scroll fixed-top navbar-expand-lg" color-on-scroll="100"
+        id="sectionsNav">
+        <div class="container">
+            <div class="navbar-translate">
+
+                <a href="/">
+                    <img class="" src="/images/logowhite.png" style="z-index: 99; height: 150px;">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="navbar-toggler-icon"></span>
+                    <span class="navbar-toggler-icon"></span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse">
+
+            </div>
+        </div>
+    </nav>
+
+
+
+    <style>
+        .col-centered {
+            float: none;
+            margin: 0 auto;
+
+        }
+
+        .box {
+            background-color: black;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            margin-left: -10px;
+            /* -1/2 width */
+            margin-top: -10px;
+            /* -1/2 height */
+        }
+    </style>
+    <div class="page-header header-filter"
+        style="background-image: url('/images/bg-reg.webp'); background-size: cover; background-position: top center;">
+        <div class="container ">
+            <br>
+            <br>
+
+
+            <div class="row">
+
+
+                <div class=" col-md-4 "></div>
+                <div class=" col-md-6 ">
+                    <div class="alert alert-danger" style="height: 5rem; z-index: 0;width: 25rem;">
+                        <div class="container">
+                            <div class="alert-icon">
+                                <i class="material-icons">error_outline</i>
+                            </div>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true"><i class="material-icons">clear</i></span>
+                            </button>
+                            <b>Registration Failed:</b> Username Has Been Taken
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 ml-auto mr-auto">
+                    <div class="section-notifications" id="passwordnotif" style="padding: 10px; display: none;">
+
+                        <div class="alert alert-warning">
+                            <div class="container">
+                                <div class="alert-icon">
+                                    <i class="material-icons">warning</i>
+                                </div>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true"><i class="material-icons">clear</i></span>
+                                </button>
+                                <a id="notiftext"> Passwords do not match </a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card card-login" style="width: 25rem;">
+
+
+
+
+
+
+
+
+
+                        <form class="form registerform" method="POST" action="/register">
+                            <!-- <form class="form registerform" > -->
+
+                            <div class="card-header card-header-primary text-center">
+                                <h4 class="card-title">Register</h4>
+                                <div class="social-line">
+                                    <a style="font-weight: normal">Register A Fundraiser Organization To Accept
+                                        Donations</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+
+                                            <i class="material-icons">groups</i>
+                                        </span>
+                                    </div>
+                                    <input type="username" name="username" class="form-control"
+                                        placeholder="Fundraiser Username Organization" required>
+                                </div>
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+
+                                            <i class="material-icons">badge</i>
+                                        </span>
+                                    </div>
+                                    <input type="username" name="firstname" class="form-control"
+                                        placeholder="Name Of Fundraiser Organization" required>
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+
+                                            <i class="material-icons">badge</i>
+                                        </span>
+                                    </div>
+                                    <input type="text" name="lastname" class="form-control"
+                                        placeholder="Other Names of Fundraiser Organization">
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+
+                                            <i class="material-icons">email</i>
+                                        </span>
+                                    </div>
+                                    <input type="email" name="email" class="form-control"
+                                        placeholder="Fundraiser Organization Email" required>
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+
+                                            <i class="material-icons">maps_home_work</i>
+                                        </span>
+                                    </div>
+                                    <input type="username" name="address" class="form-control"
+                                        placeholder="Address of Fundraiser Organization">
+                                </div>
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+
+                                            <i class="material-icons">landscape</i>
+                                        </span>
+                                    </div>
+                                    <input type="username" name="country" class="form-control"
+                                        placeholder="Country of Fundraiser Organization">
+                                </div>
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+
+                                            <i class="material-icons">local_convenience_store</i>
+                                        </span>
+                                    </div>
+                                    <input type="username" name="city" class="form-control"
+                                        placeholder="City of Fundraiser Organization">
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">lock_outline</i>
+                                        </span>
+                                    </div>
+                                    <input class="form-control" type="password" onchange="check_pass()"
+                                        placeholder="Password" id="password" name="password" required>
+
+                                </div>
+
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">lock_outline</i>
+                                        </span>
+                                    </div>
+                                    <input class="form-control" onchange="check_pass()" type="password"
+                                        placeholder="Confirm Password" name="password" id="confirm_password" required>
+                                </div>
+                            </div>
+
+                            <!-- <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value="" id="registerCheckbox">
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                    I agree to the <a href="">terms and conditions</a>.
+                                </label>
+                            </div> -->
+                            <div class=" text-center">
+                                <button type="submit" class="btn btn-primary btn-link btn-wd btn-lg" id="registerbtn"
+                                    disabled>Register</button>
+
+                                <script>
+
+                                    function check_pass() {
+                                        if ((document.getElementById('password').value == "")) {
+                                            document.getElementById('registerbtn').disabled = true;
+                                        } else {
+                                            if (document.getElementById('password').value ==
+                                                document.getElementById('confirm_password').value) {
+                                                document.getElementById('registerbtn').disabled = false;
+                                            } else {
+                                                document.getElementById('registerbtn').disabled = true;
+                                            }
+
+                                        }
+                                    }
+                                </script>
+
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container">
+                <nav class="float-left">
+                    <ul>
+
+                    </ul>
+
+            </div>
+        </footer>
+    </div>
+    <!--   Core JS Files   -->
+    <script src="/js/core/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+    <script src="/js/plugins/moment.min.js"></script>
+    <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
+    <script src="/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
+    <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+    <script src="/js/plugins/nouislider.min.js" type="text/javascript"></script>
+    <!--  Google Maps Plugin    -->
+    <!-- Control Center for Donatepal: parallax effects, scripts for the example pages etc -->
+    <script src="/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
+
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+
+    <!-- <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script> -->
+
+    <script src="/js/main.js"></script>
+
+    <!-- <script type="text/javascript">
+        $(function () {
+            $('#registerCheckbox').change(function () {
+                if ($(this).is(':checked')) {
+                    // Do something...
+                    $("#registerbtn").removeAttr('disabled');
+                } else {
+                    $("#registerbtn").attr('disabled', true);
+                }
+            });
+        });
+    </script> -->
+</body>
+
+</html>

@@ -52,6 +52,33 @@ func (usr User) AuthencateUser(user *User) bool {
 	return false
 }
 
+func (user User) GetUserNameCount() int {
+
+	// Username  string
+	// Password  string
+	// Firstname string
+	// Lastname  string
+	// Email     string
+	// Address   string
+	// Country   string
+	// City      string
+	// Age       uint
+	database := new(Database)
+	db := database.InitDatabase()
+	defer db.Close()
+
+	var count int
+	err := db.QueryRow("SELECT COUNT(username) FROM users where username=", user.Username).Scan(&count)
+	switch {
+	case err != nil:
+		log.Fatal(err)
+	default:
+		// fmt.Printf("Number of rows are %d\n", count)
+	}
+
+	return count
+}
+
 func (user User) GetAllUserData() ([]User, error) {
 
 	// Username  string
