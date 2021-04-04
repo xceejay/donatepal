@@ -1,14 +1,15 @@
 <h2>Balance</h2>
 
-
 <div class="content">
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12 " >
+        <h4>Amount Raised On Monthly Basis</h4>
         <div class="card ">
 
+         
 
-          <canvas id="myChart" width="400" height="200"></canvas>
+          <canvas id="myChart" width="400" height="190"></canvas>
           <script >
             
             var ctx = document.getElementById('myChart').getContext('2d');
@@ -20,7 +21,7 @@
 
                 datasets: [{
                   label: 'Amount Raised',
-                  data: {{.chart_data}},
+                  data: {{.chart_data}}, // @js-ignore
                   backgroundColor: [
                     '#9b27b0da',
                     '#9b27b0da',
