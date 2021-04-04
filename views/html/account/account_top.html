@@ -56,8 +56,29 @@
               <p>Settings</p>
             </a>
           </li>
+
+
+          <li class="nav-item inactive">
+            <form  method="POST" action="/logout" >
+
+            <i style="padding-top:15px;margin-left: 30px;" class="material-icons">logout</i> 
+            <button  name="submit"
+              style="padding-left: 1px; color: #555555;text-transform: capitalize;font-size: 14px;font-weight: 200;padding-top: 15px;" class="btn btn-link"
+              type="submit">
+              logout
+            </button>
+
+          </form>
+
+          </li>
+          <!-- <li id="settings" class="nav-item inactive">
+            <a href="/account/admin/logout" class="nav-link">
+              <i class="material-icons">logout</i>
+              <p>logout</p>
+            </a>
+          </li> -->
           <!-- your sidebar here -->
-        </ul>
+        </ul> 
 
       </div>
     </div>
@@ -80,10 +101,17 @@
           <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
               <li class="nav-item">
+                <form  method="POST" action="/logout" id="logout">
 
-                <a  href="/logout" class="nav-link">
-                  <i class="material-icons">logout</i> Logout
-                </a>
+                <i style="padding-top:2px;" class="material-icons">logout</i> 
+                <button name="submit"
+                  style="padding-left: 1px; padding-right: 4px; color: #555555;" class="btn btn-link"
+                  type="submit">
+                  logout
+                </button>
+
+              </form>
+
               </li>
 
 

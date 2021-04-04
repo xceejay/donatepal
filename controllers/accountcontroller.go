@@ -55,6 +55,9 @@ func (accountcontroller AccountController) HandleSuccessfulRegistration(c *gin.C
 	c.HTML(http.StatusOK, "successful_registration.html", nil)
 
 }
+func (accountcontroller AccountController) ServeLoginPage(c *gin.Context) {
+	c.HTML(http.StatusOK, "login.html", nil)
+}
 
 // HandleLogin is a simple middleware to login
 func (accountcontroller AccountController) HandleLogin(c *gin.Context) {
@@ -65,14 +68,14 @@ func (accountcontroller AccountController) HandleLogin(c *gin.Context) {
 	// if user == nil {
 	// 	c.HTML(http.StatusOK, "login.html", nil)
 	// } else {
-	// 	c.Redirect(http.StatusPermanentRedirect, "/account/"+usernameSessionstring)
+	// 	c.Redirect(http.StatusFound, "/account/"+usernameSessionstring)
 	// }
 
 	if !isLoggedIn(c) {
 		c.HTML(http.StatusOK, "login.html", nil)
 	} else {
 
-		c.Redirect(http.StatusPermanentRedirect, "/account/admin")
+		c.Redirect(http.StatusFound, "/account/admin")
 	}
 }
 
@@ -80,8 +83,9 @@ func (accountcontroller AccountController) HandleLogout(c *gin.Context) {
 	fmt.Println("logout Handled")
 	session := sessions.Default(c)
 	user := session.Get(userkey)
+	fmt.Println("USER:", user)
 	if user == nil {
-		c.Redirect(http.StatusPermanentRedirect, "/login")
+		c.Redirect(http.StatusFound, "/login")
 		fmt.Println("redirecting to login ")
 
 		return
@@ -101,7 +105,7 @@ func (accountcontroller AccountController) HandleLogout(c *gin.Context) {
 	fmt.Println("cleared  session")
 
 	// c.JSON(http.StatusOK, gin.H{"message": "Successfully logged out"})
-	c.Redirect(http.StatusPermanentRedirect, "/login")
+	c.Redirect(http.StatusFound, "/login-page")
 }
 
 // func (accountController AccountController) HandleAccountPage(c *gin.Context) {
@@ -121,7 +125,7 @@ func (accountcontroller AccountController) HandleLogout(c *gin.Context) {
 
 // 	if usernameSessionstring != urlUsername {
 
-// 		c.Redirect(http.StatusPermanentRedirect, "/login")
+// 		c.Redirect(http.StatusFound, "/login")
 // 		return
 // 	}
 
@@ -152,13 +156,13 @@ func (accountController AccountController) HandleAdminAccountPage(c *gin.Context
 
 	if len(usernameSessionstring) < 1 {
 
-		c.Redirect(http.StatusPermanentRedirect, "/login")
+		c.Redirect(http.StatusFound, "/login")
 		return
 	}
 
 	if username == nil {
 
-		c.Redirect(http.StatusPermanentRedirect, "/login")
+		c.Redirect(http.StatusFound, "/login")
 		return
 	}
 
@@ -196,8 +200,8 @@ func (accountController AccountController) HandleAdminDashboardContent(c *gin.Co
 			return
 		case "overview":
 			accountController.ServeAdminAccountOverviewPage(c)
-
 			return
+
 		case "":
 			accountController.ServeAdminAccountOverviewPage(c)
 
@@ -240,7 +244,7 @@ func (accountcontroller AccountController) PerformLogin(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
 		return
 	}
-	c.Redirect(http.StatusPermanentRedirect, "/account/admin")
+	c.Redirect(http.StatusFound, "/account/admin")
 
 }
 
