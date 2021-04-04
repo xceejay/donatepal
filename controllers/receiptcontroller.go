@@ -2,12 +2,14 @@ package controllers
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
 	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/xceejay/boilerplate/models"
+	"github.com/xceejay/boilerplate/services"
 )
 
 type ReceiptController struct{}
@@ -46,8 +48,18 @@ func (receiptController ReceiptController) HandleSaveReceipt(c *gin.Context) {
 		}
 
 		// c.JSON(http.StatusOK, gin.H{"message": "sucess", "error": fmt.Sprintf("\n%v", err)})
+		path := "views/html/account/receipt-pdf.html"
 
-		c.HTML(http.StatusOK, "receipt-pdf.html", nil)
+		vars := make(map[string]interface{})
+
+		vars["receipt_id"] = "2021DR"
+		vars["date_donated"] = receiptModel.DateDonated.Format("2020/12/01")
+		vars["fundraiser_name"] = receiptModel.GetFundraisername()
+		vars["amount_donated"] = receiptModel.Amount
+		templateEngine := new(services.TemplateEngine)
+
+		htmlContent := templateEngine.ProcessFile(path, vars)
+		c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(template.HTML(htmlContent)))
 
 	}
 

@@ -137,3 +137,21 @@ func (receipt Receipt) GetTotalAmountOfReceiptsByFundraiser(fundraiser string) i
 	return count
 
 }
+
+func (receipt Receipt) GetFundraisername() string {
+	database := new(Database)
+	db := database.InitDatabase()
+	defer db.Close()
+
+	var fundRaiserName string = ""
+	err := db.QueryRow("SELECT firstname FROM users where username=?", receipt.Fundraiser).Scan(&fundRaiserName)
+	switch {
+	case err != nil:
+		log.Fatal(err)
+	default:
+		// fmt.Printf("Number of rows are %d\n", count)
+	}
+
+	return fundRaiserName
+
+}

@@ -75,22 +75,13 @@ $(document).ready(function () {
 
 				if (xhr.status == 200) {
 
-
-
-
 					w = window.open();
 					w.document.write(response);
+				
+					w.print();
+					w.close();
 
-					//  alert(w.onload)
-					w.onload = function () {
-						// receiptContent.onload = function(){
-						//do what you need here
-						alert("loaded");
-						w.print();
-						w.close();
-					}
-
-
+				
 				}
 
 				createReceiptmodal.style.display = "none";
@@ -187,7 +178,7 @@ $(document).ready(function () {
 
 
 
-	
+
 
 });
 

@@ -1,202 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>Invoice</title>
-		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
-			rel="stylesheet"
-		/>
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
-		<style>
-			@media print {
-				@page {
-					size: A3;
-				}
-			}
-			ul {
-				padding: 0;
-				margin: 0 0 1rem 0;
-				list-style: none;
-			}
-			body {
-				font-family: "Inter", sans-serif;
-				margin: 0;
-			}
-			table {
-				width: 100%;
-				border-collapse: collapse;
-			}
-			table,
-			table th,
-			table td {
-				border: 1px solid silver;
-			}
-			table th,
-			table td {
-				text-align: right;
-				padding: 8px;
-			}
-			h1,
-			h4,
-			p {
-				margin: 0;
-			}
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Receipt</title>
 
-			.container {
-				padding: 20px 0;
-				width: 1000px;
-				max-width: 90%;
-				margin: 0 auto;
-			}
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-			.inv-title {
-				padding: 10px;
-				border: 1px solid silver;
-				text-align: center;
-				margin-bottom: 30px;
-			}
+		:root {
+			--primary-color: white;
+		}
 
-			.inv-logo {
-				width: 150px;
-				display: block;
-				margin: 0 auto;
-				margin-bottom: 40px;
-			}
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: 'Roboto', sans-serif;
+			letter-spacing: 0.5px;
+		}
 
-			/* header */
-			.inv-header {
-				display: flex;
-				margin-bottom: 20px;
-			}
-			.inv-header > :nth-child(1) {
-				flex: 2;
-			}
-			.inv-header > :nth-child(2) {
-				flex: 1;
-			}
-			.inv-header h2 {
-				font-size: 20px;
-				margin: 0 0 0.3rem 0;
-			}
-			.inv-header ul li {
-				font-size: 15px;
-				padding: 3px 0;
-			}
+		body {
+			background-color: var(--primary-color);
+		}
 
-			/* body */
-			.inv-body table th,
-			.inv-body table td {
-				text-align: left;
-			}
-			.inv-body {
-				margin-bottom: 30px;
-			}
+		.invoice-card {
+			display: flex;
+			flex-direction: column;
+			position: absolute;
+			padding: 10px 2em;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			min-height: 25em;
+			width: 22em;
+			background-color: #fff;
+			border-radius: 5px;
+			box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.15);
+		}
 
-			/* footer */
-			.inv-footer {
-				display: flex;
-				flex-direction: row;
-			}
-			.inv-footer > :nth-child(1) {
-				flex: 2;
-			}
-			.inv-footer > :nth-child(2) {
-				flex: 1;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="container">
-			<div class="inv-title">
-				<h1>Invoice # 424773</h1>
+		.invoice-card>div {
+			margin: 5px 0;
+		}
+
+		.invoice-title {
+			flex: 3;
+		}
+
+		.invoice-title #date {
+			display: block;
+			margin: 8px 0;
+			font-size: 12px;
+		}
+
+		.invoice-title #main-title {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 2em;
+		}
+
+		.invoice-title #main-title h4 {
+			letter-spacing: 2.5px;
+		}
+
+		.invoice-title span {
+			color: rgba(0, 0, 0, 0.4);
+		}
+
+		.invoice-details {
+			flex: 1;
+			border-top: 0.5px dashed grey;
+			border-bottom: 0.5px dashed grey;
+			display: flex;
+			align-items: center;
+		}
+
+		.invoice-table {
+			width: 100%;
+			border-collapse: collapse;
+		}
+
+		.invoice-table thead tr td {
+			font-size: 12px;
+			letter-spacing: 1px;
+			color: grey;
+			padding: 8px 0;
+		}
+
+		.invoice-table thead tr td:nth-last-child(1),
+		.row-data td:nth-last-child(1),
+		.calc-row td:nth-last-child(1) {
+			text-align: right;
+		}
+
+		.invoice-table tbody tr td {
+			padding: 8px 0;
+			letter-spacing: 0;
+		}
+
+		.invoice-table .row-data #unit {
+			text-align: center;
+		}
+
+		.invoice-table .row-data span {
+			font-size: 13px;
+			color: rgba(0, 0, 0, 0.6);
+		}
+
+		.invoice-footer {
+			flex: 1;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+		}
+
+		.invoice-footer #later {
+			margin-right: 5px;
+		}
+
+		.btn {
+			border: none;
+			padding: 5px 0px;
+			background: none;
+			cursor: pointer;
+			letter-spacing: 1px;
+			outline: none;
+		}
+
+		.btn.btn-secondary {
+			color: rgba(0, 0, 0, 0.3);
+		}
+
+		.btn.btn-primary {
+			color: var(--primary-color);
+		}
+
+		.btn#later {
+			margin-right: 2em;
+		}
+
+
+		
+	</style>
+
+	
+</head>
+
+<body>
+	<div class="invoice-card" id="receipt">
+		<div class="invoice-title">
+			<div id="main-title">
+				<h4>DONATEPAL RECEIPT</h4>
+				<span>#{{.receipt_id}}</span>
 			</div>
-			<img src="./ZAF.jpg" class="inv-logo" />
-			<div class="inv-header">
-				<div>
-					<h2>ABC Private Limited</h2>
-					<ul>
-						<li>Birmingom BS -435</li>
-						<li>United Kingdom</li>
-						<li>888-555-2311 | eadzhosting@gmail.com</li>
-					</ul>
-					<h2>ABC Private Limited</h2>
-					<ul>
-						<li>Birmingom BS -435</li>
-						<li>United Kingdom</li>
-						<li>888-555-2311 | eadzhosting@gmail.com</li>
-					</ul>
-				</div>
-				<div>
-					<table>
-						<tr>
-							<th>Issue Date</th>
-							<td>12-02-2018</td>
-						</tr>
-						<tr>
-							<th>Due Date</th>
-							<td>12-02-2018</td>
-						</tr>
-						<tr>
-							<th>Sub total</th>
-							<td>6500</td>
-						</tr>
-						<tr>
-							<th>Total</th>
-							<td>7000</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-			<div class="inv-body">
-				<table>
-					<thead>
-						<th>Product</th>
-						<th>Quantity</th>
-						<th>Price</th>
-					</thead>
-					<tbody>
-						<tr>
-							<td>
-								<h4>Hosting</h4>
-								<p>Some kind of hositing</p>
-							</td>
-							<td>1</td>
-							<td>2000</td>
-						</tr>
-						<tr>
-							<td>
-								<h4>Hosting</h4>
-								<p>Some kind of hositing</p>
-							</td>
-							<td>1</td>
-							<td>2000</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="inv-footer">
-				<div><!-- required --></div>
-				<div>
-					<table>
-						<tr>
-							<th>Sub total</th>
-							<td>200</td>
-						</tr>
-						<tr>
-							<th>Sales tax</th>
-							<td>200</td>
-						</tr>
-						<tr>
-							<th>Grand total</th>
-							<td>1200</td>
-						</tr>
-					</table>
-				</div>
-			</div>
+
+			<span id="date">{{.date_donated}}</span>
 		</div>
-	</body>
+
+		<div class="invoice-details">
+			<table class="invoice-table">
+				<thead>
+					<tr>
+						<td>FUNDRAISER</td>
+						<td>AMOUNT</td>
+					</tr>
+				</thead>
+
+				<tbody>
+
+					<tr class="row-data">
+						<td>{{.fundraiser_name}} </td>
+						<td id="unit">${{.amount_donated}}</td>
+
+					</tr>
+
+
+				</tbody>
+			</table>
+		</div>
+
+		<div class="invoice-footer">
+
+		</div>
+	</div>
+</body>
+
 </html>
