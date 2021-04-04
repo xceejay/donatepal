@@ -181,7 +181,7 @@ func (transaction Transaction) GetMonthlyTransactionAmountsByFundRaiser(fundrais
 	// var results []*sql.Rows
 	var i int = 0
 	for _, month := range months {
-		results, err := db.Query("select sum(amount) from transactions where monthname(date_donated)=?", month)
+		results, err := db.Query("select sum(amount) from transactions where monthname(date_donated)=? and fundraiser=?", month, fundraiser)
 		if err != nil {
 			return transactionAmounts, err
 		}
