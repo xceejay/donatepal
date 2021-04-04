@@ -170,7 +170,7 @@ func (transaction Transaction) GetMonthlyTransactionAmountsByFundRaiser(fundrais
 	months := [12]string{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"}
 
 	var count int
-	err := db.QueryRow("SELECT COUNT(*) FROM transactions").Scan(&count)
+	err := db.QueryRow("SELECT COUNT(*) FROM transactions where fundraiser=?", fundraiser).Scan(&count)
 	switch {
 	case err != nil:
 		log.Fatal(err)
