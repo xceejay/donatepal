@@ -68,7 +68,7 @@ func (user User) GetAllUserData() ([]User, error) {
 	defer db.Close()
 
 	var count int
-	err := db.QueryRow("SELECT COUNT(*) FROM users").Scan(&count)
+	err := db.QueryRow("SELECT COUNT(*) FROM users ").Scan(&count)
 	switch {
 	case err != nil:
 		log.Fatal(err)
@@ -78,7 +78,7 @@ func (user User) GetAllUserData() ([]User, error) {
 
 	users := make([]User, count)
 
-	results, err := db.Query("select username,age,firstname,lastname,email,address,country,city from users")
+	results, err := db.Query("select username,age,firstname,lastname,email,address,country,city from users order by firstname")
 
 	if err != nil {
 		return users, err
