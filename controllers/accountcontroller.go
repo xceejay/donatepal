@@ -233,7 +233,7 @@ func (accountcontroller AccountController) PerformLogin(c *gin.Context) {
 
 	// Check for username and password match from a database
 	if !user.AuthencateUser(user) {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Authentication failed"})
+		c.HTML(http.StatusUnauthorized, "login-failed.html", nil)
 		return
 	}
 
