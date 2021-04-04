@@ -198,11 +198,6 @@ func (accountController AccountController) HandleAdminDashboardContent(c *gin.Co
 			accountController.ServeAdminAccountOverviewPage(c)
 
 			return
-
-		case "logout":
-			accountController.HandleLogout(c)
-
-			return
 		case "":
 			accountController.ServeAdminAccountOverviewPage(c)
 
