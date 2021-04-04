@@ -278,7 +278,7 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 
 	var user models.User
 
-	user, err := user.GetAllUserData(fmt.Sprintf("%s", usernameSessionString))
+	user, err := user.GetAllUserDataByUsername(fmt.Sprintf("%s", usernameSessionString))
 	if err != nil {
 		panic(err)
 	}

@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql"
 	"fmt"
+	"log"
 )
 
 type User struct {
@@ -51,7 +52,61 @@ func (usr User) AuthencateUser(user *User) bool {
 	return false
 }
 
-func (user User) GetAllUserData(username string) (User, error) {
+func (user User) GetAllUserData() ([]User, error) {
+
+	// Username  string
+	// Password  string
+	// Firstname string
+	// Lastname  string
+	// Email     string
+	// Address   string
+	// Country   string
+	// City      string
+	// Age       uint
+	database := new(Database)
+	db := database.InitDatabase()
+	defer db.Close()
+
+	var count int
+	err := db.QueryRow("SELECT COUNT(*) FROM users").Scan(&count)
+	switch {
+	case err != nil:
+		log.Fatal(err)
+	default:
+		fmt.Printf("Number of rows are %d\n", count)
+	}
+
+	users := make([]User, count)
+
+	results, err := db.Query("select username,age,firstname,lastname,email,address,country,city from users")
+
+	if err != nil {
+		return users, err
+	}
+
+	defer results.Close()
+
+	user.Username = ""
+	var i int = 0
+
+	for results.Next() {
+
+		err = results.Scan(&users[i].Username, &users[i].Age, &users[i].Firstname, &users[i].Lastname, &users[i].Email, &users[i].Address, &users[i].Country, &users[i].City)
+		// fmt.Printf("ALL DATA:%v", users[i].users[i]name)
+
+		if err != nil {
+
+			fmt.Printf("scan error: %v", err)
+
+			return users, err
+
+		}
+		i++
+	}
+	return users, nil
+}
+
+func (user User) GetAllUserDataByUsername(username string) (User, error) {
 
 	// Username  string
 	// Password  string
