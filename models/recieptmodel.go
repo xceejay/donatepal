@@ -53,7 +53,7 @@ func (receipt Receipt) GetAllReceipts() ([]Receipt, error) {
 	case err != nil:
 		log.Fatal(err)
 	default:
-		fmt.Printf("Number of rows are %d\n", count)
+		// fmt.Printf("Number of rows are %d\n", count)
 	}
 
 	receipts := make([]Receipt, count)
@@ -92,7 +92,7 @@ func (receipt Receipt) GetAllReceiptsByUsername(username string) ([]Receipt, err
 	case err != nil:
 		log.Fatal(err)
 	default:
-		fmt.Printf("Number of rows are %d\n", count)
+		// fmt.Printf("Number of rows are %d\n", count)
 	}
 
 	receipts := make([]Receipt, count)
@@ -126,12 +126,12 @@ func (receipt Receipt) GetTotalAmountOfReceiptsByFundraiser(fundraiser string) i
 	defer db.Close()
 
 	var count int = 0
-	err := db.QueryRow("SELECT COUNT(*) FROM receipts").Scan(&count)
+	err := db.QueryRow("SELECT COUNT(*) FROM receipts where fundraiser=?", fundraiser).Scan(&count)
 	switch {
 	case err != nil:
 		log.Fatal(err)
 	default:
-		fmt.Printf("Number of rows are %d\n", count)
+		// fmt.Printf("Number of rows are %d\n", count)
 	}
 
 	return count

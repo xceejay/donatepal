@@ -73,7 +73,7 @@ func (user User) GetAllUserData() ([]User, error) {
 	case err != nil:
 		log.Fatal(err)
 	default:
-		fmt.Printf("Number of rows are %d\n", count)
+		// fmt.Printf("Number of rows are %d\n", count)
 	}
 
 	users := make([]User, count)

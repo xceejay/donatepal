@@ -53,7 +53,7 @@ func (transaction Transaction) GetAllTransactions() ([]Transaction, error) {
 	case err != nil:
 		log.Fatal(err)
 	default:
-		fmt.Printf("Number of rows are %d\n", count)
+		// fmt.Printf("Number of rows are %d\n", count)
 	}
 
 	transactions := make([]Transaction, count)
@@ -92,7 +92,7 @@ func (transaction Transaction) GetAllTransactionsByFundRaiser(fundraiser string)
 	case err != nil:
 		log.Fatal(err)
 	default:
-		fmt.Printf("Number of rows are %d\n", count)
+		// fmt.Printf("Number of rows are %d\n", count)
 	}
 
 	transactions := make([]Transaction, count)
@@ -126,12 +126,12 @@ func (transaction Transaction) GetTotalAmountOfTransactionsByFundraiser(fundrais
 	defer db.Close()
 
 	var count int = 0
-	err := db.QueryRow("SELECT COUNT(*) FROM transactions").Scan(&count)
+	err := db.QueryRow("SELECT COUNT(*) FROM transactions where fundraiser = ?", fundraiser).Scan(&count)
 	switch {
 	case err != nil:
 		log.Fatal(err)
 	default:
-		fmt.Printf("Number of rows are %d\n", count)
+		// fmt.Printf("Number of rows are %d\n", count)
 	}
 
 	return count
@@ -146,12 +146,12 @@ func (transaction Transaction) GetTotalAmountRaisedByFundaiser(fundraiser string
 	defer db.Close()
 
 	var Amount sql.NullFloat64
-	err := db.QueryRow("SELECT SUM(amount) FROM transactions").Scan(&Amount)
+	err := db.QueryRow("SELECT SUM(amount) FROM transactions where fundraiser=?", fundraiser).Scan(&Amount)
 	switch {
 	case err != nil:
 		log.Fatal(err)
 	default:
-		fmt.Printf("Number of rows are %d\n", Amount)
+		// fmt.Printf("Number of rows are %d\n", Amount)
 	}
 	return Amount.Float64
 }
@@ -175,7 +175,7 @@ func (transaction Transaction) GetMonthlyTransactionAmountsByFundRaiser(fundrais
 	case err != nil:
 		log.Fatal(err)
 	default:
-		fmt.Printf("Number of rows are %d\n", count)
+		// fmt.Printf("Number of rows are %d\n", count)
 	}
 
 	// var results []*sql.Rows
