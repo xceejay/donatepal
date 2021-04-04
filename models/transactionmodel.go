@@ -155,3 +155,52 @@ func (transaction Transaction) GetTotalAmountRaisedByFundaiser(fundraiser string
 	}
 	return Amount.Float64
 }
+
+// get transaction by month and transacion amounts in array
+// select * from transactions where monthname(date_donated)="April"
+
+func (transaction Transaction) GetMonthlyTransactionAmountsByFundRaiser(fundraiser string) ([12]float64, error) {
+	var transactionAmountsSql [12]sql.NullFloat64
+	var transactionAmounts [12]float64
+
+	database := new(Database)
+	db := database.InitDatabase()
+	defer db.Close()
+
+	months := [12]string{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"}
+
+	var count int
+	err := db.QueryRow("SELECT COUNT(*) FROM transactions").Scan(&count)
+	switch {
+	case err != nil:
+		log.Fatal(err)
+	default:
+		fmt.Printf("Number of rows are %d\n", count)
+	}
+
+	// var results []*sql.Rows
+	var i int = 0
+	for _, month := range months {
+		results, err := db.Query("select sum(amount) from transactions where monthname(date_donated)=?", month)
+		if err != nil {
+			return transactionAmounts, err
+		}
+
+		for results.Next() {
+			err = results.Scan(&transactionAmountsSql[i])
+			if err != nil {
+				return transactionAmounts, err
+			}
+
+		}
+		// fmt.Printf("AMOUNT FOR %s : %.2f\n", month, transactionAmountsSql[i].Float64)
+		i++
+	}
+
+	for index, transactionAmountSql := range transactionAmountsSql {
+		transactionAmounts[index] = transactionAmountSql.Float64
+
+	}
+
+	return transactionAmounts, nil
+}

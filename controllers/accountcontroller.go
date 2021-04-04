@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"html/template"
+
 	"net/http"
 	"net/url"
 	"path"
@@ -346,9 +347,33 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 
 	case "balance":
 
+		transactionModel := new(models.Transaction)
+		transactionAmounts, err := transactionModel.GetMonthlyTransactionAmountsByFundRaiser(user.Username)
+
+		var chartDataArray string
+		var i int = 0
+		for _, transactionAmount := range transactionAmounts {
+			if i == 0 {
+				chartDataArray += `[` + fmt.Sprintf("%.2f", transactionAmount) + `,`
+
+			} else if i == 11 {
+				chartDataArray += fmt.Sprintf("%.2f", transactionAmount) + `]`
+				break
+			} else {
+				chartDataArray += fmt.Sprintf("%.2f", transactionAmount) + `,`
+
+			}
+			i++
+		}
+
+		if err != nil {
+			fmt.Printf("ERROR GETTING Tranaction TABLE: %v", err)
+		}
+		// fmt.Println(getArray)
 		vars["balance_active"] = "active"
 		fundRaiserName := "<b>" + user.Firstname.String + " " + user.Lastname.String + "</b>"
 		vars["fundraiser_name"] = template.HTML(fundRaiserName)
+		vars["chart_data"] = template.JS(chartDataArray)
 
 		accounthtmlPageTop := templateEngine.ProcessFile(paths[2], vars)
 		balanceContent := templateEngine.ProcessFile(paths[6], vars)
