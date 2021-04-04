@@ -77,10 +77,13 @@ func (accountcontroller AccountController) HandleLogin(c *gin.Context) {
 }
 
 func (accountcontroller AccountController) HandleLogout(c *gin.Context) {
+	fmt.Println("logout Handled")
 	session := sessions.Default(c)
 	user := session.Get(userkey)
 	if user == nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid session token"})
+		c.Redirect(http.StatusPermanentRedirect, "/login")
+		fmt.Println("redirecting to login ")
+
 		return
 	}
 
@@ -91,12 +94,14 @@ func (accountcontroller AccountController) HandleLogout(c *gin.Context) {
 	session.Options(sessions.Options{Path: "/", MaxAge: -1}) // this sets the cookie with a MaxAge of 0
 
 	if err := session.Save(); err != nil {
+		fmt.Println("failed to save session")
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
 		return
 	}
+	fmt.Println("cleared  session")
 
 	// c.JSON(http.StatusOK, gin.H{"message": "Successfully logged out"})
-	c.Redirect(http.StatusTemporaryRedirect, "/login")
+	c.Redirect(http.StatusPermanentRedirect, "/login")
 }
 
 // func (accountController AccountController) HandleAccountPage(c *gin.Context) {
@@ -130,6 +135,7 @@ func (accountcontroller AccountController) HandleLogout(c *gin.Context) {
 // }
 
 func (accountController AccountController) HandleAdminAccountPage(c *gin.Context) {
+
 	session := sessions.Default(c)
 	username := session.Get(userkey)
 
@@ -150,6 +156,12 @@ func (accountController AccountController) HandleAdminAccountPage(c *gin.Context
 		return
 	}
 
+	if username == nil {
+
+		c.Redirect(http.StatusPermanentRedirect, "/login")
+		return
+	}
+
 	// if urlUsername == usernameSessionstring {
 
 	// 	location := fmt.Sprintf("/%s/%s", "account", username)
@@ -158,9 +170,9 @@ func (accountController AccountController) HandleAdminAccountPage(c *gin.Context
 	// 	accountController.ServeAdminAccountPage(c)
 	// }
 
-	location := fmt.Sprintf("/%s/%s", "account", username)
+	fmt.Println("USERNAME:", username)
+	fmt.Println("URL:", myUrl)
 
-	fmt.Println("LOCATION:", location)
 	accountController.ServeAdminAccountPage(c)
 }
 
@@ -184,6 +196,11 @@ func (accountController AccountController) HandleAdminDashboardContent(c *gin.Co
 			return
 		case "overview":
 			accountController.ServeAdminAccountOverviewPage(c)
+
+			return
+
+		case "logout":
+			accountController.HandleLogout(c)
 
 			return
 		case "":

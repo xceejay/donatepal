@@ -189,10 +189,6 @@ $(document).ready(function () {
 
 	
 
-
-	
-
-
 });
 
 
