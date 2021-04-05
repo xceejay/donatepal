@@ -426,7 +426,7 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 			receiptsTable += "<td>" + receipt.PaymentMethod + "</td>"
 			receiptsTable += "<td>" + receipt.Phone.String + "</td>"
 			receiptsTable += "<td>" + receipt.Address.String + "</td>"
-			receiptsTable += "<td>" + receipt.DateDonated.Format("2020-12-01") + "</td>"
+			receiptsTable += "<td>" + receipt.DateDonated.Format("2006-01-02") + "</td>"
 			receiptsTable += "</tr>"
 
 			// fmt.Println(receiptsTable)
