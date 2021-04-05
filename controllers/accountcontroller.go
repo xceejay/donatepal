@@ -345,7 +345,7 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 			transactionsTable += "<td>" + transaction.PaymentMethod + "</td>"
 			transactionsTable += "<td>" + transaction.Phone.String + "</td>"
 			transactionsTable += "<td>" + transaction.Address.String + "</td>"
-			transactionsTable += "<td>" + transaction.DateDonated.Format("2020-12-01") + "</td>"
+			transactionsTable += "<td>" + transaction.DateDonated.Format("2006-01-02") + "</td>"
 			transactionsTable += "</tr>"
 
 			// fmt.Println(transactionsTable)

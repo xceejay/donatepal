@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"html/template"
 	"net/http"
 
@@ -44,8 +43,8 @@ func (homeController HomeController) ServeDonationPage(c *gin.Context) {
 			continue
 		}
 
-		fundraiserOptions += "<option " + "value= '" + fundraiser.Username + "'>" + fundraiser.Firstname.String + " " + fundraiser.Lastname.String + "</option>"
-		fmt.Println("OPTIONS:", fundraiserOptions)
+		fundraiserOptions += "<option " + "value= '" + fundraiser.Username + "'>" + fundraiser.Firstname.String + " " + fundraiser.Lastname.String + "</option>\n"
+
 	}
 
 	vars["fundraiser_options"] = template.HTML(fundraiserOptions)
