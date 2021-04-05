@@ -15,43 +15,46 @@
             var ctx = document.getElementById('myChart').getContext('2d');
 
             var myChart = new Chart(ctx, {
-              type: 'bar',
+              type: 'line',
               data: {
                 labels:[ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ],
 
                 datasets: [{
                   label: 'Amount Raised',
                   data: {{.chart_data}}, 
-                  backgroundColor: [
-                    '#9b27b0da',
-                    '#9b27b0da',
-                    '#9b27b0da',
-                    '#9b27b0da',
-                    '#9b27b0da',
-                    '#9b27b0da',
-                    '#9b27b0da',
-                    '#9b27b0da',
-                    '#9b27b0da',
-                    '#9b27b0da',
-                    '#9b27b0da',
-                    '#9b27b0da',                    
-                  ],
-                  borderColor: [
-                    "white",
-                    "white",
-                    "white",
-                    "white",
-                    "white",
-                    "white",
-                    "white",
-                    "white",
-                    "white",
-                    "white",
-                    "white",
-                    "white",
+                  // backgroundColor: [
+                  //   '#9b27b0da',
+                  //   '#9b27b0da',
+                  //   '#9b27b0da',
+                  //   '#9b27b0da',
+                  //   '#9b27b0da',
+                  //   '#9b27b0da',
+                  //   '#9b27b0da',
+                  //   '#9b27b0da',
+                  //   '#9b27b0da',
+                  //   '#9b27b0da',
+                  //   '#9b27b0da',
+                  //   '#9b27b0da',                    
+                  // ],
+                  // borderColor: [
+                  //   "white",
+                  //   "white",
+                  //   "white",
+                  //   "white",
+                  //   "white",
+                  //   "white",
+                  //   "white",
+                  //   "white",
+                  //   "white",
+                  //   "white",
+                  //   "white",
+                  //   "white",
                   
-                  ],
-                  borderWidth: 0
+                  // ],
+                  // borderWidth: 0
+
+                
+                  borderColor: '#9b27b0da',
                 }]
               },
               options: {
@@ -63,6 +66,26 @@
                 }
               }
             });
+
+
+
+            const labels = Utils.months({count: 7});
+const data = {
+  labels: labels,
+  datasets: [{
+    label: 'My First Dataset',
+    data: [65, 59, 80, 81, 56, 55, 40],
+    fill: false,
+    borderColor: 'rgb(75, 192, 192)',
+    tension: 0.1
+  }]
+};
+
+var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: data,
+    options: options
+});
           </script>
 
         </div>
