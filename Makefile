@@ -7,4 +7,5 @@ build:
 	ln -sf bin/donatepal donatepal
 
 run: build
+	@echo "executing program..."
 	./donatepal
