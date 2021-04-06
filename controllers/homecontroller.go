@@ -47,7 +47,25 @@ func (homeController HomeController) ServeDonationPage(c *gin.Context) {
 
 	}
 
+	var fundraiserPattern string
+	var i int = 0
+	for _, fundraiser := range fundraisers {
+
+		if len(fundraiser.Firstname.String) < 1 {
+			continue
+		}
+		if i == 0 {
+			fundraiserPattern += "|"
+
+		}
+
+		fundraiserPattern += fundraiser.Username + "|"
+		i++
+	}
+
 	vars["fundraiser_options"] = template.HTML(fundraiserOptions)
+	vars["fundraiser_pattern"] = template.HTML(fundraiserPattern)
+
 	templateEngine := new(services.TemplateEngine)
 
 	donateHtmlFile := templateEngine.ProcessFile(paths[0], vars)
