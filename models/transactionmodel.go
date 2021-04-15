@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"time"
+
+	"github.com/xceejay/boilerplate/cache"
 )
 
 type Transaction struct {
@@ -20,6 +22,11 @@ type Transaction struct {
 	Phone         sql.NullString
 	FundRaiser    string
 	DateDonated   time.Time
+}
+
+func (transaction Transaction) NewTransaction() *Transaction {
+
+	return &Transaction{}
 }
 
 func (transaction Transaction) InsertTransaction() error {
@@ -82,12 +89,28 @@ func (transaction Transaction) GetAllTransactions() ([]Transaction, error) {
 }
 
 func (transaction Transaction) GetAllTransactionsByFundRaiser(fundraiser string) ([]Transaction, error) {
+
+	start := time.Now()
+
+	redisTransactions, err := transaction.GetAllTransactionsByFundRaiserWithCache(fundraiser)
+
+	if err != nil {
+		fmt.Println("GETTING WITH CACHE ERROR:", err)
+	}
+	// fmt.Println("long innit", len(redisTransactions))
+	if len(redisTransactions) > 0 {
+		// fmt.Println("WHY THE FUCK IS THERE NO DATA", redisTransactions)
+		elapsed := time.Since(start)
+		log.Printf("Search took %s using redis\n", elapsed)
+		return redisTransactions, nil
+	}
+
 	database := new(Database)
 	db := database.InitDatabase()
 	defer db.Close()
 
 	var count int
-	err := db.QueryRow("SELECT COUNT(*) FROM transactions").Scan(&count)
+	err = db.QueryRow("SELECT COUNT(*) FROM transactions").Scan(&count)
 	switch {
 	case err != nil:
 		log.Fatal(err)
@@ -116,8 +139,49 @@ func (transaction Transaction) GetAllTransactionsByFundRaiser(fundraiser string)
 
 	// fmt.Printf("%v", transactions)
 
+	transactionsCache := new(cache.TransactionsCache)
+
+	go func(fundraiser string, transactions []Transaction, transactionsCache *cache.TransactionsCache) {
+		transactionsCache.FundRaiser = fundraiser
+
+		// 	Email         string    `json:"Email"`
+		// DonationType  string    `json:"Donation_Type"`
+		// PaymentMethod string    `json:"PaymentMethod"`
+		// DateCreated   time.Time `json:"DateCreated"`
+		// Transactionid int       `json:"Transactionid"`
+		// Firstname     string    `json:"Firstname"`
+		// Lastname      string    `json:"Lastname"`
+		// Amount        float64   `json:"Amount"`
+		// Address       string    `json:"Address"`
+		// Phone         string    `json:"Phone"`
+		// DateDonated   time.Time `json:"DateDonated"`
+
+		var index int = 0
+		transactionsCache.Transactions = make([]cache.TransactionCache, len(transactions))
+		for _, transaction := range transactions {
+
+			transactionsCache.Transactions[index].Email = transaction.Email.String
+			transactionsCache.Transactions[index].Firstname = transaction.Firstname.String
+			transactionsCache.Transactions[index].Lastname = transaction.Lastname.String
+			transactionsCache.Transactions[index].Amount = transaction.Amount
+			transactionsCache.Transactions[index].PaymentMethod = transaction.PaymentMethod
+			transactionsCache.Transactions[index].Phone = transaction.Phone.String
+			transactionsCache.Transactions[index].Address = transaction.Address.String
+			transactionsCache.Transactions[index].DateDonated = transaction.DateDonated
+
+			index++
+
+		}
+
+		transactionsCache.SetTransactionsByFundRaiser()
+	}(fundraiser, transactions, transactionsCache)
+	// transactionCache.SetTransactionsByFundRaiser(fundraiser, transactions)
+
 	fmt.Println("Sucessfully Got Transactions By FundRaiser")
+	elapsed := time.Since(start)
+	fmt.Printf("Search took %s using sql \n", elapsed)
 	return transactions, nil
+
 }
 
 func (transaction Transaction) GetTotalAmountOfTransactionsByFundraiser(fundraiser string) int {
@@ -203,4 +267,56 @@ func (transaction Transaction) GetMonthlyTransactionAmountsByFundRaiser(fundrais
 	}
 
 	return transactionAmounts, nil
+}
+
+func (transaction Transaction) GetAllTransactionsByFundRaiserWithCache(fundraiser string) ([]Transaction, error) {
+
+	transactionsCache := new(cache.TransactionsCache)
+
+	// Email         string    `json:"Email"`
+	// DonationType  string    `json:"Donation_Type"`
+	// PaymentMethod string    `json:"PaymentMethod"`
+	// DateCreated   time.Time `json:"DateCreated"`
+	// Transactionid int       `json:"Transactionid"`
+	// Firstname     string    `json:"Firstname"`
+	// Lastname      string    `json:"Lastname"`
+	// Amount        float64   `json:"Amount"`
+	// Address       string    `json:"Address"`
+	// Phone         string    `json:"Phone"`
+	// DateDonated   time.Time `json:"DateDonated"`
+
+	transactionsCache.FundRaiser = fundraiser
+
+	transactionscache, err := transactionsCache.GetAllTransactionsByFundRaiser(fundraiser)
+
+	if err != nil {
+		return nil, err
+	}
+	transactions := make([]Transaction, len(transactionscache.Transactions))
+
+	var index int = 0
+
+	for range transactionscache.Transactions {
+
+		transactions[index].Email.String = transactionscache.Transactions[index].Email
+		// fmt.Println("EVERYTIME:", transactions[index].Email.String)
+		transactions[index].DonationType = transactionscache.Transactions[index].DonationType
+		transactions[index].PaymentMethod = transactionscache.Transactions[index].PaymentMethod
+		transactions[index].DateCreated = transactionscache.Transactions[index].DateCreated
+		transactions[index].Transactionid = transactionscache.Transactions[index].Transactionid
+		transactions[index].Firstname.String = transactionscache.Transactions[index].Firstname
+		transactions[index].Lastname.String = transactionscache.Transactions[index].Lastname
+		transactions[index].Address.String = transactionscache.Transactions[index].Address
+		transactions[index].Amount = transactionscache.Transactions[index].Amount
+		transactions[index].Phone.String = transactionscache.Transactions[index].Phone
+		transactions[index].DateDonated = transactionscache.Transactions[index].DateDonated
+
+		index++
+
+	}
+
+	// transactions := make([]Transaction, count)
+	fmt.Println("-----------------------------used cache ------------------------")
+	// fmt.Println("YES I GOT IT :", transactionscache.Transactions[0].Firstname)
+	return transactions, nil
 }

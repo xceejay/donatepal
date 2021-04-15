@@ -327,12 +327,12 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 		}
 		var transactionsTable string
 
-		for index, transaction := range transactions {
+		for _, transaction := range transactions {
 
 			if transaction.Amount < 1 {
 				continue
 			}
-			fmt.Println("index:", index)
+			// fmt.Println("index:", index)
 			transactionsTable += "<tr>"
 
 			transactionsTable += "<td>" + fmt.Sprintf("%v", transaction.Transactionid) + "</td>"
@@ -408,12 +408,12 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 		}
 		var receiptsTable string
 
-		for index, receipt := range receipts {
+		for _, receipt := range receipts {
 
 			if receipt.Amount < 1 {
 				continue
 			}
-			fmt.Println("index:", index)
+			// fmt.Println("index:", index)
 			receiptsTable += "<tr>"
 
 			receiptsTable += "<td>" + fmt.Sprintf("%v", receipt.Receiptid) + "</td>"
