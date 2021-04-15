@@ -12,7 +12,7 @@ var json = jsoniter.ConfigCompatibleWithStandardLibrary
 
 type TransactionCache struct {
 	Email         string    `json:"Email"`
-	DonationType  string    `json:"Donation_Type"`
+	DonationType  string    `json:"DonationType"`
 	PaymentMethod string    `json:"PaymentMethod"`
 	DateCreated   time.Time `json:"DateCreated"`
 	Transactionid int       `json:"Transactionid"`

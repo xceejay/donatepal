@@ -159,6 +159,7 @@ func (transaction Transaction) GetAllTransactionsByFundRaiser(fundraiser string)
 		var index int = 0
 		transactionsCache.Transactions = make([]cache.TransactionCache, len(transactions))
 		for _, transaction := range transactions {
+
 			transactionsCache.Transactions[index].Transactionid = transaction.Transactionid
 			transactionsCache.Transactions[index].Email = transaction.Email.String
 			transactionsCache.Transactions[index].Firstname = transaction.Firstname.String
@@ -168,6 +169,7 @@ func (transaction Transaction) GetAllTransactionsByFundRaiser(fundraiser string)
 			transactionsCache.Transactions[index].Phone = transaction.Phone.String
 			transactionsCache.Transactions[index].Address = transaction.Address.String
 			transactionsCache.Transactions[index].DateDonated = transaction.DateDonated
+			transactionsCache.Transactions[index].DonationType = transaction.DonationType
 
 			index++
 
