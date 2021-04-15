@@ -334,17 +334,15 @@ func (accountController AccountController) getAdminDashboardContent(page string,
 			}
 			// fmt.Println("index:", index)
 			transactionsTable += "<tr>"
-
 			transactionsTable += "<td>" + fmt.Sprintf("%v", transaction.Transactionid) + "</td>"
-
-			transactionsTable += "<td>" + transaction.Email.String + "</td>"
-
+			transactionsTable += "<td>" + fmt.Sprintf("%.2f", transaction.Amount) + "</td>"
+			transactionsTable += "<td>" + transaction.DonationType + "</td>"
+			transactionsTable += "<td>" + transaction.PaymentMethod + "</td>"
 			transactionsTable += "<td>" + transaction.Firstname.String + "</td>"
 			transactionsTable += "<td>" + transaction.Lastname.String + "</td>"
-			transactionsTable += "<td>" + fmt.Sprintf("%.2f", transaction.Amount) + "</td>"
-			transactionsTable += "<td>" + transaction.PaymentMethod + "</td>"
-			transactionsTable += "<td>" + transaction.Phone.String + "</td>"
 			transactionsTable += "<td>" + transaction.Address.String + "</td>"
+			transactionsTable += "<td>" + transaction.Phone.String + "</td>"
+			// transactionsTable += "<td>" + transaction.Email.String + "</td>
 			transactionsTable += "<td>" + transaction.DateDonated.Format("2006-01-02") + "</td>"
 			transactionsTable += "</tr>"
 
