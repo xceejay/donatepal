@@ -1,6 +1,6 @@
 # Donate Pal
 
-Donate Pal (DP) is an an open-source, inclusive donation management suite.
+Donate Pal (DP) is an an open-source, inclusive donation management suite written in Go.
 
 ## Modules
 
