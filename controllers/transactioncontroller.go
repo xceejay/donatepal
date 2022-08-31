@@ -8,7 +8,7 @@ import (
 
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"github.com/xceejay/boilerplate/models"
+	"github.com/xceejay/donate-pal/models"
 )
 
 type TransactionController struct{}

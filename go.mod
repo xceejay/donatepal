@@ -1,4 +1,4 @@
-module github.com/xceejay/boilerplate
+module github.com/xceejay/donate-pal
 
 go 1.16
 

@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/thinkerou/favicon"
 
-	"github.com/xceejay/boilerplate/routes"
+	"github.com/xceejay/donate-pal/routes"
 )
 
 func main() {

@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/xceejay/boilerplate/models"
-	"github.com/xceejay/boilerplate/services"
+	"github.com/xceejay/donate-pal/models"
+	"github.com/xceejay/donate-pal/services"
 )
 
 type ReceiptController struct{}
