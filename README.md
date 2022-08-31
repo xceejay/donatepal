@@ -4,9 +4,9 @@ Donate Pal (DP) is an an open-source, inclusive donation management suite writte
 
 ## Modules
 
-1. `donate` - Donation to a fundraiser
-2. `events` - Funraiser account planning and registration
-3. `manage` - Funraiser account planning and registration
+1. `donate` - Donation to a Fundraiser
+2. `events` - Fundraiser account planning and registration
+3. `manage` - Fundraiser Management
 
 ## Screenshots
 
