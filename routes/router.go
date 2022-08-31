@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/xceejay/donate-pal/controllers"
+	"github.com/xceejay/donatepal/controllers"
 )
 
 func InitRouter(engine *gin.Engine) {

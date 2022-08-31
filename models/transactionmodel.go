@@ -6,7 +6,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/xceejay/donate-pal/cache"
+	"github.com/xceejay/donatepal/cache"
 )
 
 type Transaction struct {

@@ -1,4 +1,4 @@
-module github.com/xceejay/donate-pal
+module github.com/xceejay/donatepal
 
 go 1.16
 
